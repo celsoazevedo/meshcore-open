@@ -399,9 +399,6 @@ class AppLocalizationsHu extends AppLocalizations {
       'Értesítések, üzenetküldés és térképbeállítások';
 
   @override
-  String get settings_export => 'Exportálás';
-
-  @override
   String get settings_exportData => 'Adatok exportálása';
 
   @override
@@ -411,35 +408,41 @@ class AppLocalizationsHu extends AppLocalizations {
   String get backupRestore_title => 'Mentés és visszaállítás';
 
   @override
-  String get backupRestore_subtitle =>
-      'Alkalmazásadatok és rádióbeállítások mentése vagy visszaállítása';
+  String get backupRestore_backupSubtitle =>
+      'Alkalmazásadatok és rádióbeállítások mentése fájlba';
 
   @override
-  String get backupRestore_import => 'Importálás';
+  String get backupRestore_restoreTitle => 'Mentés visszaállítása';
 
   @override
-  String get backupRestore_selectImportFile => 'Fájl importálása';
+  String get backupRestore_restoreSubtitle =>
+      'Alkalmazásadatok és rádióbeállítások betöltése fájlból';
 
   @override
-  String get backupRestore_password => 'Jelszó (opcionális)';
+  String get backupRestore_backupWarning =>
+      'A mentések tartalmazhatják a rádió privát kulcsát, a csatornakulcsokat, az üzenetelőzményeket, a mentett jelszavakat és az API-kulcsokat. Tárolja a fájlt biztonságos helyen.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'A jelszó titkosítja a fájlt. Üresen titkosítatlan szöveg mentődik, amely privát/csatornakulcsokat, előzményeket és hitelesítő adatokat tartalmazhat.';
+  String get backupRestore_passwordOptional =>
+      'Opcionális: a jelszó titkosítja a fájlt. Jelszó nélkül a fájl titkosítatlanul lesz mentve.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Ellenőrizze a jelszót, vagy válasszon támogatott mentési fájlt.';
 
   @override
-  String get backupRestore_items => 'Mentési és visszaállítási elemek';
+  String get backupRestore_restoreInfo =>
+      'A visszaállított elemek lecserélik az alkalmazásban és a rádión lévő adatokat. A legtöbb elemhez csatlakoztatott rádió szükséges.';
 
   @override
-  String get backupRestore_nodeSettings => 'Csomópont beállításai';
+  String get backupRestore_fileHeader => 'Mentési fájl';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Eszköznév, privát és nyilvános kulcs, rádióbeállítások és régiók';
+  String get backupRestore_chooseFile => 'Fájl kiválasztása';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Koppintson egy mentési fájl megnyitásához';
 
   @override
   String get backupRestore_deviceName => 'Eszköznév';
@@ -469,7 +472,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get backupRestore_contactsData => 'Névjegyek';
 
   @override
-  String get backupRestore_perContactSettings => 'Névjegybeállítások és szűrők';
+  String get backupRestore_perContactSettings => 'Névjegyenkénti beállítások';
 
   @override
   String get backupRestore_contactGroups => 'Névjegycsoportok';
@@ -493,18 +496,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get backupRestore_channelHistory => 'Csatornaelőzmények';
 
   @override
-  String get backupRestore_locationSettings => 'Helybeállítások';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Hely, névjegy- és adatvédelmi beállítások';
-
-  @override
   String get backupRestore_appSettings => 'Alkalmazásbeállítások';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Alkalmazás-előbeállítások és megjelenés';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS API-kulcs (érzékeny)';
@@ -516,25 +508,22 @@ class AppLocalizationsHu extends AppLocalizations {
   String get backupRestore_contacts => 'Névjegyek';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Névjegyek, névjegyenkénti szűrők és beállítások, csoportok és üzenetelőzmények';
-
-  @override
   String get backupRestore_discoveredContacts => 'Felfedezett névjegyek';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Felfedezett névjegyek és mentett adataik';
 
   @override
   String get backupRestore_bookmarks => 'Könyvjelzők';
 
   @override
-  String get backupRestore_channels => 'Csatornák';
+  String get backupRestore_messages => 'Üzenetek';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Csatornák, csatornaszűrők, közösségek és üzenetelőzmények';
+  String get backupRestore_itemsHeader => 'Elemek';
+
+  @override
+  String get backupRestore_selectAll => 'Összes kijelölése';
+
+  @override
+  String get backupRestore_channels => 'Csatornák';
 
   @override
   String get backupRestore_backup => 'Mentés létrehozása';
@@ -576,16 +565,20 @@ class AppLocalizationsHu extends AppLocalizations {
       'A mentési fájl nagyobb a 100 MB-os korlátnál.';
 
   @override
-  String get backupRestore_selectAtLeastOne =>
-      'Válasszon ki legalább egy elemet.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Lecseréli a rádió azonosítóját?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'A csomópont-beállítások visszaállítása lecseréli a csatlakoztatott rádió privát kulcsát és megváltoztatja az azonosítóját. Csak szándékosan folytassa.';
+      'Ez lecseréli a csatlakoztatott rádió privát kulcsát és megváltoztatja az azonosítóját. Csak szándékosan folytassa.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Visszaállítja a kijelölt elemeket?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'A kijelölt elemek lecserélik a jelenlegieket az alkalmazásban és a rádión. Ezt nem lehet visszavonni.';
 
   @override
   String get settings_nodeSettings => 'Csomópont beállításai';

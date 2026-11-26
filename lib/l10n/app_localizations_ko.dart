@@ -384,9 +384,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings_appSettingsSubtitle => '알림, 메시징, 지도 설정';
 
   @override
-  String get settings_export => '내보내기';
-
-  @override
   String get settings_exportData => '데이터 내보내기';
 
   @override
@@ -396,34 +393,38 @@ class AppLocalizationsKo extends AppLocalizations {
   String get backupRestore_title => '백업 및 복원';
 
   @override
-  String get backupRestore_subtitle => '앱 데이터와 무전기 설정을 저장하거나 복원합니다';
+  String get backupRestore_backupSubtitle => '앱 데이터와 무선 설정을 파일에 저장';
 
   @override
-  String get backupRestore_import => '가져오기';
+  String get backupRestore_restoreTitle => '백업 복원';
 
   @override
-  String get backupRestore_selectImportFile => '파일 가져오기';
+  String get backupRestore_restoreSubtitle => '파일에서 앱 데이터와 무선 설정 불러오기';
 
   @override
-  String get backupRestore_password => '비밀번호(선택)';
+  String get backupRestore_backupWarning =>
+      '백업에는 무전기의 개인 키, 채널 키, 메시지 기록, 저장된 비밀번호, API 키가 포함될 수 있습니다. 파일을 안전한 곳에 보관하세요.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      '비밀번호를 설정하면 파일이 암호화됩니다. 비워 두면 개인/채널 키, 기록, 자격 증명이 포함될 수 있는 평문으로 저장됩니다.';
+  String get backupRestore_passwordOptional =>
+      '선택 사항: 비밀번호를 설정하면 파일이 암호화됩니다. 비밀번호가 없으면 파일이 암호화되지 않은 상태로 저장됩니다.';
 
   @override
   String get backupRestore_importUnavailable =>
       '비밀번호를 확인하거나 지원되는 백업 파일을 선택하세요.';
 
   @override
-  String get backupRestore_items => '백업 및 복원 항목';
+  String get backupRestore_restoreInfo =>
+      '복원한 항목이 앱과 무전기의 기존 내용을 대체합니다. 대부분의 항목은 무전기가 연결되어 있어야 합니다.';
 
   @override
-  String get backupRestore_nodeSettings => '노드 설정';
+  String get backupRestore_fileHeader => '백업 파일';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      '장치 이름, 개인 키와 공개 키, 무선 설정, 지역';
+  String get backupRestore_chooseFile => '파일 열기';
+
+  @override
+  String get backupRestore_chooseFileHint => '백업 파일을 열려면 누르세요';
 
   @override
   String get backupRestore_deviceName => '장치 이름';
@@ -453,7 +454,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get backupRestore_contactsData => '연락처';
 
   @override
-  String get backupRestore_perContactSettings => '연락처별 설정 및 필터';
+  String get backupRestore_perContactSettings => '연락처별 설정';
 
   @override
   String get backupRestore_contactGroups => '연락처 그룹';
@@ -477,16 +478,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get backupRestore_channelHistory => '채널 기록';
 
   @override
-  String get backupRestore_locationSettings => '위치 설정';
-
-  @override
-  String get backupRestore_locationSettingsDescription => '위치, 연락처 설정, 개인정보 설정';
-
-  @override
   String get backupRestore_appSettings => '앱 설정';
-
-  @override
-  String get backupRestore_appSettingsDescription => '앱 환경설정 및 화면 설정';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS API 키(민감)';
@@ -498,24 +490,22 @@ class AppLocalizationsKo extends AppLocalizations {
   String get backupRestore_contacts => '연락처';
 
   @override
-  String get backupRestore_contactsDescription =>
-      '연락처, 연락처별 필터와 설정, 그룹, 메시지 기록';
-
-  @override
   String get backupRestore_discoveredContacts => '발견된 연락처';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      '발견된 연락처와 저장된 세부 정보';
 
   @override
   String get backupRestore_bookmarks => '북마크';
 
   @override
-  String get backupRestore_channels => '채널';
+  String get backupRestore_messages => '메시지';
 
   @override
-  String get backupRestore_channelsDescription => '채널, 채널 필터, 커뮤니티, 메시지 기록';
+  String get backupRestore_itemsHeader => '항목';
+
+  @override
+  String get backupRestore_selectAll => '모두 선택';
+
+  @override
+  String get backupRestore_channels => '채널';
 
   @override
   String get backupRestore_backup => '백업 만들기';
@@ -555,14 +545,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get backupRestore_fileTooLarge => '백업 파일이 100 MB 제한보다 큽니다.';
 
   @override
-  String get backupRestore_selectAtLeastOne => '항목을 하나 이상 선택하세요.';
-
-  @override
   String get backupRestore_replaceIdentityTitle => '무전기 ID를 교체할까요?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      '노드 설정을 복원하면 연결된 무전기의 개인 키가 교체되고 ID가 바뀝니다. 의도한 경우에만 계속하세요.';
+      '이렇게 하면 연결된 무전기의 개인 키가 교체되고 ID가 바뀝니다. 의도한 경우에만 계속하세요.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle => '선택한 항목을 복원할까요?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      '선택한 항목이 앱과 무전기의 현재 항목을 대체합니다. 이 작업은 되돌릴 수 없습니다.';
 
   @override
   String get settings_nodeSettings => '노드 설정';

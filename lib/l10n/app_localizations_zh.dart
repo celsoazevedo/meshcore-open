@@ -378,9 +378,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_appSettingsSubtitle => '通知、消息和地图偏好';
 
   @override
-  String get settings_export => '导出';
-
-  @override
   String get settings_exportData => '导出数据';
 
   @override
@@ -390,32 +387,35 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backupRestore_title => '备份与恢复';
 
   @override
-  String get backupRestore_subtitle => '保存或恢复应用数据和无线电设置';
+  String get backupRestore_backupSubtitle => '将应用数据和无线电设置保存到文件';
 
   @override
-  String get backupRestore_import => '导入';
+  String get backupRestore_restoreTitle => '恢复备份';
 
   @override
-  String get backupRestore_selectImportFile => '导入文件';
+  String get backupRestore_restoreSubtitle => '从文件加载应用数据和无线电设置';
 
   @override
-  String get backupRestore_password => '密码（可选）';
+  String get backupRestore_backupWarning =>
+      '备份可能包含无线电的私钥、频道密钥、消息历史记录、已保存的密码和 API 密钥。请将文件存放在安全的位置。';
 
   @override
-  String get backupRestore_passwordHelp =>
-      '设置密码会加密文件。留空则以明文保存，可能包含私钥/频道密钥、历史记录和凭据。';
+  String get backupRestore_passwordOptional => '可选：设置密码会加密文件。不设置密码时，文件以明文保存。';
 
   @override
   String get backupRestore_importUnavailable => '请检查密码，或选择受支持的备份文件。';
 
   @override
-  String get backupRestore_items => '备份和恢复项目';
+  String get backupRestore_restoreInfo => '恢复的项目会替换应用和无线电中的现有内容。大多数项目需要连接无线电。';
 
   @override
-  String get backupRestore_nodeSettings => '节点设置';
+  String get backupRestore_fileHeader => '备份文件';
 
   @override
-  String get backupRestore_nodeSettingsDescription => '设备名称、私钥和公钥、无线电设置以及区域';
+  String get backupRestore_chooseFile => '打开文件';
+
+  @override
+  String get backupRestore_chooseFileHint => '点按以打开备份文件';
 
   @override
   String get backupRestore_deviceName => '设备名称';
@@ -445,7 +445,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backupRestore_contactsData => '联系人';
 
   @override
-  String get backupRestore_perContactSettings => '联系人设置和过滤器';
+  String get backupRestore_perContactSettings => '每个联系人的设置';
 
   @override
   String get backupRestore_contactGroups => '联系人分组';
@@ -469,16 +469,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backupRestore_channelHistory => '频道历史记录';
 
   @override
-  String get backupRestore_locationSettings => '位置设置';
-
-  @override
-  String get backupRestore_locationSettingsDescription => '位置、联系人设置和隐私设置';
-
-  @override
   String get backupRestore_appSettings => '应用设置';
-
-  @override
-  String get backupRestore_appSettingsDescription => '应用偏好和外观设置';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS API 密钥（敏感）';
@@ -490,22 +481,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backupRestore_contacts => '联系人';
 
   @override
-  String get backupRestore_contactsDescription => '联系人、每个联系人的过滤器和设置、分组以及消息历史记录';
-
-  @override
   String get backupRestore_discoveredContacts => '已发现的联系人';
-
-  @override
-  String get backupRestore_discoveredContactsDescription => '已发现的联系人及其保存的详细信息';
 
   @override
   String get backupRestore_bookmarks => '书签';
 
   @override
-  String get backupRestore_channels => '频道';
+  String get backupRestore_messages => '消息';
 
   @override
-  String get backupRestore_channelsDescription => '频道、频道过滤器、社区和消息历史记录';
+  String get backupRestore_itemsHeader => '项目';
+
+  @override
+  String get backupRestore_selectAll => '全选';
+
+  @override
+  String get backupRestore_channels => '频道';
 
   @override
   String get backupRestore_backup => '创建备份';
@@ -543,14 +534,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backupRestore_fileTooLarge => '备份文件超过 100 MB 的限制。';
 
   @override
-  String get backupRestore_selectAtLeastOne => '请至少选择一项。';
-
-  @override
   String get backupRestore_replaceIdentityTitle => '替换无线电身份？';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      '恢复节点设置会替换已连接无线电的私钥并更改其身份。仅在确有此意时继续。';
+      '这会替换已连接无线电的私钥并更改其身份。仅在确有此意时继续。';
+
+  @override
+  String get backupRestore_confirmRestoreTitle => '恢复所选项目？';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      '所选项目会替换应用和无线电中的当前内容。此操作无法撤销。';
 
   @override
   String get settings_nodeSettings => '节点设置';

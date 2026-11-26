@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../connector/meshcore_connector.dart';
 import '../helpers/snack_bar_builder.dart';
@@ -19,12 +17,17 @@ import '../services/translation_service.dart';
 import '../services/ui_view_state_service.dart';
 import '../services/message_filter/message_filter_service.dart';
 import '../utils/platform_info.dart';
-import '../utils/share_origin.dart';
-import '../widgets/app_bar.dart';
+import '../widgets/adaptive_app_bar_title.dart';
+import '../widgets/backup_item_list.dart';
+import '../widgets/confirm_clear_dialog.dart';
+import '../widgets/mesh_nav_tile.dart';
 import '../widgets/mesh_ui.dart';
 import '../widgets/model_download_list.dart';
+import '../widgets/radio_disconnected_banner.dart';
+import '../widgets/settings_reveal.dart';
 import '../widgets/sync_progress_overlay.dart';
 
+/// Restores the chosen items from a backup file.
 class BackupRestoreScreen extends StatefulWidget {
   const BackupRestoreScreen({super.key});
 
@@ -35,16 +38,6 @@ class BackupRestoreScreen extends StatefulWidget {
 class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
   static const int _maxImportBytes = 100 * 1024 * 1024;
   static const _backupService = BackupService();
-  static const _fileType = XTypeGroup(
-    label: 'MeshCore backup',
-    extensions: ['json'],
-    mimeTypes: ['application/json'],
-  );
-  static const Set<BackupItem> _defaultUncheckedItems = {
-    BackupItem.privateKey,
-    BackupItem.ipfsKey,
-    BackupItem.stadiaMapKey,
-  };
   static const Set<BackupItem> _deviceStoredItems = {
     BackupItem.deviceName,
     BackupItem.publicKey,
@@ -56,22 +49,25 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
     BackupItem.channels,
   };
   static const Set<BackupItem> _defaultUncheckedOnRestore = {
-    ..._defaultUncheckedItems,
+    ...defaultUncheckedBackupItems,
     ..._deviceStoredItems,
   };
   final _passwordController = TextEditingController();
-  final Set<BackupItem> _selectedItems = BackupItem.values
-      .where((item) => !_defaultUncheckedItems.contains(item))
-      .toSet();
+  final Set<BackupItem> _selectedItems = {};
   Set<BackupItem>? _availableItems;
   String? _importContents;
   String? _importFileName;
   Timer? _inspectionTimer;
   int _inspectionGeneration = 0;
   bool _hasInitializedImportSelection = false;
+  // Shows the password field once the file can't be read as is, until
+  // another file is chosen.
+  bool _needsPassword = false;
+  // Set while a typed password waits to be checked, so Restore can't use it
+  // before then.
+  bool _checkingPassword = false;
   bool _busy = false;
-  // Only the backup or restore step moves the bar, not the save, share or
-  // model dialogs.
+  // Only the restore step moves the bar, not the model download prompt.
   bool _waitingForRadio = false;
 
   @override
@@ -84,232 +80,109 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final items = _availableItems;
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTitle(
-          l10n.backupRestore_title,
-          indicators: false,
-          subtitle: false,
-        ),
+        title: AdaptiveAppBarTitle(l10n.backupRestore_restoreTitle),
         centerTitle: true,
         bottom: SyncProgressAppBarBottom(busy: _waitingForRadio),
       ),
       body: SafeArea(
         top: false,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(0, 8, 0, 24),
-          children: [
-            SectionHeader(l10n.backupRestore_import),
-            MeshCard(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: _busy ? null : _selectImportFile,
-                    icon: const Icon(Icons.upload_file_outlined),
-                    label: Text(
-                      _importFileName ?? l10n.backupRestore_selectImportFile,
+        child: MeshSettingsTileTheme(
+          child: ListView(
+            padding: const EdgeInsets.only(bottom: 24),
+            children: [
+              const RadioDisconnectedBanner(),
+              const SizedBox(height: 8),
+              MeshInfoCard(l10n.backupRestore_restoreInfo),
+              SectionHeader(l10n.backupRestore_fileHeader),
+              MeshCard(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    MeshNavTile(
+                      icon: Icons.file_open_outlined,
+                      title: l10n.backupRestore_chooseFile,
+                      subtitle:
+                          _importFileName ?? l10n.backupRestore_chooseFileHint,
+                      onTap: _busy ? null : _selectImportFile,
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    onChanged: (_) => _scheduleImportInspection(),
-                    decoration: InputDecoration(
-                      labelText: l10n.backupRestore_password,
-                      helperText:
-                          _importContents != null &&
-                              _availableItems?.isEmpty == true
-                          ? l10n.backupRestore_importUnavailable
-                          : l10n.backupRestore_passwordHelp,
-                      border: const OutlineInputBorder(),
+                    RevealOnEnable(
+                      visible: _needsPassword,
+                      child: Column(
+                        children: [
+                          const Divider(height: 1, indent: 16),
+                          Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: BackupPasswordField(
+                              controller: _passwordController,
+                              label: l10n.login_password,
+                              enabled: !_busy,
+                              checking: _checkingPassword,
+                              onChanged: (_) => _scheduleImportInspection(),
+                              // Only once a password was tried.
+                              helperText:
+                                  _passwordController.text.isNotEmpty &&
+                                      items?.isEmpty == true
+                                  ? l10n.backupRestore_importUnavailable
+                                  : null,
+                              helperMaxLines: 5,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SectionHeader(l10n.backupRestore_items),
-            MeshCard(
-              padding: EdgeInsets.zero,
-              child: Column(
-                children: [
-                  _groupTile(
-                    title: l10n.backupRestore_nodeSettings,
-                    icon: Icons.router_outlined,
-                    items: [
-                      (BackupItem.deviceName, l10n.backupRestore_deviceName),
-                      (BackupItem.privateKey, l10n.backupRestore_privateKey),
-                      (BackupItem.publicKey, l10n.backupRestore_publicKey),
-                      (
-                        BackupItem.radioSettings,
-                        l10n.backupRestore_radioSettings,
-                      ),
-                      (BackupItem.regions, l10n.backupRestore_regions),
-                    ],
-                  ),
-                  const Divider(height: 1, indent: 16),
-                  _groupTile(
-                    title: l10n.backupRestore_locationSettings,
-                    icon: Icons.location_on_outlined,
-                    items: [
-                      (BackupItem.location, l10n.backupRestore_location),
-                      (
-                        BackupItem.contactSettings,
-                        l10n.backupRestore_contactSettings,
-                      ),
-                      (
-                        BackupItem.privacySettings,
-                        l10n.backupRestore_privacySettings,
-                      ),
-                    ],
-                  ),
-                  const Divider(height: 1, indent: 16),
-                  _groupTile(
-                    title: l10n.backupRestore_appSettings,
-                    icon: Icons.settings_outlined,
-                    items: [
-                      (BackupItem.appSettings, l10n.backupRestore_appSettings),
-                      (BackupItem.ipfsKey, l10n.backupRestore_ipfsKey),
-                      (
-                        BackupItem.stadiaMapKey,
-                        l10n.backupRestore_stadiaMapKey,
-                      ),
-                    ],
-                  ),
-                  const Divider(height: 1, indent: 16),
-                  _groupTile(
-                    title: l10n.backupRestore_contacts,
-                    icon: Icons.contacts_outlined,
-                    items: [
-                      (BackupItem.contacts, l10n.backupRestore_contactsData),
-                      (
-                        BackupItem.perContactSettings,
-                        l10n.backupRestore_perContactSettings,
-                      ),
-                      (
-                        BackupItem.contactGroups,
-                        l10n.backupRestore_contactGroups,
-                      ),
-                      (
-                        BackupItem.contactHistory,
-                        l10n.backupRestore_contactHistory,
-                      ),
-                    ],
-                  ),
-                  const Divider(height: 1, indent: 16),
-                  _itemTile(
-                    BackupItem.discoveredContacts,
-                    l10n.backupRestore_discoveredContacts,
-                    Icons.person_search_outlined,
-                  ),
-                  _itemTile(
-                    BackupItem.bookmarks,
-                    l10n.backupRestore_bookmarks,
-                    Icons.bookmark_border,
-                  ),
-                  const Divider(height: 1, indent: 16),
-                  _groupTile(
-                    title: l10n.backupRestore_channels,
-                    icon: Icons.forum_outlined,
-                    items: [
-                      (BackupItem.channels, l10n.backupRestore_channelsData),
-                      (
-                        BackupItem.channelFilters,
-                        l10n.backupRestore_channelFilters,
-                      ),
-                      (
-                        BackupItem.channelSettings,
-                        l10n.backupRestore_channelSettings,
-                      ),
-                      (BackupItem.communities, l10n.backupRestore_communities),
-                      (
-                        BackupItem.channelHistory,
-                        l10n.backupRestore_channelHistory,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              if (items != null && items.isNotEmpty)
+                BackupItemList(
+                  selected: _selectedItems,
+                  available: items,
+                  enabled: !_busy,
+                  onChanged: (item, selected) => setState(() {
+                    if (selected) {
+                      _selectedItems.add(item);
+                    } else {
+                      _selectedItems.remove(item);
+                    }
+                  }),
+                ),
+            ],
+          ),
+        ),
+      ),
+      // Pinned, as the item list can be longer than a screen.
+      bottomNavigationBar: _importContents == null
+          ? null
+          : SafeArea(
+              top: false,
+              minimum: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: FilledButton.icon(
                 onPressed:
                     _busy ||
+                        _checkingPassword ||
                         _selectedItems.isEmpty ||
-                        (_importContents != null && _availableItems == null)
+                        items == null
                     ? null
-                    : _runAction,
+                    : _restore,
                 icon: _busy
                     ? const SizedBox.square(
                         dimension: 18,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Icon(
-                        _importContents == null
-                            ? Icons.backup_outlined
-                            : Icons.restore_outlined,
-                      ),
-                label: Text(
-                  _importContents == null
-                      ? l10n.backupRestore_backup
-                      : l10n.backupRestore_restore,
-                ),
+                    : const Icon(Icons.restore_page_outlined),
+                label: Text(l10n.backupRestore_restore),
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _groupTile({
-    required String title,
-    required IconData icon,
-    required List<(BackupItem, String)> items,
-  }) {
-    return ExpansionTile(
-      leading: Icon(icon),
-      title: Text(title),
-      tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-      childrenPadding: EdgeInsets.zero,
-      initiallyExpanded: true,
-      visualDensity: VisualDensity.compact,
-      children: [for (final item in items) _itemTile(item.$1, item.$2)],
-    );
-  }
-
-  Widget _itemTile(BackupItem item, String title, [IconData? icon]) {
-    final available =
-        _availableItems == null || _availableItems!.contains(item);
-    return CheckboxListTile(
-      value: _selectedItems.contains(item),
-      dense: true,
-      visualDensity: VisualDensity.compact,
-      onChanged: _busy || !available
-          ? null
-          : (selected) => setState(() {
-              if (selected == true) {
-                _selectedItems.add(item);
-              } else {
-                _selectedItems.remove(item);
-              }
-            }),
-      secondary: icon == null ? null : Icon(icon),
-      title: Text(title),
-      controlAffinity: ListTileControlAffinity.trailing,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
     );
   }
 
   Future<void> _selectImportFile() async {
     final l10n = context.l10n;
     try {
-      final file = await openFile(acceptedTypeGroups: const [_fileType]);
+      final file = await openFile(acceptedTypeGroups: const [backupFileType]);
       if (file == null) return;
       if (await file.length() > _maxImportBytes) {
         _showMessage(l10n.backupRestore_fileTooLarge);
@@ -317,23 +190,28 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
       }
       final contents = utf8.decode(await file.readAsBytes());
       if (!mounted) return;
+      _inspectionTimer?.cancel();
+      _passwordController.clear();
       setState(() {
         _importContents = contents;
         _importFileName = file.name;
         _availableItems = null;
         _selectedItems.clear();
         _hasInitializedImportSelection = false;
+        _needsPassword = false;
+        _checkingPassword = false;
       });
       await _inspectImport();
     } catch (error) {
       if (mounted) {
-        _showMessage(l10n.backupRestore_failed(error.toString()));
+        _showMessage(l10n.backupRestore_failed(backupErrorText(error)));
       }
     }
   }
 
   void _scheduleImportInspection() {
     _inspectionTimer?.cancel();
+    setState(() => _checkingPassword = true);
     _inspectionTimer = Timer(const Duration(milliseconds: 350), _inspectImport);
   }
 
@@ -348,7 +226,9 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
       );
       if (!mounted || generation != _inspectionGeneration) return;
       setState(() {
+        _checkingPassword = false;
         _availableItems = info.availableItems;
+        if (info.availableItems.isEmpty) _needsPassword = true;
         if (!_hasInitializedImportSelection) {
           _selectedItems
             ..clear()
@@ -365,80 +245,11 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
     } catch (_) {
       if (!mounted || generation != _inspectionGeneration) return;
       setState(() {
+        _checkingPassword = false;
         _availableItems = <BackupItem>{};
         _selectedItems.clear();
+        _needsPassword = true;
       });
-    }
-  }
-
-  Future<void> _runAction() async {
-    if (_selectedItems.isEmpty) {
-      _showMessage(context.l10n.backupRestore_selectAtLeastOne);
-      return;
-    }
-    if (_importContents != null) {
-      await _restore();
-    } else {
-      await _createBackup();
-    }
-  }
-
-  Future<void> _createBackup() async {
-    final l10n = context.l10n;
-    final connector = context.read<MeshCoreConnector>();
-    final shareOrigin = shareOriginOf(context);
-    setState(() => _busy = _waitingForRadio = true);
-    try {
-      final contents = await _backupService.createBackup(
-        items: Set<BackupItem>.of(_selectedItems),
-        connector: connector,
-        settings: context.read<AppSettingsService>().settings,
-        password: _passwordController.text,
-      );
-      // However fast the backup, let a frame draw the bar first.
-      await WidgetsBinding.instance.endOfFrame;
-      if (!mounted) return;
-      setState(() => _waitingForRadio = false);
-      final deviceName = (connector.selfName ?? '')
-          .trim()
-          .replaceAll(RegExp(r'[<>:"/\\|?*\x00-\x1f]'), '_')
-          .replaceAll(RegExp(r'\s+'), '_')
-          .replaceAll(RegExp(r'^\.+'), '')
-          .replaceAll(RegExp(r'[. ]+$'), '');
-      final filename =
-          'meshcore-open_${deviceName.isEmpty ? 'radio' : deviceName}_backup_${DateTime.now().millisecondsSinceEpoch}.json';
-      final file = XFile.fromData(
-        Uint8List.fromList(utf8.encode(contents)),
-        name: filename,
-        mimeType: 'application/json',
-      );
-      if (PlatformInfo.isWeb) {
-        await file.saveTo(filename);
-      } else if (PlatformInfo.isDesktop) {
-        final location = await getSaveLocation(
-          suggestedName: filename,
-          acceptedTypeGroups: const [_fileType],
-        );
-        if (location == null) return;
-        await file.saveTo(location.path);
-      } else {
-        final result = await SharePlus.instance.share(
-          ShareParams(
-            files: [file],
-            fileNameOverrides: [filename],
-            sharePositionOrigin: shareOrigin,
-          ),
-        );
-        if (result.status == ShareResultStatus.dismissed) return;
-      }
-      if (mounted) _showMessage(l10n.backupRestore_backupComplete);
-    } catch (error) {
-      if (mounted) {
-        _showMessage(l10n.backupRestore_failed(error.toString()));
-      }
-    } finally {
-      await WidgetsBinding.instance.endOfFrame;
-      if (mounted) setState(() => _busy = _waitingForRadio = false);
     }
   }
 
@@ -450,8 +261,19 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
     final messageFilterService = context.read<MessageFilterService>();
     final translationService = context.read<TranslationService>();
     final imageCodecService = context.read<ImageCodecService>();
-    final needsKeyConfirmation = _selectedItems.contains(BackupItem.privateKey);
-    if (needsKeyConfirmation && !await _confirmIdentityReplacement()) return;
+    // One confirmation; the private key gets the identity warning instead.
+    final replacesIdentity = _selectedItems.contains(BackupItem.privateKey);
+    final confirmed = await showConfirmClearDialog(
+      context,
+      title: replacesIdentity
+          ? l10n.backupRestore_replaceIdentityTitle
+          : l10n.backupRestore_confirmRestoreTitle,
+      message: replacesIdentity
+          ? l10n.backupRestore_replaceIdentityMessage
+          : l10n.backupRestore_confirmRestoreMessage,
+      confirmLabel: l10n.backupRestore_restore,
+    );
+    if (!confirmed || !mounted) return;
     setState(() => _busy = _waitingForRadio = true);
     try {
       await _backupService.restoreBackup(
@@ -484,23 +306,19 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
       }
       if (mounted) {
         _showMessage(l10n.backupRestore_restoreComplete);
+        _passwordController.clear();
         setState(() {
           _importContents = null;
           _importFileName = null;
           _availableItems = null;
-          _selectedItems
-            ..clear()
-            ..addAll(
-              BackupItem.values.where(
-                (item) => !_defaultUncheckedItems.contains(item),
-              ),
-            );
+          _selectedItems.clear();
           _hasInitializedImportSelection = false;
+          _needsPassword = false;
         });
       }
     } catch (error) {
       if (mounted) {
-        _showMessage(l10n.backupRestore_failed(error.toString()));
+        _showMessage(l10n.backupRestore_failed(backupErrorText(error)));
       }
     } finally {
       await WidgetsBinding.instance.endOfFrame;
@@ -822,7 +640,7 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
                                 } else {
                                   setDialogState(() {
                                     starting = false;
-                                    downloadError = error.toString();
+                                    downloadError = backupErrorText(error);
                                   });
                                 }
                               }
@@ -841,28 +659,6 @@ class _BackupRestoreScreenState extends State<BackupRestoreScreen> {
         ),
       ),
     );
-  }
-
-  Future<bool> _confirmIdentityReplacement() async {
-    final l10n = context.l10n;
-    return await showDialog<bool>(
-          context: context,
-          builder: (dialogContext) => AlertDialog(
-            title: Text(l10n.backupRestore_replaceIdentityTitle),
-            content: Text(l10n.backupRestore_replaceIdentityMessage),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext, false),
-                child: Text(l10n.common_cancel),
-              ),
-              FilledButton(
-                onPressed: () => Navigator.pop(dialogContext, true),
-                child: Text(l10n.backupRestore_restore),
-              ),
-            ],
-          ),
-        ) ??
-        false;
   }
 
   void _showMessage(String message) {

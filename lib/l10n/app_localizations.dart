@@ -817,12 +817,6 @@ abstract class AppLocalizations {
   /// **'Notifications, messaging, and map preferences'**
   String get settings_appSettingsSubtitle;
 
-  /// No description provided for @settings_export.
-  ///
-  /// In en, this message translates to:
-  /// **'Export'**
-  String get settings_export;
-
   /// No description provided for @settings_exportData.
   ///
   /// In en, this message translates to:
@@ -841,35 +835,35 @@ abstract class AppLocalizations {
   /// **'Backup & Restore'**
   String get backupRestore_title;
 
-  /// No description provided for @backupRestore_subtitle.
+  /// No description provided for @backupRestore_backupSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Save or restore app data and radio settings'**
-  String get backupRestore_subtitle;
+  /// **'Save app data and radio settings to a file'**
+  String get backupRestore_backupSubtitle;
 
-  /// No description provided for @backupRestore_import.
+  /// No description provided for @backupRestore_restoreTitle.
   ///
   /// In en, this message translates to:
-  /// **'Import'**
-  String get backupRestore_import;
+  /// **'Restore Backup'**
+  String get backupRestore_restoreTitle;
 
-  /// No description provided for @backupRestore_selectImportFile.
+  /// No description provided for @backupRestore_restoreSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Import File'**
-  String get backupRestore_selectImportFile;
+  /// **'Load app data and radio settings from a file'**
+  String get backupRestore_restoreSubtitle;
 
-  /// No description provided for @backupRestore_password.
+  /// No description provided for @backupRestore_backupWarning.
   ///
   /// In en, this message translates to:
-  /// **'Password (optional)'**
-  String get backupRestore_password;
+  /// **'Backups can include your radio\'s private key, channel keys, message history, saved passwords and API keys. Keep the file somewhere safe.'**
+  String get backupRestore_backupWarning;
 
-  /// No description provided for @backupRestore_passwordHelp.
+  /// No description provided for @backupRestore_passwordOptional.
   ///
   /// In en, this message translates to:
-  /// **'A password encrypts the file. Blank saves plaintext that may include private/channel keys, history, and credentials.'**
-  String get backupRestore_passwordHelp;
+  /// **'Optional: a password encrypts the file. Without one, the file is saved as plaintext.'**
+  String get backupRestore_passwordOptional;
 
   /// No description provided for @backupRestore_importUnavailable.
   ///
@@ -877,23 +871,29 @@ abstract class AppLocalizations {
   /// **'Check the password or choose a supported backup file.'**
   String get backupRestore_importUnavailable;
 
-  /// No description provided for @backupRestore_items.
+  /// No description provided for @backupRestore_restoreInfo.
   ///
   /// In en, this message translates to:
-  /// **'Backup and restore items'**
-  String get backupRestore_items;
+  /// **'Restored items replace what is in the app and on your radio. Most items need a connected radio.'**
+  String get backupRestore_restoreInfo;
 
-  /// No description provided for @backupRestore_nodeSettings.
+  /// No description provided for @backupRestore_fileHeader.
   ///
   /// In en, this message translates to:
-  /// **'Node Settings'**
-  String get backupRestore_nodeSettings;
+  /// **'Backup File'**
+  String get backupRestore_fileHeader;
 
-  /// No description provided for @backupRestore_nodeSettingsDescription.
+  /// No description provided for @backupRestore_chooseFile.
   ///
   /// In en, this message translates to:
-  /// **'Device name, private and public keys, radio settings, and regions'**
-  String get backupRestore_nodeSettingsDescription;
+  /// **'Choose File'**
+  String get backupRestore_chooseFile;
+
+  /// No description provided for @backupRestore_chooseFileHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to open a backup file'**
+  String get backupRestore_chooseFileHint;
 
   /// No description provided for @backupRestore_deviceName.
   ///
@@ -952,7 +952,7 @@ abstract class AppLocalizations {
   /// No description provided for @backupRestore_perContactSettings.
   ///
   /// In en, this message translates to:
-  /// **'Contact Settings and Filters'**
+  /// **'Per-Contact Settings'**
   String get backupRestore_perContactSettings;
 
   /// No description provided for @backupRestore_contactGroups.
@@ -997,29 +997,11 @@ abstract class AppLocalizations {
   /// **'Channel History'**
   String get backupRestore_channelHistory;
 
-  /// No description provided for @backupRestore_locationSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Location Settings'**
-  String get backupRestore_locationSettings;
-
-  /// No description provided for @backupRestore_locationSettingsDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Location, contact settings, and privacy settings'**
-  String get backupRestore_locationSettingsDescription;
-
   /// No description provided for @backupRestore_appSettings.
   ///
   /// In en, this message translates to:
   /// **'App Settings'**
   String get backupRestore_appSettings;
-
-  /// No description provided for @backupRestore_appSettingsDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'App preferences and appearance settings'**
-  String get backupRestore_appSettingsDescription;
 
   /// No description provided for @backupRestore_ipfsKey.
   ///
@@ -1039,23 +1021,11 @@ abstract class AppLocalizations {
   /// **'Contacts'**
   String get backupRestore_contacts;
 
-  /// No description provided for @backupRestore_contactsDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Contacts, per-contact filters and settings, groups, and message history'**
-  String get backupRestore_contactsDescription;
-
   /// No description provided for @backupRestore_discoveredContacts.
   ///
   /// In en, this message translates to:
   /// **'Discovered Contacts'**
   String get backupRestore_discoveredContacts;
-
-  /// No description provided for @backupRestore_discoveredContactsDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Discovered contacts and their saved details'**
-  String get backupRestore_discoveredContactsDescription;
 
   /// No description provided for @backupRestore_bookmarks.
   ///
@@ -1063,17 +1033,29 @@ abstract class AppLocalizations {
   /// **'Bookmarks'**
   String get backupRestore_bookmarks;
 
+  /// No description provided for @backupRestore_messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get backupRestore_messages;
+
+  /// No description provided for @backupRestore_itemsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get backupRestore_itemsHeader;
+
+  /// No description provided for @backupRestore_selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select All'**
+  String get backupRestore_selectAll;
+
   /// No description provided for @backupRestore_channels.
   ///
   /// In en, this message translates to:
   /// **'Channels'**
   String get backupRestore_channels;
-
-  /// No description provided for @backupRestore_channelsDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Channels, channel filters, communities, and message history'**
-  String get backupRestore_channelsDescription;
 
   /// No description provided for @backupRestore_backup.
   ///
@@ -1141,12 +1123,6 @@ abstract class AppLocalizations {
   /// **'Backup file is larger than the 100 MB limit.'**
   String get backupRestore_fileTooLarge;
 
-  /// No description provided for @backupRestore_selectAtLeastOne.
-  ///
-  /// In en, this message translates to:
-  /// **'Select at least one item.'**
-  String get backupRestore_selectAtLeastOne;
-
   /// No description provided for @backupRestore_replaceIdentityTitle.
   ///
   /// In en, this message translates to:
@@ -1156,8 +1132,20 @@ abstract class AppLocalizations {
   /// No description provided for @backupRestore_replaceIdentityMessage.
   ///
   /// In en, this message translates to:
-  /// **'Restoring Node Settings replaces the connected radio\'s private key and changes its identity. Continue only if this is intended.'**
+  /// **'This replaces the connected radio\'s private key and changes its identity. Continue only if this is intended.'**
   String get backupRestore_replaceIdentityMessage;
+
+  /// No description provided for @backupRestore_confirmRestoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore selected items?'**
+  String get backupRestore_confirmRestoreTitle;
+
+  /// No description provided for @backupRestore_confirmRestoreMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected items replace the current ones in the app and on your radio. This can\'t be undone.'**
+  String get backupRestore_confirmRestoreMessage;
 
   /// No description provided for @settings_nodeSettings.
   ///

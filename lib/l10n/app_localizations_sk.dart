@@ -402,9 +402,6 @@ class AppLocalizationsSk extends AppLocalizations {
       'Upozornenia, správy a nastavenia mapy';
 
   @override
-  String get settings_export => 'Exportovať';
-
-  @override
   String get settings_exportData => 'Exportovať dáta';
 
   @override
@@ -414,35 +411,40 @@ class AppLocalizationsSk extends AppLocalizations {
   String get backupRestore_title => 'Zálohovanie a obnovenie';
 
   @override
-  String get backupRestore_subtitle =>
-      'Uložte alebo obnovte dáta aplikácie a nastavenia rádia';
+  String get backupRestore_backupSubtitle =>
+      'Uložiť dáta aplikácie a nastavenia rádia do súboru';
 
   @override
-  String get backupRestore_import => 'Importovať';
+  String get backupRestore_restoreTitle => 'Obnoviť zálohu';
 
   @override
-  String get backupRestore_selectImportFile => 'Importovať súbor';
+  String get backupRestore_restoreSubtitle =>
+      'Načítať dáta aplikácie a nastavenia rádia zo súboru';
 
   @override
-  String get backupRestore_password => 'Heslo (voliteľné)';
+  String get backupRestore_backupWarning =>
+      'Zálohy môžu obsahovať súkromný kľúč rádia, kľúče kanálov, históriu správ, uložené heslá a kľúče API. Súbor uložte na bezpečné miesto.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Heslo súbor zašifruje. Prázdne heslo uloží čistý text, ktorý môže obsahovať súkromné kľúče a kľúče kanálov, históriu a prihlasovacie údaje.';
+  String get backupRestore_passwordOptional =>
+      'Voliteľné: heslo súbor zašifruje. Bez hesla sa súbor uloží nešifrovaný.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Skontrolujte heslo alebo vyberte podporovaný súbor zálohy.';
 
   @override
-  String get backupRestore_items => 'Položky zálohy a obnovenia';
+  String get backupRestore_restoreInfo =>
+      'Obnovené položky nahradia to, čo je v aplikácii a v rádiu. Väčšina položiek vyžaduje pripojené rádio.';
 
   @override
-  String get backupRestore_nodeSettings => 'Nastavenia uzla';
+  String get backupRestore_fileHeader => 'Súbor zálohy';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Názov zariadenia, súkromný a verejný kľúč, nastavenia rádia a regióny';
+  String get backupRestore_chooseFile => 'Zvoliť súbor';
+
+  @override
+  String get backupRestore_chooseFileHint => 'Klepnutím otvoríte súbor zálohy';
 
   @override
   String get backupRestore_deviceName => 'Názov zariadenia';
@@ -473,7 +475,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get backupRestore_perContactSettings =>
-      'Nastavenia a filtre kontaktov';
+      'Nastavenia jednotlivých kontaktov';
 
   @override
   String get backupRestore_contactGroups => 'Skupiny kontaktov';
@@ -497,18 +499,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get backupRestore_channelHistory => 'História kanálov';
 
   @override
-  String get backupRestore_locationSettings => 'Nastavenia polohy';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Poloha, nastavenia kontaktov a súkromia';
-
-  @override
   String get backupRestore_appSettings => 'Nastavenia aplikácie';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Predvoľby aplikácie a nastavenia vzhľadu';
 
   @override
   String get backupRestore_ipfsKey => 'Kľúč API IPFS (citlivé)';
@@ -520,25 +511,22 @@ class AppLocalizationsSk extends AppLocalizations {
   String get backupRestore_contacts => 'Kontakty';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Kontakty, filtre a nastavenia jednotlivých kontaktov, skupiny a história správ';
-
-  @override
   String get backupRestore_discoveredContacts => 'Objavené kontakty';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Objavené kontakty a ich uložené údaje';
 
   @override
   String get backupRestore_bookmarks => 'Záložky';
 
   @override
-  String get backupRestore_channels => 'Kanály';
+  String get backupRestore_messages => 'Správy';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Kanály, filtre kanálov, komunity a história správ';
+  String get backupRestore_itemsHeader => 'Položky';
+
+  @override
+  String get backupRestore_selectAll => 'Vybrať všetko';
+
+  @override
+  String get backupRestore_channels => 'Kanály';
 
   @override
   String get backupRestore_backup => 'Vytvoriť zálohu';
@@ -579,14 +567,18 @@ class AppLocalizationsSk extends AppLocalizations {
       'Súbor zálohy je väčší ako limit 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Vyberte aspoň jednu položku.';
-
-  @override
   String get backupRestore_replaceIdentityTitle => 'Nahradiť identitu rádia?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Obnovenie nastavení uzla nahradí súkromný kľúč pripojeného rádia a zmení jeho identitu. Pokračujte, iba ak je to zámer.';
+      'Toto nahradí súkromný kľúč pripojeného rádia a zmení jeho identitu. Pokračujte, iba ak je to zámer.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle => 'Obnoviť vybrané položky?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Vybrané položky nahradia súčasné položky v aplikácii a v rádiu. Túto akciu nie je možné vrátiť späť.';
 
   @override
   String get settings_nodeSettings => 'Nastavenia uzla';

@@ -384,9 +384,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings_appSettingsSubtitle => '通知、メッセージング、および地図の表示設定';
 
   @override
-  String get settings_export => 'エクスポート';
-
-  @override
   String get settings_exportData => 'データのエクスポート';
 
   @override
@@ -396,34 +393,38 @@ class AppLocalizationsJa extends AppLocalizations {
   String get backupRestore_title => 'バックアップと復元';
 
   @override
-  String get backupRestore_subtitle => 'アプリのデータと無線機の設定を保存または復元します';
+  String get backupRestore_backupSubtitle => 'アプリのデータと無線設定をファイルに保存';
 
   @override
-  String get backupRestore_import => 'インポート';
+  String get backupRestore_restoreTitle => 'バックアップを復元';
 
   @override
-  String get backupRestore_selectImportFile => 'ファイルをインポート';
+  String get backupRestore_restoreSubtitle => 'アプリのデータと無線設定をファイルから読み込み';
 
   @override
-  String get backupRestore_password => 'パスワード（任意）';
+  String get backupRestore_backupWarning =>
+      'バックアップには、無線機の秘密鍵、チャンネルキー、メッセージ履歴、保存したパスワード、APIキーが含まれる場合があります。ファイルは安全な場所に保管してください。';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'パスワードを設定するとファイルが暗号化されます。空欄の場合は平文で保存され、秘密鍵/チャンネル鍵、履歴、認証情報が含まれる可能性があります。';
+  String get backupRestore_passwordOptional =>
+      '任意：パスワードを設定するとファイルが暗号化されます。設定しない場合、ファイルは暗号化されずに保存されます。';
 
   @override
   String get backupRestore_importUnavailable =>
       'パスワードを確認するか、対応しているバックアップファイルを選択してください。';
 
   @override
-  String get backupRestore_items => 'バックアップと復元の項目';
+  String get backupRestore_restoreInfo =>
+      '復元した項目で、アプリと無線機の内容が置き換えられます。ほとんどの項目は無線機の接続が必要です。';
 
   @override
-  String get backupRestore_nodeSettings => 'ノード設定';
+  String get backupRestore_fileHeader => 'バックアップファイル';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'デバイス名、秘密鍵と公開鍵、無線設定、リージョン';
+  String get backupRestore_chooseFile => 'ファイルを開く';
+
+  @override
+  String get backupRestore_chooseFileHint => 'タップしてバックアップファイルを開きます';
 
   @override
   String get backupRestore_deviceName => 'デバイス名';
@@ -453,7 +454,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get backupRestore_contactsData => '連絡先';
 
   @override
-  String get backupRestore_perContactSettings => '連絡先ごとの設定とフィルター';
+  String get backupRestore_perContactSettings => '連絡先ごとの設定';
 
   @override
   String get backupRestore_contactGroups => '連絡先グループ';
@@ -477,16 +478,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get backupRestore_channelHistory => 'チャンネルの履歴';
 
   @override
-  String get backupRestore_locationSettings => '位置情報設定';
-
-  @override
-  String get backupRestore_locationSettingsDescription => '位置情報、連絡先設定、プライバシー設定';
-
-  @override
   String get backupRestore_appSettings => 'アプリ設定';
-
-  @override
-  String get backupRestore_appSettingsDescription => 'アプリの設定と外観設定';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS APIキー（機密）';
@@ -498,24 +490,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get backupRestore_contacts => '連絡先';
 
   @override
-  String get backupRestore_contactsDescription =>
-      '連絡先、連絡先ごとのフィルターと設定、グループ、メッセージ履歴';
-
-  @override
   String get backupRestore_discoveredContacts => '検出された連絡先';
-
-  @override
-  String get backupRestore_discoveredContactsDescription => '検出された連絡先と保存済みの詳細';
 
   @override
   String get backupRestore_bookmarks => 'ブックマーク';
 
   @override
-  String get backupRestore_channels => 'チャンネル';
+  String get backupRestore_messages => 'メッセージ';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'チャンネル、チャンネルフィルター、コミュニティ、メッセージ履歴';
+  String get backupRestore_itemsHeader => '項目';
+
+  @override
+  String get backupRestore_selectAll => 'すべて選択';
+
+  @override
+  String get backupRestore_channels => 'チャンネル';
 
   @override
   String get backupRestore_backup => 'バックアップを作成';
@@ -555,14 +545,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get backupRestore_fileTooLarge => 'バックアップファイルが100 MBの上限を超えています。';
 
   @override
-  String get backupRestore_selectAtLeastOne => '項目を1つ以上選択してください。';
-
-  @override
   String get backupRestore_replaceIdentityTitle => '無線機のIDを置き換えますか？';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'ノード設定を復元すると、接続中の無線機の秘密鍵が置き換えられ、IDが変わります。意図している場合のみ続行してください。';
+      'これにより、接続中の無線機の秘密鍵が置き換えられ、IDが変わります。意図している場合のみ続行してください。';
+
+  @override
+  String get backupRestore_confirmRestoreTitle => '選択した項目を復元しますか？';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      '選択した項目で、アプリと無線機の現在の内容が置き換えられます。この操作は元に戻せません。';
 
   @override
   String get settings_nodeSettings => 'ノード設定';

@@ -399,9 +399,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Notificaties, berichten en kaartinstellingen';
 
   @override
-  String get settings_export => 'Exporteren';
-
-  @override
   String get settings_exportData => 'Gegevens exporteren';
 
   @override
@@ -411,35 +408,41 @@ class AppLocalizationsNl extends AppLocalizations {
   String get backupRestore_title => 'Back-up en herstel';
 
   @override
-  String get backupRestore_subtitle =>
-      'App-gegevens en radio-instellingen opslaan of herstellen';
+  String get backupRestore_backupSubtitle =>
+      'App-gegevens en radio-instellingen opslaan in een bestand';
 
   @override
-  String get backupRestore_import => 'Importeren';
+  String get backupRestore_restoreTitle => 'Back-up herstellen';
 
   @override
-  String get backupRestore_selectImportFile => 'Bestand importeren';
+  String get backupRestore_restoreSubtitle =>
+      'App-gegevens en radio-instellingen laden uit een bestand';
 
   @override
-  String get backupRestore_password => 'Wachtwoord (optioneel)';
+  String get backupRestore_backupWarning =>
+      'Back-ups kunnen de privésleutel van je radio, kanaalsleutels, berichtgeschiedenis, opgeslagen wachtwoorden en API-sleutels bevatten. Bewaar het bestand op een veilige plek.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Een wachtwoord versleutelt het bestand. Leeg laten slaat platte tekst op die privé-/kanaalsleutels, geschiedenis en inloggegevens kan bevatten.';
+  String get backupRestore_passwordOptional =>
+      'Optioneel: een wachtwoord versleutelt het bestand. Zonder wachtwoord wordt het bestand onversleuteld opgeslagen.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Controleer het wachtwoord of kies een ondersteund back-upbestand.';
 
   @override
-  String get backupRestore_items => 'Items voor back-up en herstel';
+  String get backupRestore_restoreInfo =>
+      'Herstelde items vervangen wat er in de app en op je radio staat. De meeste items hebben een verbonden radio nodig.';
 
   @override
-  String get backupRestore_nodeSettings => 'Node-instellingen';
+  String get backupRestore_fileHeader => 'Back-upbestand';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Apparaatnaam, privé- en openbare sleutels, radio-instellingen en regio\'s';
+  String get backupRestore_chooseFile => 'Bestand kiezen';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Tik om een back-upbestand te openen';
 
   @override
   String get backupRestore_deviceName => 'Apparaatnaam';
@@ -469,8 +472,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get backupRestore_contactsData => 'Contacten';
 
   @override
-  String get backupRestore_perContactSettings =>
-      'Contactinstellingen en filters';
+  String get backupRestore_perContactSettings => 'Instellingen per contact';
 
   @override
   String get backupRestore_contactGroups => 'Contactgroepen';
@@ -494,18 +496,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get backupRestore_channelHistory => 'Kanaalgeschiedenis';
 
   @override
-  String get backupRestore_locationSettings => 'Locatie-instellingen';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Locatie, contactinstellingen en privacy-instellingen';
-
-  @override
   String get backupRestore_appSettings => 'App-instellingen';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'App-voorkeuren en weergave-instellingen';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS API-sleutel (gevoelig)';
@@ -517,25 +508,22 @@ class AppLocalizationsNl extends AppLocalizations {
   String get backupRestore_contacts => 'Contacten';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Contacten, filters en instellingen per contact, groepen en berichtgeschiedenis';
-
-  @override
   String get backupRestore_discoveredContacts => 'Ontdekte contacten';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Ontdekte contacten en hun opgeslagen gegevens';
 
   @override
   String get backupRestore_bookmarks => 'Bladwijzers';
 
   @override
-  String get backupRestore_channels => 'Kanalen';
+  String get backupRestore_messages => 'Berichten';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Kanalen, kanaalfilters, communities en berichtgeschiedenis';
+  String get backupRestore_itemsHeader => 'Items';
+
+  @override
+  String get backupRestore_selectAll => 'Alles selecteren';
+
+  @override
+  String get backupRestore_channels => 'Kanalen';
 
   @override
   String get backupRestore_backup => 'Back-up maken';
@@ -576,15 +564,20 @@ class AppLocalizationsNl extends AppLocalizations {
       'Het back-upbestand is groter dan de limiet van 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Selecteer minstens één item.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Radio-identiteit vervangen?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Het herstellen van de node-instellingen vervangt de privésleutel van de verbonden radio en wijzigt de identiteit ervan. Ga alleen door als dit de bedoeling is.';
+      'Dit vervangt de privésleutel van de verbonden radio en wijzigt de identiteit ervan. Ga alleen door als dit de bedoeling is.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Geselecteerde items herstellen?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'De geselecteerde items vervangen de huidige in de app en op je radio. Dit kan niet worden teruggedraaid.';
 
   @override
   String get settings_nodeSettings => 'Node Instellingen';

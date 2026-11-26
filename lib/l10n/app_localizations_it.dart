@@ -403,9 +403,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Notifiche, messaggi e preferenze della mappa';
 
   @override
-  String get settings_export => 'Esporta';
-
-  @override
   String get settings_exportData => 'Esporta dati';
 
   @override
@@ -415,35 +412,41 @@ class AppLocalizationsIt extends AppLocalizations {
   String get backupRestore_title => 'Backup e ripristino';
 
   @override
-  String get backupRestore_subtitle =>
-      'Salva o ripristina i dati dell\'app e le impostazioni della radio';
+  String get backupRestore_backupSubtitle =>
+      'Salva i dati dell\'app e le impostazioni radio in un file';
 
   @override
-  String get backupRestore_import => 'Importa';
+  String get backupRestore_restoreTitle => 'Ripristina backup';
 
   @override
-  String get backupRestore_selectImportFile => 'Importa file';
+  String get backupRestore_restoreSubtitle =>
+      'Carica i dati dell\'app e le impostazioni radio da un file';
 
   @override
-  String get backupRestore_password => 'Password (facoltativa)';
+  String get backupRestore_backupWarning =>
+      'I backup possono includere la chiave privata della radio, le chiavi dei canali, la cronologia dei messaggi, le password salvate e le chiavi API. Conserva il file in un luogo sicuro.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Una password cifra il file. Se vuota, il file viene salvato in chiaro e può includere chiavi private/di canale, cronologia e credenziali.';
+  String get backupRestore_passwordOptional =>
+      'Facoltativa: una password cifra il file. Senza password, il file viene salvato in chiaro.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Controlla la password o scegli un file di backup supportato.';
 
   @override
-  String get backupRestore_items => 'Elementi di backup e ripristino';
+  String get backupRestore_restoreInfo =>
+      'Gli elementi ripristinati sostituiscono quelli presenti nell\'app e sulla radio. La maggior parte degli elementi richiede una radio connessa.';
 
   @override
-  String get backupRestore_nodeSettings => 'Impostazioni del nodo';
+  String get backupRestore_fileHeader => 'File di backup';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Nome del dispositivo, chiavi privata e pubblica, impostazioni radio e regioni';
+  String get backupRestore_chooseFile => 'Scegli file';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Tocca per aprire un file di backup';
 
   @override
   String get backupRestore_deviceName => 'Nome del dispositivo';
@@ -473,8 +476,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get backupRestore_contactsData => 'Contatti';
 
   @override
-  String get backupRestore_perContactSettings =>
-      'Impostazioni e filtri per contatto';
+  String get backupRestore_perContactSettings => 'Impostazioni per contatto';
 
   @override
   String get backupRestore_contactGroups => 'Gruppi di contatti';
@@ -498,18 +500,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get backupRestore_channelHistory => 'Cronologia dei canali';
 
   @override
-  String get backupRestore_locationSettings => 'Impostazioni di posizione';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Posizione, impostazioni dei contatti e impostazioni sulla privacy';
-
-  @override
   String get backupRestore_appSettings => 'Impostazioni dell\'app';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Preferenze dell\'app e impostazioni di aspetto';
 
   @override
   String get backupRestore_ipfsKey => 'Chiave API IPFS (sensibile)';
@@ -521,25 +512,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get backupRestore_contacts => 'Contatti';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Contatti, filtri e impostazioni per contatto, gruppi e cronologia messaggi';
-
-  @override
   String get backupRestore_discoveredContacts => 'Contatti scoperti';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Contatti scoperti e relativi dettagli salvati';
 
   @override
   String get backupRestore_bookmarks => 'Segnalibri';
 
   @override
-  String get backupRestore_channels => 'Canali';
+  String get backupRestore_messages => 'Messaggi';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Canali, filtri dei canali, community e cronologia messaggi';
+  String get backupRestore_itemsHeader => 'Elementi';
+
+  @override
+  String get backupRestore_selectAll => 'Seleziona tutto';
+
+  @override
+  String get backupRestore_channels => 'Canali';
 
   @override
   String get backupRestore_backup => 'Crea backup';
@@ -580,15 +568,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il file di backup supera il limite di 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Seleziona almeno un elemento.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Sostituire l\'identità della radio?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Il ripristino delle impostazioni del nodo sostituisce la chiave privata della radio connessa e ne cambia l\'identità. Continua solo se è voluto.';
+      'Questo sostituisce la chiave privata della radio connessa e ne cambia l\'identità. Continua solo se è voluto.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Ripristinare gli elementi selezionati?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Gli elementi selezionati sostituiscono quelli attuali nell\'app e sulla radio. L\'operazione non può essere annullata.';
 
   @override
   String get settings_nodeSettings => 'Impostazioni Nodo';

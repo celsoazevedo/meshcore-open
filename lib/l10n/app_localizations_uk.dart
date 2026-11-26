@@ -401,9 +401,6 @@ class AppLocalizationsUk extends AppLocalizations {
       'Сповіщення, повідомлення та налаштування карти';
 
   @override
-  String get settings_export => 'Експорт';
-
-  @override
   String get settings_exportData => 'Експорт даних';
 
   @override
@@ -413,35 +410,41 @@ class AppLocalizationsUk extends AppLocalizations {
   String get backupRestore_title => 'Резервне копіювання';
 
   @override
-  String get backupRestore_subtitle =>
-      'Збереження та відновлення даних застосунку й налаштувань радіо';
+  String get backupRestore_backupSubtitle =>
+      'Зберегти дані застосунку й налаштування радіо у файл';
 
   @override
-  String get backupRestore_import => 'Імпорт';
+  String get backupRestore_restoreTitle => 'Відновити резервну копію';
 
   @override
-  String get backupRestore_selectImportFile => 'Імпорт файлу';
+  String get backupRestore_restoreSubtitle =>
+      'Завантажити дані застосунку й налаштування радіо з файлу';
 
   @override
-  String get backupRestore_password => 'Пароль (необов\'язково)';
+  String get backupRestore_backupWarning =>
+      'Резервні копії можуть містити приватний ключ радіо, ключі каналів, історію повідомлень, збережені паролі та ключі API. Зберігайте файл у надійному місці.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Пароль шифрує файл. Без пароля файл зберігається відкритим текстом і може містити приватні ключі й ключі каналів, історію та облікові дані.';
+  String get backupRestore_passwordOptional =>
+      'Необов\'язково: пароль шифрує файл. Без пароля файл зберігається незашифрованим.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Перевірте пароль або виберіть підтримуваний файл резервної копії.';
 
   @override
-  String get backupRestore_items => 'Елементи резервної копії та відновлення';
+  String get backupRestore_restoreInfo =>
+      'Відновлені елементи замінюють дані в застосунку та на радіо. Для більшості елементів потрібне підключене радіо.';
 
   @override
-  String get backupRestore_nodeSettings => 'Налаштування вузла';
+  String get backupRestore_fileHeader => 'Файл резервної копії';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Назва пристрою, приватний і публічний ключі, налаштування радіо та регіони';
+  String get backupRestore_chooseFile => 'Обрати файл';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Натисніть, щоб відкрити файл резервної копії';
 
   @override
   String get backupRestore_deviceName => 'Назва пристрою';
@@ -472,7 +475,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get backupRestore_perContactSettings =>
-      'Налаштування й фільтри контактів';
+      'Налаштування для кожного контакту';
 
   @override
   String get backupRestore_contactGroups => 'Групи контактів';
@@ -496,18 +499,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get backupRestore_channelHistory => 'Історія каналів';
 
   @override
-  String get backupRestore_locationSettings => 'Налаштування місцезнаходження';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Місцезнаходження, налаштування контактів і приватності';
-
-  @override
   String get backupRestore_appSettings => 'Налаштування застосунку';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Параметри застосунку та зовнішнього вигляду';
 
   @override
   String get backupRestore_ipfsKey => 'Ключ API IPFS (секретний)';
@@ -519,25 +511,22 @@ class AppLocalizationsUk extends AppLocalizations {
   String get backupRestore_contacts => 'Контакти';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Контакти, фільтри й налаштування по контактах, групи та історія повідомлень';
-
-  @override
   String get backupRestore_discoveredContacts => 'Виявлені контакти';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Виявлені контакти та їхні збережені дані';
 
   @override
   String get backupRestore_bookmarks => 'Закладки';
 
   @override
-  String get backupRestore_channels => 'Канали';
+  String get backupRestore_messages => 'Повідомлення';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Канали, фільтри каналів, спільноти та історія повідомлень';
+  String get backupRestore_itemsHeader => 'Елементи';
+
+  @override
+  String get backupRestore_selectAll => 'Вибрати все';
+
+  @override
+  String get backupRestore_channels => 'Канали';
 
   @override
   String get backupRestore_backup => 'Створити резервну копію';
@@ -578,16 +567,19 @@ class AppLocalizationsUk extends AppLocalizations {
       'Файл резервної копії перевищує ліміт 100 МБ.';
 
   @override
-  String get backupRestore_selectAtLeastOne =>
-      'Виберіть принаймні один елемент.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Замінити ідентифікатор радіо?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Відновлення налаштувань вузла замінює приватний ключ підключеного радіо та змінює його ідентифікатор. Продовжуйте, лише якщо це навмисно.';
+      'Це замінює приватний ключ підключеного радіо та змінює його ідентифікатор. Продовжуйте, лише якщо це навмисно.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle => 'Відновити вибрані елементи?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Вибрані елементи замінять поточні в застосунку та на радіо. Цю дію неможливо скасувати.';
 
   @override
   String get settings_nodeSettings => 'Налаштування вузла';

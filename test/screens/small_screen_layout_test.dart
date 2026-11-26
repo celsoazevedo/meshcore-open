@@ -26,6 +26,8 @@ import 'package:meshcore_open/screens/about_screen.dart';
 import 'package:meshcore_open/screens/add_contact_screen.dart';
 import 'package:meshcore_open/screens/app_debug_log_screen.dart';
 import 'package:meshcore_open/screens/app_settings_screen.dart';
+import 'package:meshcore_open/screens/backup_create_screen.dart';
+import 'package:meshcore_open/screens/backup_restore_screen.dart';
 import 'package:meshcore_open/screens/ble_debug_log_screen.dart';
 import 'package:meshcore_open/screens/channel_chat_screen.dart';
 import 'package:meshcore_open/screens/channel_message_path_screen.dart';
@@ -259,6 +261,8 @@ final Map<String, _ScreenBuilder> _screens = {
       const LocationPickerScreen(initial: LatLng(45.515232, -122.678385)),
   'ContactSettings': (_) => const ContactSettingsScreen(),
   'PrivacySettings': (_) => const PrivacySettingsScreen(),
+  'BackupCreate': (_) => const BackupCreateScreen(),
+  'BackupRestore': (_) => const BackupRestoreScreen(),
   'About': (_) => const AboutScreen(),
   'Discovery': (_) => const DiscoveryScreen(),
   'RegionManagement': (_) => const RegionManagementScreen(),

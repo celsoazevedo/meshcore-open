@@ -216,15 +216,27 @@ One-tap device operations. While an action waits for the radio, its row shows a 
 
 ## Backup & Restore and Export Data
 
-The settings card links to **Backup & Restore** and **Export Data** subpages.
+The **Backup & Restore** card links to the **Create Backup**, **Restore Backup** and **Export Data** pages.
 
-### Backup & Restore
+Both backup pages open without a radio and show a banner while it is disconnected; backing up or restoring radio items then fails with a message. On both pages, the button at the end of the password field shows or hides the password.
 
-Choose individual items to include in a backup or restore. Location settings include the saved coordinates, GPS enable state and interval, contact discovery options, and privacy/adverts settings. When importing, only items found in the selected file can be selected. Backups from the official MeshCore app are supported; those files do not include app preferences, groups, filters, or message history, so those choices are unavailable. A radio connection is required to restore radio settings and contact or channel lists. Restoring contacts or channels replaces the selected list on the radio, then reloads it from the device. If you also restore the radio identity, reconnect afterward to reload its data. Message history and groups are restored in the app.
+### Create Backup
 
-The private-key option is off by default because it changes the radio's identity. Select it only when you intend to restore that identity; the app asks for confirmation before proceeding. Some radios do not allow identity backup or restore, and the app will let you know if this feature is unavailable.
+A password protects the backup file. Leave the password blank to create an unprotected file. Backups may contain your radio's private key, channel keys, messages and saved passwords, so store them carefully.
 
-A password protects the backup file. Leave the password blank to create an unprotected file. Backups may contain your radio's private key, channel keys, messages and saved passwords, so store them carefully. Model settings are backed up, but model files are not; after restoring, the app offers to download selected models that are missing. Download progress appears in that prompt, and closing it cancels an active download. Received image files and cached map tiles are not included.
+Choose individual items to include, or tap **Select All** to include everything. Location settings include the saved coordinates, GPS enable state and interval, contact discovery options, and privacy/adverts settings. The private-key option is off by default because it changes the radio's identity when restored. Some radios do not allow identity backup or restore, and the app will let you know if this feature is unavailable.
+
+Model settings are backed up, but model files are not. Received image files and cached map tiles are not included.
+
+### Restore Backup
+
+A note at the top explains that restored items replace what is in the app and on your radio, and that most items need a connected radio.
+
+Tap **Choose File** and pick a backup; the row then shows the file name. Only items found in the selected file are listed, and **Select All** ticks all of them. If the file cannot be read without a password, or is not a supported backup, a password field appears; the items are listed once the password is right, and a hint asks you to check the password or choose a supported file while a typed password does not work. While a typed password is being checked, the field shows a spinner and **Restore Selected** waits. Backups from the official MeshCore app are supported; those files do not include app preferences, groups, filters, or message history, so those items are not listed.
+
+A radio connection is required to restore radio settings and contact or channel lists. Restoring contacts or channels replaces the selected list on the radio, then reloads it from the device. If you also restore the radio identity, reconnect afterward to reload its data. Message history and groups are restored in the app.
+
+**Restore Selected** always asks for confirmation first, since restored items replace the current ones and this can't be undone. The private-key option is off by default. Select it only when you intend to restore that identity; with it selected, the confirmation warns that the radio's identity will change instead. After restoring, the app offers to download selected models that are missing. Download progress appears in that prompt, and closing it cancels an active download.
 
 ### Export Data
 

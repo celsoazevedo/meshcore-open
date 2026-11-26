@@ -400,9 +400,6 @@ class AppLocalizationsSl extends AppLocalizations {
       'Obveščanja, sporoščanje in zemljevidi';
 
   @override
-  String get settings_export => 'Izvozi';
-
-  @override
   String get settings_exportData => 'Izvozi podatke';
 
   @override
@@ -412,35 +409,41 @@ class AppLocalizationsSl extends AppLocalizations {
   String get backupRestore_title => 'Varnostna kopija in obnovitev';
 
   @override
-  String get backupRestore_subtitle =>
-      'Shranite ali obnovite podatke aplikacije in nastavitve radia';
+  String get backupRestore_backupSubtitle =>
+      'Shrani podatke aplikacije in nastavitve radia v datoteko';
 
   @override
-  String get backupRestore_import => 'Uvozi';
+  String get backupRestore_restoreTitle => 'Obnovi varnostno kopijo';
 
   @override
-  String get backupRestore_selectImportFile => 'Uvozi datoteko';
+  String get backupRestore_restoreSubtitle =>
+      'Naloži podatke aplikacije in nastavitve radia iz datoteke';
 
   @override
-  String get backupRestore_password => 'Geslo (neobvezno)';
+  String get backupRestore_backupWarning =>
+      'Varnostne kopije lahko vsebujejo zasebni ključ radia, ključe kanalov, zgodovino sporočil, shranjena gesla in ključe API. Datoteko shranite na varno mesto.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Geslo datoteko šifrira. Prazno geslo shrani navadno besedilo, ki lahko vsebuje zasebne ključe in ključe kanalov, zgodovino in poverilnice.';
+  String get backupRestore_passwordOptional =>
+      'Neobvezno: geslo šifrira datoteko. Brez gesla se datoteka shrani nešifrirana.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Preverite geslo ali izberite podprto datoteko varnostne kopije.';
 
   @override
-  String get backupRestore_items => 'Elementi varnostne kopije in obnovitve';
+  String get backupRestore_restoreInfo =>
+      'Obnovljeni elementi zamenjajo vsebino v aplikaciji in na radiu. Večina elementov potrebuje povezan radio.';
 
   @override
-  String get backupRestore_nodeSettings => 'Nastavitve vozlišča';
+  String get backupRestore_fileHeader => 'Datoteka varnostne kopije';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Ime naprave, zasebni in javni ključ, nastavitve radia in regije';
+  String get backupRestore_chooseFile => 'Odpri datoteko';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Tapnite, da odprete datoteko varnostne kopije';
 
   @override
   String get backupRestore_deviceName => 'Ime naprave';
@@ -471,7 +474,7 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get backupRestore_perContactSettings =>
-      'Nastavitve in filtri kontaktov';
+      'Nastavitve posameznih kontaktov';
 
   @override
   String get backupRestore_contactGroups => 'Skupine kontaktov';
@@ -495,18 +498,7 @@ class AppLocalizationsSl extends AppLocalizations {
   String get backupRestore_channelHistory => 'Zgodovina kanalov';
 
   @override
-  String get backupRestore_locationSettings => 'Nastavitve lokacije';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Lokacija, nastavitve kontaktov in zasebnosti';
-
-  @override
   String get backupRestore_appSettings => 'Nastavitve aplikacije';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Nastavitve aplikacije in videza';
 
   @override
   String get backupRestore_ipfsKey => 'Ključ API IPFS (občutljivo)';
@@ -518,25 +510,22 @@ class AppLocalizationsSl extends AppLocalizations {
   String get backupRestore_contacts => 'Kontakti';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Kontakti, filtri in nastavitve posameznih kontaktov, skupine in zgodovina sporočil';
-
-  @override
   String get backupRestore_discoveredContacts => 'Odkriti kontakti';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Odkriti kontakti in njihovi shranjeni podatki';
 
   @override
   String get backupRestore_bookmarks => 'Zaznamki';
 
   @override
-  String get backupRestore_channels => 'Kanali';
+  String get backupRestore_messages => 'Sporočila';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Kanali, filtri kanalov, skupnosti in zgodovina sporočil';
+  String get backupRestore_itemsHeader => 'Elementi';
+
+  @override
+  String get backupRestore_selectAll => 'Izberi vse';
+
+  @override
+  String get backupRestore_channels => 'Kanali';
 
   @override
   String get backupRestore_backup => 'Ustvari varnostno kopijo';
@@ -578,15 +567,19 @@ class AppLocalizationsSl extends AppLocalizations {
       'Datoteka varnostne kopije presega omejitev 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Izberite vsaj en element.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Zamenjati identiteto radia?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Obnovitev nastavitev vozlišča zamenja zasebni ključ povezanega radia in spremeni njegovo identiteto. Nadaljujte le, če je to namerno.';
+      'To zamenja zasebni ključ povezanega radia in spremeni njegovo identiteto. Nadaljujte le, če je to namerno.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle => 'Obnoviti izbrane elemente?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Izbrani elementi zamenjajo trenutne v aplikaciji in na radiu. Tega ni mogoče razveljaviti.';
 
   @override
   String get settings_nodeSettings => 'Nastavitev časa';

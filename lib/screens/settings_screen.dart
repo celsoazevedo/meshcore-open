@@ -28,6 +28,7 @@ import '../widgets/radio_stats_entry.dart';
 import 'telemetry_screen.dart';
 import '../widgets/sync_progress_overlay.dart';
 import 'region_management_screen.dart';
+import 'backup_create_screen.dart';
 import 'backup_restore_screen.dart';
 import 'export_screen.dart';
 import '../utils/radio_guard.dart';
@@ -127,24 +128,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: Icons.settings_outlined,
                     title: l10n.settings_appSettings,
                     subtitle: l10n.settings_appSettingsSubtitle,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const AppSettingsScreen(),
-                      ),
-                    ),
+                    onTap: () => _push(context, const AppSettingsScreen()),
                   ),
                   const Divider(height: 1, indent: 16),
                   MeshNavTile(
                     icon: Icons.filter_alt_outlined,
                     title: l10n.messageFilter_title,
                     subtitle: l10n.messageFilter_settingsSubtitle,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const MessageFilterSettingsScreen(),
-                      ),
-                    ),
+                    onTap: () =>
+                        _push(context, const MessageFilterSettingsScreen()),
                   ),
                 ],
               ),
@@ -160,32 +152,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
 
-            // BACKUP AND EXPORT
-            SectionHeader(l10n.settings_export),
+            // BACKUP AND RESTORE
+            SectionHeader(l10n.backupRestore_title),
             MeshCard(
               padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   MeshNavTile(
-                    icon: Icons.backup_outlined,
-                    title: l10n.backupRestore_title,
-                    subtitle: l10n.backupRestore_subtitle,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const BackupRestoreScreen(),
-                      ),
-                    ),
+                    icon: Icons.save_outlined,
+                    title: l10n.backupRestore_backup,
+                    subtitle: l10n.backupRestore_backupSubtitle,
+                    onTap: () => _push(context, const BackupCreateScreen()),
                   ),
                   const Divider(height: 1, indent: 16),
                   MeshNavTile(
-                    icon: Icons.download_outlined,
+                    icon: Icons.restore_page_outlined,
+                    title: l10n.backupRestore_restoreTitle,
+                    subtitle: l10n.backupRestore_restoreSubtitle,
+                    onTap: () => _push(context, const BackupRestoreScreen()),
+                  ),
+                  const Divider(height: 1, indent: 16),
+                  MeshNavTile(
+                    // Same icon as the theme export actions.
+                    icon: Icons.ios_share_outlined,
                     title: l10n.settings_exportData,
                     subtitle: l10n.settings_exportSubtitle,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const ExportScreen()),
-                    ),
+                    onTap: () => _push(context, const ExportScreen()),
                   ),
                 ],
               ),
@@ -679,28 +671,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           icon: Icons.bluetooth_outlined,
           title: l10n.settings_companionDebugLog,
           subtitle: l10n.settings_companionDebugLogSubtitle,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const BleDebugLogScreen(),
-              ),
-            );
-          },
+          onTap: () => _push(context, const BleDebugLogScreen()),
         ),
         const Divider(height: 1, indent: 16),
         MeshNavTile(
           icon: Icons.code_outlined,
           title: l10n.settings_appDebugLog,
           subtitle: l10n.settings_appDebugLogSubtitle,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AppDebugLogScreen(),
-              ),
-            );
-          },
+          onTap: () => _push(context, const AppDebugLogScreen()),
         ),
       ],
     );

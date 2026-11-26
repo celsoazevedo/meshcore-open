@@ -402,9 +402,6 @@ class AppLocalizationsPt extends AppLocalizations {
       'Notificações, mensagens e preferências de mapa';
 
   @override
-  String get settings_export => 'Exportar';
-
-  @override
   String get settings_exportData => 'Exportar dados';
 
   @override
@@ -414,35 +411,40 @@ class AppLocalizationsPt extends AppLocalizations {
   String get backupRestore_title => 'Backup e restauração';
 
   @override
-  String get backupRestore_subtitle =>
-      'Salve ou restaure dados do app e configurações do rádio';
+  String get backupRestore_backupSubtitle =>
+      'Salvar dados do app e configurações do rádio em um arquivo';
 
   @override
-  String get backupRestore_import => 'Importar';
+  String get backupRestore_restoreTitle => 'Restaurar backup';
 
   @override
-  String get backupRestore_selectImportFile => 'Importar arquivo';
+  String get backupRestore_restoreSubtitle =>
+      'Carregar dados do app e configurações do rádio de um arquivo';
 
   @override
-  String get backupRestore_password => 'Senha (opcional)';
+  String get backupRestore_backupWarning =>
+      'Os backups podem incluir a chave privada do rádio, chaves dos canais, histórico de mensagens, senhas salvas e chaves API. Guarde o arquivo em um local seguro.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Uma senha criptografa o arquivo. Em branco, salva em texto simples, que pode incluir chaves privadas/de canal, histórico e credenciais.';
+  String get backupRestore_passwordOptional =>
+      'Opcional: uma senha criptografa o arquivo. Sem senha, o arquivo é salvo sem criptografia.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Verifique a senha ou escolha um arquivo de backup compatível.';
 
   @override
-  String get backupRestore_items => 'Itens de backup e restauração';
+  String get backupRestore_restoreInfo =>
+      'Os itens restaurados substituem o que está no app e no rádio. A maioria dos itens precisam de um rádio conectado.';
 
   @override
-  String get backupRestore_nodeSettings => 'Configurações do nó';
+  String get backupRestore_fileHeader => 'Arquivo de backup';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Nome do dispositivo, chaves privada e pública, configurações de rádio e regiões';
+  String get backupRestore_chooseFile => 'Escolher arquivo';
+
+  @override
+  String get backupRestore_chooseFileHint => 'Toque para abrir um backup';
 
   @override
   String get backupRestore_deviceName => 'Nome do dispositivo';
@@ -473,7 +475,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get backupRestore_perContactSettings =>
-      'Configurações e filtros por contato';
+      'Opções individuais de contatos';
 
   @override
   String get backupRestore_contactGroups => 'Grupos de contatos';
@@ -498,18 +500,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get backupRestore_channelHistory => 'Histórico de canais';
 
   @override
-  String get backupRestore_locationSettings => 'Configurações de localização';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Localização, configurações de contatos e de privacidade';
-
-  @override
   String get backupRestore_appSettings => 'Configurações do app';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Preferências do app e configurações de aparência';
 
   @override
   String get backupRestore_ipfsKey => 'Chave de API do IPFS (sensível)';
@@ -522,25 +513,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get backupRestore_contacts => 'Contatos';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Contatos, filtros e configurações por contato, grupos e histórico de mensagens';
-
-  @override
   String get backupRestore_discoveredContacts => 'Contatos descobertos';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Contatos descobertos e seus detalhes salvos';
 
   @override
   String get backupRestore_bookmarks => 'Marcadores';
 
   @override
-  String get backupRestore_channels => 'Canais';
+  String get backupRestore_messages => 'Mensagens';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Canais, filtros de canal, comunidades e histórico de mensagens';
+  String get backupRestore_itemsHeader => 'Itens';
+
+  @override
+  String get backupRestore_selectAll => 'Selecionar todos';
+
+  @override
+  String get backupRestore_channels => 'Canais';
 
   @override
   String get backupRestore_backup => 'Criar backup';
@@ -581,15 +569,20 @@ class AppLocalizationsPt extends AppLocalizations {
       'O arquivo de backup é maior que o limite de 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Selecione pelo menos um item.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Substituir a identidade do rádio?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Restaurar as configurações do nó substitui a chave privada do rádio conectado e muda sua identidade. Continue apenas se for essa a intenção.';
+      'Isso substitui a chave privada do rádio conectado e altera sua identidade. Continue apenas se for essa a intenção.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Restaurar os itens selecionados?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Os itens selecionados substituem os atuais no app e no rádio. Esta ação não pode ser desfeita.';
 
   @override
   String get settings_nodeSettings => 'Configurações do Nó';
@@ -8720,9 +8713,6 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
       'Notificações, mensagens e preferências do mapa';
 
   @override
-  String get settings_export => 'Exportar';
-
-  @override
   String get settings_exportData => 'Exportar dados';
 
   @override
@@ -8733,35 +8723,40 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
   String get backupRestore_title => 'Cópia e restauro';
 
   @override
-  String get backupRestore_subtitle =>
-      'Guardar ou restaurar dados da app e definições do rádio';
+  String get backupRestore_backupSubtitle =>
+      'Guardar dados da app e definições do rádio num ficheiro';
 
   @override
-  String get backupRestore_import => 'Importar';
+  String get backupRestore_restoreTitle => 'Restaurar cópia';
 
   @override
-  String get backupRestore_selectImportFile => 'Importar ficheiro';
+  String get backupRestore_restoreSubtitle =>
+      'Carregar dados da app e definições do rádio de um ficheiro';
 
   @override
-  String get backupRestore_password => 'Palavra-passe (opcional)';
+  String get backupRestore_backupWarning =>
+      'As cópias podem incluir a chave privada do rádio, chaves dos canais, histórico de mensagens, palavras-passe guardadas e chaves API. Guarde o ficheiro num local seguro.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Uma palavra-passe cifra o ficheiro. Em branco, guarda texto simples que pode incluir chaves privadas/de canais, histórico e credenciais.';
+  String get backupRestore_passwordOptional =>
+      'Opcional: uma palavra-passe encripta o ficheiro. Sem palavra-passe, o ficheiro é guardado sem encriptação.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Verifique a palavra-passe ou escolha um ficheiro de cópia compatível.';
 
   @override
-  String get backupRestore_items => 'Itens da cópia e do restauro';
+  String get backupRestore_restoreInfo =>
+      'Os itens restaurados substituem o que está na app e no rádio. A maioria dos itens precisam de um rádio ligado.';
 
   @override
-  String get backupRestore_nodeSettings => 'Definições do nó';
+  String get backupRestore_fileHeader => 'Ficheiro de backup';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Nome do dispositivo, chaves privada e pública, definições de rádio e regiões';
+  String get backupRestore_chooseFile => 'Escolher ficheiro';
+
+  @override
+  String get backupRestore_chooseFileHint => 'Toque para abrir um backup';
 
   @override
   String get backupRestore_deviceName => 'Nome do dispositivo';
@@ -8792,7 +8787,7 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
 
   @override
   String get backupRestore_perContactSettings =>
-      'Definições e filtros de contactos';
+      'Opções individuais de contactos';
 
   @override
   String get backupRestore_contactGroups => 'Grupos de contactos';
@@ -8817,18 +8812,7 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
   String get backupRestore_channelHistory => 'Histórico de canais';
 
   @override
-  String get backupRestore_locationSettings => 'Definições de localização';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Localização, definições de contactos e de privacidade';
-
-  @override
   String get backupRestore_appSettings => 'Definições da app';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Preferências e definições de aparência da app';
 
   @override
   String get backupRestore_ipfsKey => 'Chave API IPFS (sensível)';
@@ -8840,25 +8824,22 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
   String get backupRestore_contacts => 'Contactos';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Contactos, filtros e definições por contacto, grupos e histórico de mensagens';
-
-  @override
   String get backupRestore_discoveredContacts => 'Contactos descobertos';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Contactos descobertos e os seus detalhes guardados';
 
   @override
   String get backupRestore_bookmarks => 'Marcadores';
 
   @override
-  String get backupRestore_channels => 'Canais';
+  String get backupRestore_messages => 'Mensagens';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Canais, filtros de canais, comunidades e histórico de mensagens';
+  String get backupRestore_itemsHeader => 'Itens';
+
+  @override
+  String get backupRestore_selectAll => 'Selecionar todos';
+
+  @override
+  String get backupRestore_channels => 'Canais';
 
   @override
   String get backupRestore_backup => 'Criar cópia';
@@ -8899,15 +8880,20 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
       'O ficheiro de cópia excede o limite de 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Selecione pelo menos um item.';
-
-  @override
   String get backupRestore_replaceIdentityTitle =>
       'Substituir a identidade do rádio?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Restaurar as Definições do nó substitui a chave privada do rádio ligado e altera a sua identidade. Continue apenas se for essa a intenção.';
+      'Isto substitui a chave privada do rádio ligado e altera a sua identidade. Continue apenas se for essa a intenção.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Restaurar os itens selecionados?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Os itens selecionados substituem os atuais na app e no rádio. Esta ação não pode ser anulada.';
 
   @override
   String get settings_nodeSettings => 'Definições do nó';

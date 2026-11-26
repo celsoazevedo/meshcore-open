@@ -403,9 +403,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Benachrichtigungen, Nachrichten und Karten-Einstellungen';
 
   @override
-  String get settings_export => 'Exportieren';
-
-  @override
   String get settings_exportData => 'Daten exportieren';
 
   @override
@@ -415,36 +412,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get backupRestore_title => 'Sichern & Wiederherstellen';
 
   @override
-  String get backupRestore_subtitle =>
-      'App-Daten und Funkeinstellungen sichern oder wiederherstellen';
+  String get backupRestore_backupSubtitle =>
+      'App-Daten und Funkeinstellungen in einer Datei speichern';
 
   @override
-  String get backupRestore_import => 'Importieren';
+  String get backupRestore_restoreTitle => 'Sicherung wiederherstellen';
 
   @override
-  String get backupRestore_selectImportFile => 'Datei importieren';
+  String get backupRestore_restoreSubtitle =>
+      'App-Daten und Funkeinstellungen aus einer Datei laden';
 
   @override
-  String get backupRestore_password => 'Passwort (optional)';
+  String get backupRestore_backupWarning =>
+      'Sicherungen können den privaten Schlüssel des Funkgeräts, Kanalschlüssel, den Nachrichtenverlauf, gespeicherte Passwörter und API-Schlüssel enthalten. Bewahren Sie die Datei sicher auf.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Ein Passwort verschlüsselt die Datei. Ohne Passwort wird Klartext gespeichert, der private/Kanalschlüssel, Verlauf und Zugangsdaten enthalten kann.';
+  String get backupRestore_passwordOptional =>
+      'Optional: Ein Passwort verschlüsselt die Datei. Ohne Passwort wird sie unverschlüsselt gespeichert.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Prüfen Sie das Passwort oder wählen Sie eine unterstützte Sicherungsdatei.';
 
   @override
-  String get backupRestore_items =>
-      'Elemente für Sicherung und Wiederherstellung';
+  String get backupRestore_restoreInfo =>
+      'Wiederhergestellte Elemente ersetzen die Daten in der App und auf Ihrem Funkgerät. Die meisten Elemente erfordern ein verbundenes Funkgerät.';
 
   @override
-  String get backupRestore_nodeSettings => 'Knoteneinstellungen';
+  String get backupRestore_fileHeader => 'Sicherungsdatei';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Gerätename, private und öffentliche Schlüssel, Funkeinstellungen und Regionen';
+  String get backupRestore_chooseFile => 'Datei wählen';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Tippen, um eine Sicherungsdatei zu öffnen';
 
   @override
   String get backupRestore_deviceName => 'Gerätename';
@@ -474,8 +476,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get backupRestore_contactsData => 'Kontakte';
 
   @override
-  String get backupRestore_perContactSettings =>
-      'Kontakteinstellungen und Filter';
+  String get backupRestore_perContactSettings => 'Einstellungen pro Kontakt';
 
   @override
   String get backupRestore_contactGroups => 'Kontaktgruppen';
@@ -499,18 +500,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get backupRestore_channelHistory => 'Kanalverlauf';
 
   @override
-  String get backupRestore_locationSettings => 'Standorteinstellungen';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Standort, Kontakteinstellungen und Datenschutzeinstellungen';
-
-  @override
   String get backupRestore_appSettings => 'App-Einstellungen';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'App-Einstellungen und Darstellung';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS-API-Schlüssel (sensibel)';
@@ -523,25 +513,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get backupRestore_contacts => 'Kontakte';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Kontakte, Filter und Einstellungen pro Kontakt, Gruppen und Nachrichtenverlauf';
-
-  @override
   String get backupRestore_discoveredContacts => 'Entdeckte Kontakte';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Entdeckte Kontakte und ihre gespeicherten Details';
 
   @override
   String get backupRestore_bookmarks => 'Lesezeichen';
 
   @override
-  String get backupRestore_channels => 'Kanäle';
+  String get backupRestore_messages => 'Nachrichten';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Kanäle, Kanalfilter, Communitys und Nachrichtenverlauf';
+  String get backupRestore_itemsHeader => 'Elemente';
+
+  @override
+  String get backupRestore_selectAll => 'Alle auswählen';
+
+  @override
+  String get backupRestore_channels => 'Kanäle';
 
   @override
   String get backupRestore_backup => 'Sicherung erstellen';
@@ -583,15 +570,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Sicherungsdatei überschreitet das Limit von 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne =>
-      'Wählen Sie mindestens ein Element aus.';
-
-  @override
   String get backupRestore_replaceIdentityTitle => 'Funkidentität ersetzen?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Beim Wiederherstellen der Knoteneinstellungen wird der private Schlüssel des verbundenen Funkgeräts ersetzt und seine Identität geändert. Fahren Sie nur fort, wenn dies beabsichtigt ist.';
+      'Dadurch wird der private Schlüssel des verbundenen Funkgeräts ersetzt und seine Identität geändert. Fahren Sie nur fort, wenn dies beabsichtigt ist.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Ausgewählte Elemente wiederherstellen?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Die ausgewählten Elemente ersetzen die aktuellen in der App und auf Ihrem Funkgerät. Dies kann nicht rückgängig gemacht werden.';
 
   @override
   String get settings_nodeSettings => 'Knoteneinstellungen';

@@ -397,9 +397,6 @@ class AppLocalizationsSv extends AppLocalizations {
       'Notifieringar, meddelanden och kartinställningar';
 
   @override
-  String get settings_export => 'Exportera';
-
-  @override
   String get settings_exportData => 'Exportera data';
 
   @override
@@ -409,36 +406,41 @@ class AppLocalizationsSv extends AppLocalizations {
   String get backupRestore_title => 'Säkerhetskopia och återställning';
 
   @override
-  String get backupRestore_subtitle =>
-      'Spara eller återställ appdata och radioinställningar';
+  String get backupRestore_backupSubtitle =>
+      'Spara appdata och radioinställningar till en fil';
 
   @override
-  String get backupRestore_import => 'Importera';
+  String get backupRestore_restoreTitle => 'Återställ säkerhetskopia';
 
   @override
-  String get backupRestore_selectImportFile => 'Importera fil';
+  String get backupRestore_restoreSubtitle =>
+      'Läs in appdata och radioinställningar från en fil';
 
   @override
-  String get backupRestore_password => 'Lösenord (valfritt)';
+  String get backupRestore_backupWarning =>
+      'Säkerhetskopior kan innehålla radions privata nyckel, kanalnycklar, meddelandehistorik, sparade lösenord och API-nycklar. Förvara filen på ett säkert ställe.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Ett lösenord krypterar filen. Utan lösenord sparas klartext som kan innehålla privata nycklar/kanalnycklar, historik och inloggningsuppgifter.';
+  String get backupRestore_passwordOptional =>
+      'Valfritt: ett lösenord krypterar filen. Utan lösenord sparas filen okrypterad.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Kontrollera lösenordet eller välj en fil som stöds.';
 
   @override
-  String get backupRestore_items =>
-      'Objekt för säkerhetskopiering och återställning';
+  String get backupRestore_restoreInfo =>
+      'Återställda objekt ersätter det som finns i appen och på radion. De flesta objekt kräver en ansluten radio.';
 
   @override
-  String get backupRestore_nodeSettings => 'Nodinställningar';
+  String get backupRestore_fileHeader => 'Säkerhetskopiefil';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Enhetsnamn, privata och publika nycklar, radioinställningar och regioner';
+  String get backupRestore_chooseFile => 'Välj fil';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Tryck för att öppna en säkerhetskopia';
 
   @override
   String get backupRestore_deviceName => 'Enhetsnamn';
@@ -468,8 +470,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get backupRestore_contactsData => 'Kontakter';
 
   @override
-  String get backupRestore_perContactSettings =>
-      'Kontaktinställningar och filter';
+  String get backupRestore_perContactSettings => 'Inställningar per kontakt';
 
   @override
   String get backupRestore_contactGroups => 'Kontaktgrupper';
@@ -494,18 +495,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get backupRestore_channelHistory => 'Kanalhistorik';
 
   @override
-  String get backupRestore_locationSettings => 'Platsinställningar';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Plats, kontaktinställningar och integritetsinställningar';
-
-  @override
   String get backupRestore_appSettings => 'Appinställningar';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Appinställningar och utseende';
 
   @override
   String get backupRestore_ipfsKey => 'IPFS API-nyckel (känslig)';
@@ -518,25 +508,22 @@ class AppLocalizationsSv extends AppLocalizations {
   String get backupRestore_contacts => 'Kontakter';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Kontakter, filter och inställningar per kontakt, grupper och meddelandehistorik';
-
-  @override
   String get backupRestore_discoveredContacts => 'Upptäckta kontakter';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Upptäckta kontakter och deras sparade uppgifter';
 
   @override
   String get backupRestore_bookmarks => 'Bokmärken';
 
   @override
-  String get backupRestore_channels => 'Kanaler';
+  String get backupRestore_messages => 'Meddelanden';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Kanaler, kanalfilter, communityn och meddelandehistorik';
+  String get backupRestore_itemsHeader => 'Objekt';
+
+  @override
+  String get backupRestore_selectAll => 'Markera alla';
+
+  @override
+  String get backupRestore_channels => 'Kanaler';
 
   @override
   String get backupRestore_backup => 'Skapa säkerhetskopia';
@@ -577,14 +564,19 @@ class AppLocalizationsSv extends AppLocalizations {
       'Säkerhetskopian är större än gränsen på 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne => 'Välj minst ett objekt.';
-
-  @override
   String get backupRestore_replaceIdentityTitle => 'Ersätta radions identitet?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Att återställa nodinställningarna ersätter den anslutna radions privata nyckel och ändrar dess identitet. Fortsätt bara om det är avsett.';
+      'Detta ersätter den anslutna radions privata nyckel och ändrar dess identitet. Fortsätt bara om det är avsett.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Återställa markerade objekt?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'De markerade objekten ersätter de nuvarande i appen och på radion. Detta kan inte ångras.';
 
   @override
   String get settings_nodeSettings => 'Nodinställningar';

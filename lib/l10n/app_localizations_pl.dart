@@ -406,9 +406,6 @@ class AppLocalizationsPl extends AppLocalizations {
       'Powiadomienia, wiadomości i preferencje mapy';
 
   @override
-  String get settings_export => 'Eksportuj';
-
-  @override
   String get settings_exportData => 'Eksportuj dane';
 
   @override
@@ -418,35 +415,41 @@ class AppLocalizationsPl extends AppLocalizations {
   String get backupRestore_title => 'Kopia zapasowa i przywracanie';
 
   @override
-  String get backupRestore_subtitle =>
-      'Zapisz lub przywróć dane aplikacji i ustawienia radia';
+  String get backupRestore_backupSubtitle =>
+      'Zapisz dane aplikacji i ustawienia radia w pliku';
 
   @override
-  String get backupRestore_import => 'Importuj';
+  String get backupRestore_restoreTitle => 'Przywróć kopię zapasową';
 
   @override
-  String get backupRestore_selectImportFile => 'Importuj plik';
+  String get backupRestore_restoreSubtitle =>
+      'Wczytaj dane aplikacji i ustawienia radia z pliku';
 
   @override
-  String get backupRestore_password => 'Hasło (opcjonalnie)';
+  String get backupRestore_backupWarning =>
+      'Kopie zapasowe mogą zawierać klucz prywatny radia, klucze kanałów, historię wiadomości, zapisane hasła i klucze API. Przechowuj plik w bezpiecznym miejscu.';
 
   @override
-  String get backupRestore_passwordHelp =>
-      'Hasło szyfruje plik. Puste zapisuje zwykły tekst, który może zawierać klucze prywatne/kanałów, historię i dane uwierzytelniające.';
+  String get backupRestore_passwordOptional =>
+      'Opcjonalnie: hasło szyfruje plik. Bez hasła plik jest zapisywany bez szyfrowania.';
 
   @override
   String get backupRestore_importUnavailable =>
       'Sprawdź hasło lub wybierz obsługiwany plik kopii zapasowej.';
 
   @override
-  String get backupRestore_items => 'Elementy kopii zapasowej i przywracania';
+  String get backupRestore_restoreInfo =>
+      'Przywrócone elementy zastępują to, co jest w aplikacji i w radiu. Większość elementów wymaga podłączonego radia.';
 
   @override
-  String get backupRestore_nodeSettings => 'Ustawienia węzła';
+  String get backupRestore_fileHeader => 'Plik kopii zapasowej';
 
   @override
-  String get backupRestore_nodeSettingsDescription =>
-      'Nazwa urządzenia, klucze prywatny i publiczny, ustawienia radia i regiony';
+  String get backupRestore_chooseFile => 'Wybierz plik';
+
+  @override
+  String get backupRestore_chooseFileHint =>
+      'Dotknij, aby otworzyć plik kopii zapasowej';
 
   @override
   String get backupRestore_deviceName => 'Nazwa urządzenia';
@@ -477,7 +480,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get backupRestore_perContactSettings =>
-      'Ustawienia i filtry kontaktów';
+      'Ustawienia poszczególnych kontaktów';
 
   @override
   String get backupRestore_contactGroups => 'Grupy kontaktów';
@@ -501,18 +504,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get backupRestore_channelHistory => 'Historia kanałów';
 
   @override
-  String get backupRestore_locationSettings => 'Ustawienia lokalizacji';
-
-  @override
-  String get backupRestore_locationSettingsDescription =>
-      'Lokalizacja, ustawienia kontaktów i prywatności';
-
-  @override
   String get backupRestore_appSettings => 'Ustawienia aplikacji';
-
-  @override
-  String get backupRestore_appSettingsDescription =>
-      'Preferencje aplikacji i ustawienia wyglądu';
 
   @override
   String get backupRestore_ipfsKey => 'Klucz API IPFS (wrażliwy)';
@@ -524,25 +516,22 @@ class AppLocalizationsPl extends AppLocalizations {
   String get backupRestore_contacts => 'Kontakty';
 
   @override
-  String get backupRestore_contactsDescription =>
-      'Kontakty, filtry i ustawienia poszczególnych kontaktów, grupy i historia wiadomości';
-
-  @override
   String get backupRestore_discoveredContacts => 'Wykryte kontakty';
-
-  @override
-  String get backupRestore_discoveredContactsDescription =>
-      'Wykryte kontakty i ich zapisane dane';
 
   @override
   String get backupRestore_bookmarks => 'Zakładki';
 
   @override
-  String get backupRestore_channels => 'Kanały';
+  String get backupRestore_messages => 'Wiadomości';
 
   @override
-  String get backupRestore_channelsDescription =>
-      'Kanały, filtry kanałów, społeczności i historia wiadomości';
+  String get backupRestore_itemsHeader => 'Elementy';
+
+  @override
+  String get backupRestore_selectAll => 'Zaznacz wszystko';
+
+  @override
+  String get backupRestore_channels => 'Kanały';
 
   @override
   String get backupRestore_backup => 'Utwórz kopię zapasową';
@@ -584,15 +573,19 @@ class AppLocalizationsPl extends AppLocalizations {
       'Plik kopii zapasowej przekracza limit 100 MB.';
 
   @override
-  String get backupRestore_selectAtLeastOne =>
-      'Wybierz co najmniej jeden element.';
-
-  @override
   String get backupRestore_replaceIdentityTitle => 'Zastąpić tożsamość radia?';
 
   @override
   String get backupRestore_replaceIdentityMessage =>
-      'Przywrócenie ustawień węzła zastępuje klucz prywatny podłączonego radia i zmienia jego tożsamość. Kontynuuj tylko, jeśli to zamierzone.';
+      'To zastępuje klucz prywatny podłączonego radia i zmienia jego tożsamość. Kontynuuj tylko, jeśli to zamierzone.';
+
+  @override
+  String get backupRestore_confirmRestoreTitle =>
+      'Przywrócić wybrane elementy?';
+
+  @override
+  String get backupRestore_confirmRestoreMessage =>
+      'Wybrane elementy zastąpią obecne w aplikacji i w radiu. Nie można tego cofnąć.';
 
   @override
   String get settings_nodeSettings => 'Ustawienia węzła';
