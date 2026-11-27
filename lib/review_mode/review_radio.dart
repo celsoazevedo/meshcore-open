@@ -69,6 +69,7 @@ class ReviewRadio {
       autoAddChatFlag | autoAddRepeaterFlag | autoAddRoomServerFlag;
   int _autoAddMaxHops = 0;
   int _timeOffsetSecs = 0;
+  final Stopwatch _uptime = Stopwatch()..start();
 
   /// Frames radio to app. Each event is one complete companion frame.
   Stream<Uint8List> get frames => _controller.stream;
@@ -284,14 +285,20 @@ class ReviewRadio {
         _emit([ReviewFrames.ok()]);
         break;
       case cmdGetStats:
+        final statsType = frame.length >= 2 ? frame[1] : -1;
         _emit([
-          frame.length >= 2 && frame[1] == statsTypeRadio
+          statsType == statsTypeRadio
               ? ReviewFrames.radioStats(
                   noiseFloorDbm: -112,
                   lastRssiDbm: -78,
                   lastSnrQuarterDb: 28,
                   txAirSecs: 12,
                   rxAirSecs: 48,
+                )
+              : statsType == statsTypeCore
+              ? ReviewFrames.coreStats(
+                  millivolts: 3980,
+                  uptimeSecs: _uptime.elapsed.inSeconds,
                 )
               : ReviewFrames.err(),
         ]);

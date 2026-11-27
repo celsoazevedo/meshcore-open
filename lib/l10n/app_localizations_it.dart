@@ -164,11 +164,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -989,9 +984,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settings_infoName => 'Nome';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => 'Stato';
 
   @override
@@ -1002,15 +994,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => 'Chiave pubblica copiata';
-
-  @override
-  String get settings_infoContactsCount => 'Numero di contatti';
-
-  @override
-  String get settings_infoChannelCount => 'Numero di canali';
-
-  @override
-  String get settings_infoHardware => 'Hardware';
 
   @override
   String get settings_infoFirmware => 'Firmware';
@@ -7203,13 +7186,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impostazioni del contatto salvate';
 
   @override
-  String get settings_batteryToggleHint =>
-      'Tocca per passare tra percentuale e tensione';
-
-  @override
-  String get settings_publicKeyCopyHint => 'Copia chiave pubblica';
-
-  @override
   String get settings_locationClearHelper =>
       'Lascia vuoti entrambi i campi per rimuovere la tua posizione.';
 
@@ -8324,4 +8300,238 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return 'Ultima connessione $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => 'Ultima connessione poco fa';
+
+  @override
+  String get deviceInfo_storage => 'Memoria';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => 'Dispositivo';
+
+  @override
+  String get deviceInfo_model => 'Modello';
+
+  @override
+  String get deviceInfo_buildDate => 'Data build';
+
+  @override
+  String get deviceInfo_runningSince => 'Attivo da';
+
+  @override
+  String get deviceInfo_radioClock => 'Orologio della radio';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return '$duration indietro';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return '$duration avanti';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => 'Sincronizzato';
+
+  @override
+  String get deviceInfo_connection => 'Connessione';
+
+  @override
+  String get deviceInfo_link => 'Tipo';
+
+  @override
+  String get deviceInfo_connectedSince => 'Connesso da';
+
+  @override
+  String get deviceInfo_lastConnected => 'Ultima connessione';
+
+  @override
+  String get deviceInfo_signal => 'Segnale';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'PIN Bluetooth';
+
+  @override
+  String get deviceInfo_pinFixed => 'Fisso';
+
+  @override
+  String get deviceInfo_pinNotFixed => 'Non fisso';
+
+  @override
+  String get deviceInfo_pinNotFixedHint =>
+      'Casuale (sullo schermo della radio) o 123456';
+
+  @override
+  String get deviceInfo_showPin => 'Mostra PIN';
+
+  @override
+  String get deviceInfo_hidePin => 'Nascondi PIN';
+
+  @override
+  String get deviceInfo_frequency => 'Frequenza';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'Potenza TX';
+
+  @override
+  String get deviceInfo_hashSize => 'Dimensione hash';
+
+  @override
+  String get deviceInfo_repeat => 'Ripetizione';
+
+  @override
+  String get deviceInfo_on => 'Attivo';
+
+  @override
+  String get deviceInfo_off => 'Disattivo';
+
+  @override
+  String get deviceInfo_airtimeDescription => 'Totale dall\'avvio della radio';
+
+  @override
+  String get deviceInfo_transmit => 'Trasmissione';
+
+  @override
+  String get deviceInfo_receive => 'Ricezione';
+
+  @override
+  String get deviceInfo_mesh => 'Mesh';
+
+  @override
+  String get deviceInfo_telemetryDescription =>
+      'Dalla tua radio, aggiornata all\'apertura della pagina';
+
+  @override
+  String get deviceInfo_asText => 'Come testo';
+
+  @override
+  String get deviceInfo_viewAsText => 'Visualizza come testo';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle =>
+      'Da copiare o condividere quando chiedi aiuto';
+
+  @override
+  String get deviceInfo_copied => 'Informazioni dispositivo copiate';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '${days}g ${hours}h';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '${minutes}m ${seconds}s';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return 'Connesso tramite $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return 'Disconnesso, ultima connessione: $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => 'PIN fisso (nascosto)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN non fisso';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, build del $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'App';
+
+  @override
+  String get shareContact_title => 'Condividi contatto';
+
+  @override
+  String get shareContact_scanHint =>
+      'Scansiona per aggiungere questo contatto';
+
+  @override
+  String get shareContact_copyKey => 'Copia chiave';
+
+  @override
+  String get shareContact_info =>
+      'Per chattare direttamente con qualcuno, ognuno dei due deve avere l\'altro nei propri contatti.';
 }

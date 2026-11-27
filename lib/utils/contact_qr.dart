@@ -34,6 +34,24 @@ const int _maxAdvertPacketBytes = 171;
 const int _contactCardKeyBytes = 32;
 const String _legacyPrefix = 'meshcore://';
 
+/// Contact-card link that [parseContactQr] reads back.
+String buildContactQrLink({
+  required String name,
+  required String publicKeyHex,
+  required int type,
+}) {
+  return Uri(
+    scheme: 'meshcore',
+    host: 'contact',
+    path: '/add',
+    queryParameters: {
+      'name': name,
+      'public_key': publicKeyHex,
+      'type': '$type',
+    },
+  ).toString();
+}
+
 /// Returns null when [data] is not a recognizable MeshCore contact QR/link.
 ScannedContact? parseContactQr(String data) {
   final trimmed = data.trim();

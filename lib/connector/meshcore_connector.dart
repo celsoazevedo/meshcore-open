@@ -397,6 +397,11 @@ class MeshCoreConnector extends ChangeNotifier {
   bool _hasReceivedDeviceInfo = false;
   String? _manufacturerName;
   String? _firmwareVersionString;
+  String? _firmwareBuildDate;
+  int? _blePin;
+  DateTime? _connectedAt;
+  DateTime? _radioStartedAt;
+  Duration? _radioClockOffset;
   // Initial sync is serialized for predictable progress. Firmware exposes one
   // FIFO queued-message stream, so direct/room frames are buffered until after
   // contacts are known.
@@ -574,7 +579,6 @@ class MeshCoreConnector extends ChangeNotifier {
   MeshCoreConnectionState get state => _state;
   BluetoothDevice? get device => _device;
   String? get deviceId => _deviceId;
-  String get deviceIdLabel => _deviceId ?? 'Unknown';
 
   /// Stable per-radio key for transport-agnostic per-device settings such as
   /// battery chemistry. On BLE this is the existing remoteId (so previously
@@ -740,6 +744,23 @@ class MeshCoreConnector extends ChangeNotifier {
   String? get selfName => _selfName;
   String? get manufacturerName => _manufacturerName;
   String? get firmwareVersionString => _firmwareVersionString;
+
+  /// Build date string from DEVICE_INFO, e.g. "15 Oct 2026".
+  String? get firmwareBuildDate => _firmwareBuildDate;
+
+  /// The saved BLE PIN: 0 when none is set (the radio then uses a random PIN
+  /// shown on its screen, or its build default). Not the PIN in use.
+  int? get blePin => _blePin;
+
+  /// When the link to the radio was made; null while disconnected.
+  DateTime? get connectedAt => _connectedAt;
+
+  /// Radio boot time from its uptime (core stats); null until requested.
+  DateTime? get radioStartedAt => _radioStartedAt;
+
+  /// Radio clock minus phone clock; null until requested.
+  Duration? get radioClockOffset => _radioClockOffset;
+
   double? get selfLatitude => _selfLatitude;
   double? get selfLongitude => _selfLongitude;
   List<DirectRepeater> get directRepeaters => _directRepeaters;
@@ -4579,6 +4600,8 @@ class MeshCoreConnector extends ChangeNotifier {
     _clientRepeat = null;
     _rememberedNonRepeatRadioState = null;
     _firmwareVerCode = null;
+    _firmwareBuildDate = null;
+    _blePin = null;
     _allowedRepeatFreqRanges = null;
     _autoAddMaxHops = null;
     _contactsStorageFull = false;
@@ -4775,6 +4798,39 @@ class MeshCoreConnector extends ChangeNotifier {
     try {
       await sendFrame(buildGetStatsFrame(statsTypeRadio));
     } catch (_) {}
+  }
+
+  /// Asks for core stats, whose uptime sets [radioStartedAt].
+  Future<void> requestCoreStats() async {
+    if (!isConnected) return;
+    if (!supportsCompanionRadioStats) return;
+    try {
+      await sendFrame(buildGetStatsFrame(statsTypeCore));
+    } catch (_) {}
+  }
+
+  /// Asks for the radio clock, which sets [radioClockOffset].
+  Future<void> requestDeviceTime() async {
+    if (!isConnected) return;
+    try {
+      await sendFrame(buildGetDeviceTimeFrame());
+    } catch (_) {}
+  }
+
+  /// Signal strength of the Bluetooth link in dBm, or null when the link is
+  /// not Bluetooth or the platform cannot read it.
+  Future<int?> readBleRssi() async {
+    final device = _device;
+    if (!isConnected ||
+        _activeTransport != MeshCoreTransportType.bluetooth ||
+        device == null) {
+      return null;
+    }
+    try {
+      return await device.readRssi();
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<Uint8List> exportPrivateKey() async {
@@ -7294,6 +7350,15 @@ class MeshCoreConnector extends ChangeNotifier {
       case respCodeStats:
         _handleStatsFrame(frame);
         break;
+      case respCodeCurrTime:
+        if (frame.length >= 5) {
+          // The radio sends whole seconds; compare from the middle of that second.
+          final radioMs = readUint32LE(frame, 1) * 1000 + 500;
+          final phoneMs = DateTime.now().millisecondsSinceEpoch;
+          _radioClockOffset = Duration(milliseconds: radioMs - phoneMs);
+          notifyListeners();
+        }
+        break;
       case respCodeCustomVars:
         _handleCustomVars(frame);
         break;
@@ -7539,6 +7604,9 @@ class MeshCoreConnector extends ChangeNotifier {
       return s.isEmpty ? null : s;
     }
 
+    // Saved BLE PIN (bytes 4..7, 0 = not fixed) and build date (8..19)
+    _blePin = frame.length >= 8 ? readUint32LE(frame, 4) : null;
+    _firmwareBuildDate = readCString(8, 12);
     _manufacturerName = readCString(20, 40);
     _firmwareVersionString = readCString(60, 20);
 
@@ -7677,6 +7745,13 @@ class MeshCoreConnector extends ChangeNotifier {
   }
 
   void _handleStatsFrame(Uint8List frame) {
+    // Core stats: [code][type][battery_mv u16][uptime_secs u32]...
+    if (frame.length >= 8 && frame[1] == statsTypeCore) {
+      final uptimeSecs = readUint32LE(frame, 4);
+      _radioStartedAt = DateTime.now().subtract(Duration(seconds: uptimeSecs));
+      notifyListeners();
+      return;
+    }
     final stats = CompanionRadioStats.tryParse(frame);
     if (stats == null) return;
     final total = stats.txAirSecs + stats.rxAirSecs;
@@ -9943,6 +10018,10 @@ class MeshCoreConnector extends ChangeNotifier {
   /// Per-link state shared by a full disconnect and a dropped BLE link:
   /// polling timers, radio stats, battery and pending protocol replies.
   void _resetLinkSessionState() {
+    _stampLastRadioDisconnect();
+    _connectedAt = null;
+    _radioStartedAt = null;
+    _radioClockOffset = null;
     _persistedStateLoadedKey = null;
     _defaultFloodScopeName = null;
     _defaultFloodScopeKey = null;
@@ -10058,6 +10137,29 @@ class MeshCoreConnector extends ChangeNotifier {
     _lastRadio = radio;
     _offlineScopeKeyHex = keyHex;
     unawaited(_lastRadioStore.save(radio));
+  }
+
+  /// Moves the remembered radio's time to now when its link ends, so
+  /// "last connected" shows when it was last connected, not when it connected.
+  void _stampLastRadioDisconnect() {
+    final radio = _lastRadio;
+    if (radio == null ||
+        _selfPublicKey == null ||
+        radio.publicKeyHex != selfPublicKeyHex) {
+      return;
+    }
+    final stamped = LastRadio(
+      publicKeyHex: radio.publicKeyHex,
+      name: radio.name,
+      transport: radio.transport,
+      bleRemoteId: radio.bleRemoteId,
+      bleDisplayName: radio.bleDisplayName,
+      tcpHost: radio.tcpHost,
+      tcpPort: radio.tcpPort,
+      savedAt: DateTime.now(),
+    );
+    _lastRadio = stamped;
+    unawaited(_lastRadioStore.save(stamped));
   }
 
   /// Loads the remembered radio's saved contacts, channels, messages and
@@ -10236,6 +10338,7 @@ class MeshCoreConnector extends ChangeNotifier {
     if (_state != newState) {
       _state = newState;
       if (newState == MeshCoreConnectionState.connected) {
+        _connectedAt = DateTime.now();
         if (_appSettingsService?.settings.notificationsEnabled ?? false) {
           unawaited(_notificationService.requestPermissionsOnce());
         }

@@ -130,6 +130,53 @@ void main() {
     });
   });
 
+  group('buildContactQrLink', () {
+    final key = List.generate(
+      32,
+      (i) => (0xA0 + i).toRadixString(16).padLeft(2, '0'),
+    ).join();
+
+    test('uses the official contact card form', () {
+      final link = buildContactQrLink(name: 'Bob', publicKeyHex: key, type: 1);
+
+      expect(link, 'meshcore://contact/add?name=Bob&public_key=$key&type=1');
+    });
+
+    for (final name in [
+      'Bob',
+      'Base Camp 2',
+      'Tom & Jerry',
+      'a=b',
+      'C++ 100%',
+      'Hash #1?',
+      'João 📡',
+      '日本語',
+      '',
+    ]) {
+      test('round-trips the name "$name"', () {
+        final result = parseContactQr(
+          buildContactQrLink(name: name, publicKeyHex: key, type: 1),
+        );
+
+        expect(result, isNotNull);
+        expect(result!.isAdvertPacket, isFalse);
+        expect(result.name, name);
+        expect(result.publicKey, decodeContactPublicKeyHex(key));
+        expect(result.type, 1);
+      });
+    }
+
+    for (final type in [1, 2, 3, 4]) {
+      test('round-trips type $type', () {
+        final result = parseContactQr(
+          buildContactQrLink(name: 'Node', publicKeyHex: key, type: type),
+        );
+
+        expect(result?.type, type);
+      });
+    }
+  });
+
   group('parseContactQr rejects unsupported input', () {
     test('channel add link is not a contact', () {
       final result = parseContactQr(

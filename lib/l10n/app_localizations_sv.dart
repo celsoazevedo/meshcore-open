@@ -163,11 +163,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -975,9 +970,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get settings_infoName => 'Namn';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => 'Status';
 
   @override
@@ -988,15 +980,6 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => 'Publik nyckel kopierad';
-
-  @override
-  String get settings_infoContactsCount => 'Antal kontakter';
-
-  @override
-  String get settings_infoChannelCount => 'Antal kanaler';
-
-  @override
-  String get settings_infoHardware => 'Hardware';
 
   @override
   String get settings_infoFirmware => 'Firmware';
@@ -7136,13 +7119,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get settings_contactSettingsSaved => 'Kontaktinställningar sparade';
 
   @override
-  String get settings_batteryToggleHint =>
-      'Tryck för att växla mellan procent och spänning';
-
-  @override
-  String get settings_publicKeyCopyHint => 'Kopiera publik nyckel';
-
-  @override
   String get settings_locationClearHelper =>
       'Lämna båda fälten tomma för att ta bort din plats.';
 
@@ -8250,4 +8226,237 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return 'Senast ansluten $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => 'Senast ansluten precis nu';
+
+  @override
+  String get deviceInfo_storage => 'Lagring';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => 'Enhet';
+
+  @override
+  String get deviceInfo_model => 'Modell';
+
+  @override
+  String get deviceInfo_buildDate => 'Byggdatum';
+
+  @override
+  String get deviceInfo_runningSince => 'Igång sedan';
+
+  @override
+  String get deviceInfo_radioClock => 'Radions klocka';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return '$duration efter';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return '$duration före';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => 'Synkad';
+
+  @override
+  String get deviceInfo_connection => 'Anslutning';
+
+  @override
+  String get deviceInfo_link => 'Anslutningstyp';
+
+  @override
+  String get deviceInfo_connectedSince => 'Ansluten sedan';
+
+  @override
+  String get deviceInfo_lastConnected => 'Senast ansluten';
+
+  @override
+  String get deviceInfo_signal => 'Signal';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'Bluetooth-PIN';
+
+  @override
+  String get deviceInfo_pinFixed => 'Fast';
+
+  @override
+  String get deviceInfo_pinNotFixed => 'Inte fast';
+
+  @override
+  String get deviceInfo_pinNotFixedHint =>
+      'Slumpmässig (på radions skärm) eller 123456';
+
+  @override
+  String get deviceInfo_showPin => 'Visa PIN';
+
+  @override
+  String get deviceInfo_hidePin => 'Dölj PIN';
+
+  @override
+  String get deviceInfo_frequency => 'Frekvens';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'TX-effekt';
+
+  @override
+  String get deviceInfo_hashSize => 'Hashstorlek';
+
+  @override
+  String get deviceInfo_repeat => 'Repetering';
+
+  @override
+  String get deviceInfo_on => 'På';
+
+  @override
+  String get deviceInfo_off => 'Av';
+
+  @override
+  String get deviceInfo_airtimeDescription => 'Totalt sedan radion startade';
+
+  @override
+  String get deviceInfo_transmit => 'Sändning';
+
+  @override
+  String get deviceInfo_receive => 'Mottagning';
+
+  @override
+  String get deviceInfo_mesh => 'Mesh';
+
+  @override
+  String get deviceInfo_telemetryDescription =>
+      'Från din radio, uppdateras när sidan öppnas';
+
+  @override
+  String get deviceInfo_asText => 'Som text';
+
+  @override
+  String get deviceInfo_viewAsText => 'Visa som text';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle =>
+      'För att kopiera eller dela när du ber om hjälp';
+
+  @override
+  String get deviceInfo_copied => 'Enhetsinformation kopierad';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '$days d $hours h';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '$minutes min $seconds s';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return 'Ansluten via $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return 'Frånkopplad, senast ansluten $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => 'fast PIN (visas inte)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'ingen fast PIN';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, byggd $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'App';
+
+  @override
+  String get shareContact_title => 'Dela kontakt';
+
+  @override
+  String get shareContact_scanHint => 'Skanna för att lägga till kontakten';
+
+  @override
+  String get shareContact_copyKey => 'Kopiera nyckel';
+
+  @override
+  String get shareContact_info =>
+      'För att chatta direkt med någon måste ni ha varandra bland era kontakter.';
 }

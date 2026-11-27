@@ -271,6 +271,19 @@ class ReviewFrames {
     return writer.toBytes();
   }
 
+  /// STATS_TYPE_CORE: [24][0][battery_mv u16][uptime_secs u32][err u16][queue u8].
+  static Uint8List coreStats({
+    required int millivolts,
+    required int uptimeSecs,
+  }) {
+    final data = ByteData(11);
+    data.setUint8(0, respCodeStats);
+    data.setUint8(1, statsTypeCore);
+    data.setUint16(2, millivolts, Endian.little);
+    data.setUint32(4, uptimeSecs, Endian.little);
+    return data.buffer.asUint8List();
+  }
+
   /// STATS_TYPE_RADIO: [24][1][noise i16][rssi i8][snr*4 i8][tx u32][rx u32].
   static Uint8List radioStats({
     required int noiseFloorDbm,

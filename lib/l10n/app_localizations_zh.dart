@@ -159,11 +159,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -915,9 +910,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_infoName => '名称';
 
   @override
-  String get settings_infoId => 'MAC ID';
-
-  @override
   String get settings_infoStatus => '状态';
 
   @override
@@ -928,15 +920,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => '公钥已复制';
-
-  @override
-  String get settings_infoContactsCount => '联系人数量';
-
-  @override
-  String get settings_infoChannelCount => '频道数量';
-
-  @override
-  String get settings_infoHardware => '硬件';
 
   @override
   String get settings_infoFirmware => '固件';
@@ -6728,12 +6711,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_contactSettingsSaved => '联系人设置已保存';
 
   @override
-  String get settings_batteryToggleHint => '点按可在百分比和电压之间切换';
-
-  @override
-  String get settings_publicKeyCopyHint => '复制公钥';
-
-  @override
   String get settings_locationClearHelper => '将两个字段都留空即可移除你的位置。';
 
   @override
@@ -7791,4 +7768,233 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return '上次连接：$time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => '上次连接：刚才';
+
+  @override
+  String get deviceInfo_storage => '存储';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => '设备';
+
+  @override
+  String get deviceInfo_model => '型号';
+
+  @override
+  String get deviceInfo_buildDate => '构建日期';
+
+  @override
+  String get deviceInfo_runningSince => '启动时间';
+
+  @override
+  String get deviceInfo_radioClock => '无线电时钟';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return '慢 $duration';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return '快 $duration';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => '已同步';
+
+  @override
+  String get deviceInfo_connection => '连接';
+
+  @override
+  String get deviceInfo_link => '连接方式';
+
+  @override
+  String get deviceInfo_connectedSince => '连接时间';
+
+  @override
+  String get deviceInfo_lastConnected => '上次连接';
+
+  @override
+  String get deviceInfo_signal => '信号';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => '蓝牙 PIN';
+
+  @override
+  String get deviceInfo_pinFixed => '固定';
+
+  @override
+  String get deviceInfo_pinNotFixed => '未固定';
+
+  @override
+  String get deviceInfo_pinNotFixedHint => '随机（显示在无线电屏幕上）或 123456';
+
+  @override
+  String get deviceInfo_showPin => '显示 PIN';
+
+  @override
+  String get deviceInfo_hidePin => '隐藏 PIN';
+
+  @override
+  String get deviceInfo_frequency => '频率';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'TX 功率';
+
+  @override
+  String get deviceInfo_hashSize => '哈希大小';
+
+  @override
+  String get deviceInfo_repeat => '中继';
+
+  @override
+  String get deviceInfo_on => '开启';
+
+  @override
+  String get deviceInfo_off => '关闭';
+
+  @override
+  String get deviceInfo_airtimeDescription => '无线电启动以来的总计';
+
+  @override
+  String get deviceInfo_transmit => '发射';
+
+  @override
+  String get deviceInfo_receive => '接收';
+
+  @override
+  String get deviceInfo_mesh => '网状网络';
+
+  @override
+  String get deviceInfo_telemetryDescription => '来自你的无线电，打开页面时更新';
+
+  @override
+  String get deviceInfo_asText => '纯文本';
+
+  @override
+  String get deviceInfo_viewAsText => '以纯文本查看';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle => '求助时可复制或分享';
+
+  @override
+  String get deviceInfo_copied => '设备信息已复制';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '$days天$hours小时';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hours小时$minutes分';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '$minutes分$seconds秒';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '$seconds秒';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return '已通过 $link 连接';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return '已断开，上次连接于 $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => '固定 PIN（未显示）';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN 未固定';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first，$second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version，构建于 $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => '应用';
+
+  @override
+  String get shareContact_title => '分享联系人';
+
+  @override
+  String get shareContact_scanHint => '扫描以添加此联系人';
+
+  @override
+  String get shareContact_copyKey => '复制公钥';
+
+  @override
+  String get shareContact_info => '要与某人直接聊天，双方的联系人中都必须有对方。';
 }

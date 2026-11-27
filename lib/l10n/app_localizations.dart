@@ -409,12 +409,6 @@ abstract class AppLocalizations {
   /// **'—'**
   String get common_notAvailable;
 
-  /// No description provided for @common_voltageValue.
-  ///
-  /// In en, this message translates to:
-  /// **'{volts} V'**
-  String common_voltageValue(String volts);
-
   /// No description provided for @common_percentValue.
   ///
   /// In en, this message translates to:
@@ -1831,12 +1825,6 @@ abstract class AppLocalizations {
   /// **'Name'**
   String get settings_infoName;
 
-  /// No description provided for @settings_infoId.
-  ///
-  /// In en, this message translates to:
-  /// **'ID'**
-  String get settings_infoId;
-
   /// No description provided for @settings_infoStatus.
   ///
   /// In en, this message translates to:
@@ -1860,24 +1848,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public key copied'**
   String get settings_publicKeyCopied;
-
-  /// No description provided for @settings_infoContactsCount.
-  ///
-  /// In en, this message translates to:
-  /// **'Contacts Count'**
-  String get settings_infoContactsCount;
-
-  /// No description provided for @settings_infoChannelCount.
-  ///
-  /// In en, this message translates to:
-  /// **'Channel Count'**
-  String get settings_infoChannelCount;
-
-  /// No description provided for @settings_infoHardware.
-  ///
-  /// In en, this message translates to:
-  /// **'Hardware'**
-  String get settings_infoHardware;
 
   /// No description provided for @settings_infoFirmware.
   ///
@@ -11975,18 +11945,6 @@ abstract class AppLocalizations {
   /// **'Contact settings saved'**
   String get settings_contactSettingsSaved;
 
-  /// No description provided for @settings_batteryToggleHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap to switch between percent and voltage'**
-  String get settings_batteryToggleHint;
-
-  /// No description provided for @settings_publicKeyCopyHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy public key'**
-  String get settings_publicKeyCopyHint;
-
   /// No description provided for @settings_locationClearHelper.
   ///
   /// In en, this message translates to:
@@ -13821,6 +13779,378 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unable to load image'**
   String get messageUrlImageLoadFailed;
+
+  /// No description provided for @deviceInfo_lastConnectedAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Last connected {time}'**
+  String deviceInfo_lastConnectedAgo(String time);
+
+  /// No description provided for @deviceInfo_lastConnectedJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Last connected just now'**
+  String get deviceInfo_lastConnectedJustNow;
+
+  /// No description provided for @deviceInfo_storage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get deviceInfo_storage;
+
+  /// No description provided for @deviceInfo_storageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'/ {total} KB'**
+  String deviceInfo_storageOf(String total);
+
+  /// No description provided for @deviceInfo_ofMax.
+  ///
+  /// In en, this message translates to:
+  /// **'/ {max}'**
+  String deviceInfo_ofMax(String max);
+
+  /// No description provided for @deviceInfo_volts.
+  ///
+  /// In en, this message translates to:
+  /// **'{volts}V'**
+  String deviceInfo_volts(String volts);
+
+  /// No description provided for @deviceInfo_device.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get deviceInfo_device;
+
+  /// No description provided for @deviceInfo_model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get deviceInfo_model;
+
+  /// No description provided for @deviceInfo_buildDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Date'**
+  String get deviceInfo_buildDate;
+
+  /// No description provided for @deviceInfo_runningSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Running Since'**
+  String get deviceInfo_runningSince;
+
+  /// No description provided for @deviceInfo_radioClock.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Clock'**
+  String get deviceInfo_radioClock;
+
+  /// No description provided for @deviceInfo_clockBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} behind'**
+  String deviceInfo_clockBehind(String duration);
+
+  /// No description provided for @deviceInfo_clockAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} ahead'**
+  String deviceInfo_clockAhead(String duration);
+
+  /// No description provided for @deviceInfo_clockInSync.
+  ///
+  /// In en, this message translates to:
+  /// **'In sync'**
+  String get deviceInfo_clockInSync;
+
+  /// No description provided for @deviceInfo_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get deviceInfo_connection;
+
+  /// No description provided for @deviceInfo_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get deviceInfo_link;
+
+  /// No description provided for @deviceInfo_connectedSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected Since'**
+  String get deviceInfo_connectedSince;
+
+  /// No description provided for @deviceInfo_lastConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Connected'**
+  String get deviceInfo_lastConnected;
+
+  /// No description provided for @deviceInfo_signal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get deviceInfo_signal;
+
+  /// No description provided for @deviceInfo_dbm.
+  ///
+  /// In en, this message translates to:
+  /// **'{dbm} dBm'**
+  String deviceInfo_dbm(int dbm);
+
+  /// No description provided for @deviceInfo_blePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth PIN'**
+  String get deviceInfo_blePin;
+
+  /// No description provided for @deviceInfo_pinFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed'**
+  String get deviceInfo_pinFixed;
+
+  /// No description provided for @deviceInfo_pinNotFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not fixed'**
+  String get deviceInfo_pinNotFixed;
+
+  /// No description provided for @deviceInfo_pinNotFixedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Random (on the radio\'s screen) or 123456'**
+  String get deviceInfo_pinNotFixedHint;
+
+  /// No description provided for @deviceInfo_showPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Show PIN'**
+  String get deviceInfo_showPin;
+
+  /// No description provided for @deviceInfo_hidePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide PIN'**
+  String get deviceInfo_hidePin;
+
+  /// No description provided for @deviceInfo_frequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get deviceInfo_frequency;
+
+  /// No description provided for @deviceInfo_khz.
+  ///
+  /// In en, this message translates to:
+  /// **'{khz} kHz'**
+  String deviceInfo_khz(String khz);
+
+  /// No description provided for @deviceInfo_txPower.
+  ///
+  /// In en, this message translates to:
+  /// **'TX Power'**
+  String get deviceInfo_txPower;
+
+  /// No description provided for @deviceInfo_hashSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Hash Size'**
+  String get deviceInfo_hashSize;
+
+  /// No description provided for @deviceInfo_repeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get deviceInfo_repeat;
+
+  /// No description provided for @deviceInfo_on.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get deviceInfo_on;
+
+  /// No description provided for @deviceInfo_off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get deviceInfo_off;
+
+  /// No description provided for @deviceInfo_airtimeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Total since the radio started'**
+  String get deviceInfo_airtimeDescription;
+
+  /// No description provided for @deviceInfo_transmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmit'**
+  String get deviceInfo_transmit;
+
+  /// No description provided for @deviceInfo_receive.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive'**
+  String get deviceInfo_receive;
+
+  /// No description provided for @deviceInfo_mesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh'**
+  String get deviceInfo_mesh;
+
+  /// No description provided for @deviceInfo_telemetryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'From your radio, updated when the page opens'**
+  String get deviceInfo_telemetryDescription;
+
+  /// No description provided for @deviceInfo_asText.
+  ///
+  /// In en, this message translates to:
+  /// **'As Text'**
+  String get deviceInfo_asText;
+
+  /// No description provided for @deviceInfo_viewAsText.
+  ///
+  /// In en, this message translates to:
+  /// **'View as Text'**
+  String get deviceInfo_viewAsText;
+
+  /// No description provided for @deviceInfo_viewAsTextSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To copy or share when asking for help'**
+  String get deviceInfo_viewAsTextSubtitle;
+
+  /// No description provided for @deviceInfo_copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Device info copied'**
+  String get deviceInfo_copied;
+
+  /// No description provided for @deviceInfo_durationDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d {hours}h'**
+  String deviceInfo_durationDays(int days, int hours);
+
+  /// No description provided for @deviceInfo_durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String deviceInfo_durationHours(int hours, int minutes);
+
+  /// No description provided for @deviceInfo_durationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m {seconds}s'**
+  String deviceInfo_durationMinutes(int minutes, int seconds);
+
+  /// No description provided for @deviceInfo_durationSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String deviceInfo_durationSeconds(int seconds);
+
+  /// No description provided for @deviceInfo_dayTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}, {time}'**
+  String deviceInfo_dayTime(String day, String time);
+
+  /// No description provided for @deviceInfo_valueWithDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} ({detail})'**
+  String deviceInfo_valueWithDetail(String value, String detail);
+
+  /// No description provided for @deviceInfo_reportConnectedVia.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected via {link}'**
+  String deviceInfo_reportConnectedVia(String link);
+
+  /// No description provided for @deviceInfo_reportDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected, last connected {time}'**
+  String deviceInfo_reportDisconnected(String time);
+
+  /// No description provided for @deviceInfo_reportPinFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'fixed PIN (not shown)'**
+  String get deviceInfo_reportPinFixed;
+
+  /// No description provided for @deviceInfo_reportPinNotFixed.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN not fixed'**
+  String get deviceInfo_reportPinNotFixed;
+
+  /// No description provided for @deviceInfo_reportJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'{first}, {second}'**
+  String deviceInfo_reportJoin(String first, String second);
+
+  /// No description provided for @deviceInfo_reportBuilt.
+  ///
+  /// In en, this message translates to:
+  /// **'{version}, built {date}'**
+  String deviceInfo_reportBuilt(String version, String date);
+
+  /// No description provided for @deviceInfo_reportRadio.
+  ///
+  /// In en, this message translates to:
+  /// **'{frequency}, BW {bandwidth} · {spreadingFactor} · CR {codingRate} · {txPower}'**
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  );
+
+  /// No description provided for @deviceInfo_reportAirtime.
+  ///
+  /// In en, this message translates to:
+  /// **'TX {transmit}, RX {receive}'**
+  String deviceInfo_reportAirtime(String transmit, String receive);
+
+  /// No description provided for @deviceInfo_app.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get deviceInfo_app;
+
+  /// No description provided for @shareContact_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Contact'**
+  String get shareContact_title;
+
+  /// No description provided for @shareContact_scanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to add this contact'**
+  String get shareContact_scanHint;
+
+  /// No description provided for @shareContact_copyKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Key'**
+  String get shareContact_copyKey;
+
+  /// No description provided for @shareContact_info.
+  ///
+  /// In en, this message translates to:
+  /// **'To chat directly with someone, they must have you in their contacts and you must have them in yours.'**
+  String get shareContact_info;
 }
 
 class _AppLocalizationsDelegate

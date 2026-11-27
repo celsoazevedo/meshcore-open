@@ -164,11 +164,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts В';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -991,9 +986,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settings_infoName => 'Имя';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => 'Статус';
 
   @override
@@ -1004,15 +996,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => 'Публичный ключ скопирован';
-
-  @override
-  String get settings_infoContactsCount => 'Количество контактов';
-
-  @override
-  String get settings_infoChannelCount => 'Количество каналов';
-
-  @override
-  String get settings_infoHardware => 'Оборудование';
 
   @override
   String get settings_infoFirmware => 'Прошивка';
@@ -7221,13 +7204,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settings_contactSettingsSaved => 'Настройки контакта сохранены';
 
   @override
-  String get settings_batteryToggleHint =>
-      'Нажмите, чтобы переключить между процентами и напряжением';
-
-  @override
-  String get settings_publicKeyCopyHint => 'Копировать публичный ключ';
-
-  @override
   String get settings_locationClearHelper =>
       'Оставьте оба поля пустыми, чтобы удалить вашу позицию.';
 
@@ -8343,4 +8319,239 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return 'Последнее подключение $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow =>
+      'Последнее подключение только что';
+
+  @override
+  String get deviceInfo_storage => 'Память';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total КБ';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '$voltsВ';
+  }
+
+  @override
+  String get deviceInfo_device => 'Устройство';
+
+  @override
+  String get deviceInfo_model => 'Модель';
+
+  @override
+  String get deviceInfo_buildDate => 'Дата сборки';
+
+  @override
+  String get deviceInfo_runningSince => 'Работает с';
+
+  @override
+  String get deviceInfo_radioClock => 'Часы радио';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return 'Отстают на $duration';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return 'Спешат на $duration';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => 'Синхронизированы';
+
+  @override
+  String get deviceInfo_connection => 'Подключение';
+
+  @override
+  String get deviceInfo_link => 'Тип';
+
+  @override
+  String get deviceInfo_connectedSince => 'Подключено с';
+
+  @override
+  String get deviceInfo_lastConnected => 'Последнее подключение';
+
+  @override
+  String get deviceInfo_signal => 'Сигнал';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm дБм';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'PIN Bluetooth';
+
+  @override
+  String get deviceInfo_pinFixed => 'Постоянный';
+
+  @override
+  String get deviceInfo_pinNotFixed => 'Не задан';
+
+  @override
+  String get deviceInfo_pinNotFixedHint =>
+      'Случайный (на экране радио) или 123456';
+
+  @override
+  String get deviceInfo_showPin => 'Показать PIN';
+
+  @override
+  String get deviceInfo_hidePin => 'Скрыть PIN';
+
+  @override
+  String get deviceInfo_frequency => 'Частота';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz кГц';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'Мощность TX';
+
+  @override
+  String get deviceInfo_hashSize => 'Размер хеша';
+
+  @override
+  String get deviceInfo_repeat => 'Ретрансляция';
+
+  @override
+  String get deviceInfo_on => 'Вкл.';
+
+  @override
+  String get deviceInfo_off => 'Выкл.';
+
+  @override
+  String get deviceInfo_airtimeDescription => 'Всего с момента запуска радио';
+
+  @override
+  String get deviceInfo_transmit => 'Передача';
+
+  @override
+  String get deviceInfo_receive => 'Приём';
+
+  @override
+  String get deviceInfo_mesh => 'Сеть';
+
+  @override
+  String get deviceInfo_telemetryDescription =>
+      'С вашего радио, обновляется при открытии страницы';
+
+  @override
+  String get deviceInfo_asText => 'В виде текста';
+
+  @override
+  String get deviceInfo_viewAsText => 'Показать в виде текста';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle =>
+      'Чтобы скопировать или поделиться при запросе помощи';
+
+  @override
+  String get deviceInfo_copied => 'Информация об устройстве скопирована';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '$daysд $hoursч';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hoursч $minutesм';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '$minutesм $secondsс';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '$secondsс';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return 'Подключено через $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return 'Отключено, последнее подключение $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => 'постоянный PIN (скрыт)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'постоянный PIN не задан';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, сборка от $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'Приложение';
+
+  @override
+  String get shareContact_title => 'Поделиться контактом';
+
+  @override
+  String get shareContact_scanHint =>
+      'Отсканируйте, чтобы добавить этот контакт';
+
+  @override
+  String get shareContact_copyKey => 'Копировать ключ';
+
+  @override
+  String get shareContact_info =>
+      'Чтобы общаться с кем-то напрямую, вы должны быть в контактах друг у друга.';
 }

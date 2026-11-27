@@ -36,6 +36,7 @@ import 'package:meshcore_open/screens/companion_radio_stats_screen.dart';
 import 'package:meshcore_open/screens/contact_settings_screen.dart';
 import 'package:meshcore_open/screens/contacts_screen.dart';
 import 'package:meshcore_open/screens/coordinate_map_screen.dart';
+import 'package:meshcore_open/screens/device_info_screen.dart';
 import 'package:meshcore_open/screens/discovery_screen.dart';
 import 'package:meshcore_open/screens/line_of_sight_map_screen.dart';
 import 'package:meshcore_open/screens/location_picker_screen.dart';
@@ -55,6 +56,7 @@ import 'package:meshcore_open/screens/repeater_status_screen.dart';
 import 'package:meshcore_open/screens/connect_screen.dart';
 import 'package:meshcore_open/screens/scanner_screen.dart';
 import 'package:meshcore_open/screens/settings_screen.dart';
+import 'package:meshcore_open/screens/share_contact_screen.dart';
 import 'package:meshcore_open/screens/tcp_screen.dart';
 import 'package:meshcore_open/screens/telemetry_screen.dart';
 import 'package:meshcore_open/screens/usb_screen.dart';
@@ -230,6 +232,10 @@ _interactions = {
       ),
     );
   },
+  // Lays out the sections below the first screen.
+  'DeviceInfo scrolled': (t, _) async {
+    await t.drag(find.byType(ListView), const Offset(0, -3000));
+  },
   'Routing sheet': (t, c) async {
     unawaited(
       ContactRoutingSheet.show(
@@ -253,6 +259,13 @@ final Map<String, _ScreenBuilder> _screens = {
   'Contacts': (_) => const ContactsScreen(),
   'Channels': (_) => const ChannelsScreen(),
   'Settings': (_) => const SettingsScreen(),
+  'DeviceInfo': (_) => const DeviceInfoScreen(),
+  'DeviceInfo scrolled': (_) => const DeviceInfoScreen(),
+  'ShareContact': (c) => ShareContactScreen(
+    name: c.deviceDisplayName,
+    publicKeyHex: c.selfPublicKeyHex,
+    type: advTypeChat,
+  ),
   'AppSettings': (_) => const AppSettingsScreen(),
   'NodeName': (_) => const NodeNameScreen(),
   'RadioSettings': (c) => RadioSettingsScreen(connector: c),
@@ -360,6 +373,7 @@ void main() {
             'ChannelChat',
             'ChessGame',
             'Settings',
+            'DeviceInfo',
             'NodeName',
             'RadioSettings',
             'LocationSettings',

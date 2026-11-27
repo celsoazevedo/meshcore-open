@@ -26,20 +26,33 @@ Every entry opens its own page. Settings stored on the radio (Node Name, Radio S
 
 ## Device Info
 
-A collapsible card showing read-only device information. **Collapsed by default** — tap the header to expand with an animated chevron indicator:
+A row with the radio's name, a Connected / Disconnected chip and a chip for the link (Bluetooth, USB or TCP). While disconnected it shows the last radio's name and when it was last connected ("Last connected 1d ago"). Tap it to open the Device Info page.
 
-| Field | Description |
+### Device Info page
+
+Read-only information about the radio. Values the app doesn't know are hidden; while disconnected the page shows a banner and only what the app remembers.
+
+| Section | Shows |
 |---|---|
-| Name | Connected device's display name |
-| ID | Device identifier |
-| Status | Connected / Disconnected |
-| Battery | Percentage or voltage (tap to toggle) |
-| Node Name | The node's mesh identity name |
-| Public Key | First 16 hex characters + "..." |
-| Contacts Count | Number of known contacts |
-| Channel Count | Number of configured channels |
+| Header | Name, status and link chips, and the public key; tap the key to open Share Contact |
+| Status | Battery (% and voltage; alert icon at 15% or below), storage, contacts and channels (used / max), radio uptime (tap to reboot the radio), how long the link has been connected |
+| Device | Model, firmware, build date, when the radio started, radio clock (how far ahead or behind the phone, and its time; tap to sync it) |
+| Connection | Link and its address, connected since (or last connected); on Bluetooth, the signal and the Bluetooth PIN |
+| Radio Settings | Frequency, bandwidth, spreading factor, coding rate, TX power, hash size, repeat, and a row to Radio Settings |
+| Airtime | Transmit and receive time since the radio started, and a row to Radio Stats |
+| Mesh | Multi-ACKs, location |
+| Telemetry | Temperatures, humidity and pressure the radio reports, and a row to Telemetry |
+| As Text | **View as Text** opens everything as plain text with Copy and Share |
 
-Battery shows an alert icon and orange text when at 15% or below. The toggle only works when millivolt data is available from the firmware.
+The page asks the radio for its uptime, clock, radio stats and telemetry when it opens. The refresh button asks again for everything on the page. Uptime needs firmware that supports stats (v1.10 or newer).
+
+Tapping the radio clock does the same as **Sync Time**, then reads the clock back. Tapping uptime does the same as **Reboot Device**, after you confirm.
+
+The Bluetooth PIN is hidden until you tap the eye icon, and never included in the text. The radio sends the PIN it has saved: a saved PIN is shown as **Fixed**; without one the radio uses a random PIN shown on its screen, or its default (usually 123456), shown as **Not fixed**.
+
+### Share Contact
+
+Your contact as a QR code that MeshCore can scan, with the public key, **Copy Key** and **Share** (shares the contact link). It works while disconnected.
 
 ---
 

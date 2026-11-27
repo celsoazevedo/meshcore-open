@@ -166,11 +166,6 @@ class AppLocalizationsSl extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent %';
   }
@@ -984,9 +979,6 @@ class AppLocalizationsSl extends AppLocalizations {
   String get settings_infoName => 'Ime';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => 'Stanje';
 
   @override
@@ -997,15 +989,6 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => 'Javni ključ kopiran';
-
-  @override
-  String get settings_infoContactsCount => 'Število stikov';
-
-  @override
-  String get settings_infoChannelCount => 'Število kanalov';
-
-  @override
-  String get settings_infoHardware => 'Hardver';
 
   @override
   String get settings_infoFirmware => 'Pravilnik';
@@ -7182,13 +7165,6 @@ class AppLocalizationsSl extends AppLocalizations {
   String get settings_contactSettingsSaved => 'Nastavitve stika shranjene';
 
   @override
-  String get settings_batteryToggleHint =>
-      'Tapnite za preklop med odstotki in napetostjo';
-
-  @override
-  String get settings_publicKeyCopyHint => 'Kopiraj javni ključ';
-
-  @override
   String get settings_locationClearHelper =>
       'Obe polji pustite prazni, če želite odstraniti svojo lokacijo.';
 
@@ -8302,4 +8278,237 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return 'Nazadnje povezano $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => 'Nazadnje povezano pravkar';
+
+  @override
+  String get deviceInfo_storage => 'Pomnilnik';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => 'Naprava';
+
+  @override
+  String get deviceInfo_model => 'Model';
+
+  @override
+  String get deviceInfo_buildDate => 'Datum izdelave';
+
+  @override
+  String get deviceInfo_runningSince => 'Deluje od';
+
+  @override
+  String get deviceInfo_radioClock => 'Ura radia';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return 'Zaostaja $duration';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return 'Prehiteva $duration';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => 'Usklajeno';
+
+  @override
+  String get deviceInfo_connection => 'Povezava';
+
+  @override
+  String get deviceInfo_link => 'Vrsta povezave';
+
+  @override
+  String get deviceInfo_connectedSince => 'Povezano od';
+
+  @override
+  String get deviceInfo_lastConnected => 'Nazadnje povezano';
+
+  @override
+  String get deviceInfo_signal => 'Signal';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'Bluetooth PIN';
+
+  @override
+  String get deviceInfo_pinFixed => 'Fiksen';
+
+  @override
+  String get deviceInfo_pinNotFixed => 'Ni fiksen';
+
+  @override
+  String get deviceInfo_pinNotFixedHint =>
+      'Naključen (na zaslonu radia) ali 123456';
+
+  @override
+  String get deviceInfo_showPin => 'Prikaži PIN';
+
+  @override
+  String get deviceInfo_hidePin => 'Skrij PIN';
+
+  @override
+  String get deviceInfo_frequency => 'Frekvenca';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'Moč TX';
+
+  @override
+  String get deviceInfo_hashSize => 'Velikost zgoščene poti';
+
+  @override
+  String get deviceInfo_repeat => 'Ponavljanje';
+
+  @override
+  String get deviceInfo_on => 'Vklopljeno';
+
+  @override
+  String get deviceInfo_off => 'Izklopljeno';
+
+  @override
+  String get deviceInfo_airtimeDescription => 'Skupno od zagona radia';
+
+  @override
+  String get deviceInfo_transmit => 'Oddajanje';
+
+  @override
+  String get deviceInfo_receive => 'Sprejemanje';
+
+  @override
+  String get deviceInfo_mesh => 'Mreža';
+
+  @override
+  String get deviceInfo_telemetryDescription =>
+      'Z vašega radia, posodobljeno ob odprtju strani';
+
+  @override
+  String get deviceInfo_asText => 'Kot besedilo';
+
+  @override
+  String get deviceInfo_viewAsText => 'Prikaži kot besedilo';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle =>
+      'Za kopiranje ali deljenje, ko prosite za pomoč';
+
+  @override
+  String get deviceInfo_copied => 'Informacije o napravi kopirane';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '$days d $hours h';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '$minutes min $seconds s';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return 'Povezano prek $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return 'Prekinjeno, nazadnje povezano $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => 'fiksen PIN (ni prikazan)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN ni fiksen';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, izdelano $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'Aplikacija';
+
+  @override
+  String get shareContact_title => 'Deli stik';
+
+  @override
+  String get shareContact_scanHint => 'Skenirajte za dodajanje tega stika';
+
+  @override
+  String get shareContact_copyKey => 'Kopiraj ključ';
+
+  @override
+  String get shareContact_info =>
+      'Za neposreden klepet z nekom morata imeti drug drugega med stiki.';
 }

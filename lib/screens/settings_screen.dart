@@ -1,22 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../connector/meshcore_connector.dart';
-import '../connector/meshcore_protocol.dart';
 import '../l10n/l10n.dart';
-import '../theme/mesh_theme.dart';
 import '../helpers/snack_bar_builder.dart';
 import '../widgets/confirm_clear_dialog.dart';
 import '../widgets/mesh_nav_tile.dart';
 import '../widgets/adaptive_app_bar_title.dart';
 import '../widgets/mesh_ui.dart';
-import '../widgets/settings_reveal.dart';
 import 'about_screen.dart';
 import 'app_settings_screen.dart';
 import 'contact_settings_screen.dart';
+import 'device_info_screen.dart';
 import 'location_settings_screen.dart';
 import 'node_name_screen.dart';
 import 'privacy_settings_screen.dart';
@@ -30,6 +27,7 @@ import '../widgets/sync_progress_overlay.dart';
 import 'region_management_screen.dart';
 import 'backup_restore_screen.dart';
 import 'export_screen.dart';
+import '../utils/radio_actions.dart';
 import '../utils/radio_guard.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -40,8 +38,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _showBatteryVoltage = false;
-  bool _deviceInfoExpanded = false;
   // Radio actions in progress: the app bar, plus the row spinner while a
   // reply is awaited.
   bool _refreshingContacts = false;
@@ -75,19 +71,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: EdgeInsets.zero,
               child: _selectConnector(
                 (c) => (
-                  c.deviceDisplayName,
                   c.isConnected,
-                  c.deviceIdLabel,
-                  c.batteryPercent,
-                  c.batteryMillivolts,
-                  c.manufacturerName,
-                  c.firmwareVersionString,
-                  c.selfName,
-                  c.selfPublicKey == null ? null : c.selfPublicKeyHex,
-                  c.contacts.length,
-                  c.channels.length,
+                  c.deviceDisplayName,
+                  c.lastRadioName,
+                  c.lastRadio?.savedAt,
+                  c.lastRadio?.transport,
+                  c.activeTransport,
                 ),
-                _buildIdentityCardContent,
+                (context, connector) =>
+                    DeviceInfoSettingsRow(connector: connector),
               ),
             ),
 
@@ -232,297 +224,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   /// sent while disconnected and a success message would be a lie.
   bool _ensureConnected(BuildContext context, MeshCoreConnector connector) =>
       ensureRadioConnected(context);
-
-  Widget _buildIdentityCardContent(
-    BuildContext context,
-    MeshCoreConnector connector,
-  ) {
-    final l10n = context.l10n;
-    final scheme = Theme.of(context).colorScheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Header row: device name + status chip + expand toggle
-        InkWell(
-          onTap: () {
-            setState(() {
-              _deviceInfoExpanded = !_deviceInfoExpanded;
-            });
-          },
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        connector.deviceDisplayName,
-                        style: MeshTheme.mono(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: scheme.onSurface,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      StatusChip(
-                        label: connector.isConnected
-                            ? l10n.common_connected
-                            : l10n.common_disconnected,
-                        color: connector.isConnected
-                            ? scheme.primary
-                            : scheme.onSurfaceVariant,
-                        pulse: connector.isConnected,
-                      ),
-                    ],
-                  ),
-                ),
-                AnimatedRotation(
-                  turns: _deviceInfoExpanded ? 0.5 : 0,
-                  duration: const Duration(milliseconds: 200),
-                  child: Icon(
-                    Icons.expand_more,
-                    color: scheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        RevealOnEnable(
-          visible: _deviceInfoExpanded,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Divider(height: 1),
-                const SizedBox(height: 10),
-                _infoRow(
-                  context,
-                  label: l10n.settings_infoId,
-                  value: connector.deviceIdLabel,
-                ),
-                _buildBatteryInfoRow(context, connector),
-                if (connector.manufacturerName != null)
-                  _infoRow(
-                    context,
-                    label: l10n.settings_infoHardware,
-                    value: connector.manufacturerName!,
-                  ),
-                if (connector.firmwareVersionString != null)
-                  _infoRow(
-                    context,
-                    label: l10n.settings_infoFirmware,
-                    value: connector.firmwareVersionString!,
-                  ),
-                if (connector.selfName != null)
-                  _infoRow(
-                    context,
-                    label: l10n.settings_nodeName,
-                    value: connector.selfName!,
-                  ),
-                if (connector.selfPublicKey != null)
-                  _publicKeyRow(
-                    context,
-                    label: l10n.settings_infoPublicKey,
-                    publicKeyHex: pubKeyToHex(connector.selfPublicKey!),
-                  ),
-                _infoRow(
-                  context,
-                  label: l10n.settings_infoContactsCount,
-                  value: '${connector.contacts.length}',
-                ),
-                _infoRow(
-                  context,
-                  label: l10n.settings_infoChannelCount,
-                  value: '${connector.channels.length}',
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Copies the key rendered in the row, not whatever the connector holds when
-  /// the tap lands: a disconnect in between clears `selfPublicKey`.
-  Widget _publicKeyRow(
-    BuildContext context, {
-    required String label,
-    required String publicKeyHex,
-  }) {
-    return _infoRow(
-      context,
-      label: label,
-      value: publicKeyHex,
-      mono: true,
-      semanticsHint: context.l10n.settings_publicKeyCopyHint,
-      trailing: Icon(
-        Icons.copy_outlined,
-        size: 20,
-        color: Theme.of(context).colorScheme.onSurfaceVariant,
-      ),
-      onTap: () => _copyPublicKey(context, publicKeyHex),
-    );
-  }
-
-  Future<void> _copyPublicKey(BuildContext context, String publicKeyHex) async {
-    await Clipboard.setData(ClipboardData(text: publicKeyHex));
-    if (!context.mounted) return;
-    showDismissibleSnackBar(
-      context,
-      content: Text(context.l10n.settings_publicKeyCopied),
-    );
-  }
-
-  Widget _infoRow(
-    BuildContext context, {
-    required String label,
-    required String value,
-    bool mono = false,
-    Widget? leading,
-    Color? valueColor,
-    Widget? trailing,
-    String? semanticsHint,
-    VoidCallback? onTap,
-  }) {
-    final scheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    Widget content = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              if (leading != null) ...[leading, const SizedBox(width: 6)],
-              Text(
-                label,
-                style: textTheme.bodyMedium?.copyWith(
-                  color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 2),
-          mono
-              ? Text(
-                  value,
-                  style: MeshTheme.mono(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: valueColor ?? scheme.onSurface,
-                  ),
-                )
-              : Text(
-                  value,
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: valueColor,
-                  ),
-                ),
-        ],
-      ),
-    );
-
-    if (trailing != null) {
-      content = Row(
-        children: [
-          Expanded(child: content),
-          const SizedBox(width: 8),
-          trailing,
-        ],
-      );
-    }
-
-    if (onTap != null) {
-      return Semantics(
-        button: true,
-        hint: semanticsHint,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(MeshRadii.xs),
-          onTap: onTap,
-          child: content,
-        ),
-      );
-    }
-    return content;
-  }
-
-  Widget _buildBatteryInfoRow(
-    BuildContext context,
-    MeshCoreConnector connector,
-  ) {
-    final l10n = context.l10n;
-    final percent = connector.batteryPercent;
-    final millivolts = connector.batteryMillivolts;
-
-    final String displayValue;
-    if (millivolts == null) {
-      displayValue = l10n.common_notAvailable;
-    } else if (_showBatteryVoltage) {
-      displayValue = l10n.common_voltageValue(
-        (millivolts / 1000.0).toStringAsFixed(2),
-      );
-    } else {
-      displayValue = percent != null
-          ? l10n.common_percentValue(percent)
-          : l10n.common_notAvailable;
-    }
-
-    final IconData icon;
-    final Color? iconColor;
-    final Color? valueColor;
-
-    if (percent == null) {
-      icon = Icons.battery_unknown;
-      iconColor = Theme.of(context).colorScheme.onSurfaceVariant;
-      valueColor = null;
-    } else if (percent <= 15) {
-      icon = Icons.battery_alert;
-      iconColor = Theme.of(context).colorScheme.tertiary;
-      valueColor = Theme.of(context).colorScheme.tertiary;
-    } else {
-      icon = Icons.battery_full;
-      iconColor = null;
-      valueColor = null;
-    }
-
-    return _infoRow(
-      context,
-      semanticsHint: millivolts != null
-          ? l10n.settings_batteryToggleHint
-          : null,
-      label: l10n.settings_infoBattery,
-      value: displayValue,
-      leading: Icon(icon, size: 20, color: iconColor),
-      valueColor: valueColor,
-      trailing: millivolts != null
-          ? Tooltip(
-              message: l10n.settings_batteryToggleHint,
-              child: Icon(
-                Icons.swap_horiz,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            )
-          : null,
-      onTap: millivolts != null
-          ? () {
-              setState(() {
-                _showBatteryVoltage = !_showBatteryVoltage;
-              });
-            }
-          : null,
-    );
-  }
 
   Widget _buildNodeCardContent(
     BuildContext context,
@@ -710,25 +411,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     BuildContext context,
     MeshCoreConnector connector,
   ) async {
-    final l10n = context.l10n;
     if (!_ensureConnected(context, connector)) return;
     // The top bar shows the time going to the radio; no reply is awaited.
     setState(() => _syncingTime = true);
-    try {
-      await connector.syncTime();
-      if (!context.mounted) return;
-      showDismissibleSnackBar(context, content: Text(l10n.settings_timeSent));
-    } catch (e) {
-      if (!context.mounted) return;
-      showDismissibleSnackBar(
-        context,
-        content: Text(l10n.settings_error(e.toString())),
-      );
-    } finally {
-      // However fast the send, let a frame draw the bar first.
-      await WidgetsBinding.instance.endOfFrame;
-      if (mounted) setState(() => _syncingTime = false);
-    }
+    await syncRadioTime(context, connector);
+    // However fast the send, let a frame draw the bar first.
+    await WidgetsBinding.instance.endOfFrame;
+    if (mounted) setState(() => _syncingTime = false);
   }
 
   Future<void> _refreshContacts(
@@ -741,7 +430,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       await connector.getContacts();
       // END_OF_CONTACTS sets hasLoadedContacts; a stalled sync ends without.
-      await _untilConnector(connector, () => !connector.isLoadingContacts);
+      await waitForConnector(connector, () => !connector.isLoadingContacts);
     } catch (e) {
       if (context.mounted) {
         showDismissibleSnackBar(
@@ -787,59 +476,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     BuildContext context,
     MeshCoreConnector connector,
   ) async {
-    final l10n = context.l10n;
-    final confirmed = await showConfirmClearDialog(
-      context,
-      title: l10n.settings_rebootDevice,
-      message: l10n.settings_rebootDeviceConfirm,
-      confirmLabel: l10n.common_reboot,
-      warning: true,
-    );
-    if (!confirmed || !context.mounted) return;
-    if (!_ensureConnected(context, connector)) return;
-    try {
-      await connector.rebootDevice();
-    } catch (e) {
-      if (context.mounted) {
-        showDismissibleSnackBar(
-          context,
-          content: Text(l10n.settings_error(e.toString())),
-        );
-      }
-      return;
-    }
-    if (!context.mounted) return;
-    showDismissibleSnackBar(context, content: Text(l10n.settings_rebootSent));
+    if (!await confirmRadioReboot(context, connector) || !mounted) return;
     // No reply comes; busy until the radio drops off, at most 15 s.
     setState(() => _rebooting = true);
-    await _untilConnector(
+    await waitForConnector(
       connector,
       () => !connector.isConnected,
       timeout: const Duration(seconds: 15),
     );
     if (mounted) setState(() => _rebooting = false);
-  }
-
-  /// Completes once [done] is true, checked on each connector change, or
-  /// after [timeout].
-  Future<void> _untilConnector(
-    MeshCoreConnector connector,
-    bool Function() done, {
-    Duration? timeout,
-  }) async {
-    final completer = Completer<void>();
-    void check() {
-      if (done() && !completer.isCompleted) completer.complete();
-    }
-
-    connector.addListener(check);
-    check();
-    try {
-      await (timeout == null
-          ? completer.future
-          : completer.future.timeout(timeout, onTimeout: () {}));
-    } finally {
-      connector.removeListener(check);
-    }
   }
 }

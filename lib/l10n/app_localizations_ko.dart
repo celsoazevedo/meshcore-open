@@ -160,11 +160,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -935,9 +930,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings_infoName => '이름';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => '상태';
 
   @override
@@ -948,15 +940,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => '공개 키가 복사되었습니다';
-
-  @override
-  String get settings_infoContactsCount => '연락처 수';
-
-  @override
-  String get settings_infoChannelCount => '채널 수';
-
-  @override
-  String get settings_infoHardware => '하드웨어';
 
   @override
   String get settings_infoFirmware => '펌웨어';
@@ -6883,12 +6866,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings_contactSettingsSaved => '연락처 설정을 저장했습니다';
 
   @override
-  String get settings_batteryToggleHint => '탭하여 퍼센트와 전압 전환';
-
-  @override
-  String get settings_publicKeyCopyHint => '공개 키 복사';
-
-  @override
   String get settings_locationClearHelper => '위치를 삭제하려면 두 입력란을 모두 비워 두세요.';
 
   @override
@@ -7961,4 +7938,234 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return '마지막 연결: $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => '마지막 연결: 방금';
+
+  @override
+  String get deviceInfo_storage => '저장 공간';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => '장치';
+
+  @override
+  String get deviceInfo_model => '모델';
+
+  @override
+  String get deviceInfo_buildDate => '빌드 날짜';
+
+  @override
+  String get deviceInfo_runningSince => '가동 시작';
+
+  @override
+  String get deviceInfo_radioClock => '무전기 시계';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return '$duration 느림';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return '$duration 빠름';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => '동기화됨';
+
+  @override
+  String get deviceInfo_connection => '연결';
+
+  @override
+  String get deviceInfo_link => '연결 방식';
+
+  @override
+  String get deviceInfo_connectedSince => '연결 시작';
+
+  @override
+  String get deviceInfo_lastConnected => '마지막 연결';
+
+  @override
+  String get deviceInfo_signal => '신호';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => '블루투스 PIN';
+
+  @override
+  String get deviceInfo_pinFixed => '고정';
+
+  @override
+  String get deviceInfo_pinNotFixed => '고정 안 됨';
+
+  @override
+  String get deviceInfo_pinNotFixedHint => '무작위(무전기 화면에 표시) 또는 123456';
+
+  @override
+  String get deviceInfo_showPin => 'PIN 보기';
+
+  @override
+  String get deviceInfo_hidePin => 'PIN 숨기기';
+
+  @override
+  String get deviceInfo_frequency => '주파수';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => '송신 전력';
+
+  @override
+  String get deviceInfo_hashSize => '해시 크기';
+
+  @override
+  String get deviceInfo_repeat => '반복 모드';
+
+  @override
+  String get deviceInfo_on => '켬';
+
+  @override
+  String get deviceInfo_off => '끔';
+
+  @override
+  String get deviceInfo_airtimeDescription => '무전기 시작 이후 합계';
+
+  @override
+  String get deviceInfo_transmit => '송신';
+
+  @override
+  String get deviceInfo_receive => '수신';
+
+  @override
+  String get deviceInfo_mesh => '메시';
+
+  @override
+  String get deviceInfo_telemetryDescription => '내 무전기에서 읽음, 페이지를 열 때 업데이트';
+
+  @override
+  String get deviceInfo_asText => '텍스트 형식';
+
+  @override
+  String get deviceInfo_viewAsText => '텍스트로 보기';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle => '도움을 요청할 때 복사하거나 공유하기 위해';
+
+  @override
+  String get deviceInfo_copied => '장치 정보가 복사되었습니다';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '$days일 $hours시간';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hours시간 $minutes분';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '$minutes분 $seconds초';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '$seconds초';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return '연결됨: $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return '연결 해제됨, 마지막 연결: $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => '고정 PIN(표시 안 함)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN 고정 안 됨';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, $date 빌드';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => '앱';
+
+  @override
+  String get shareContact_title => '연락처 공유';
+
+  @override
+  String get shareContact_scanHint => '스캔하여 이 연락처 추가';
+
+  @override
+  String get shareContact_copyKey => '키 복사';
+
+  @override
+  String get shareContact_info =>
+      '누군가와 직접 채팅하려면 상대방의 연락처에 내가 있고 내 연락처에도 상대방이 있어야 합니다.';
 }

@@ -164,11 +164,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -984,9 +979,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get settings_infoName => 'Név';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => 'Állapot';
 
   @override
@@ -997,15 +989,6 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => 'Nyilvános kulcs másolva';
-
-  @override
-  String get settings_infoContactsCount => 'Névjegyek száma';
-
-  @override
-  String get settings_infoChannelCount => 'Csatornaszám';
-
-  @override
-  String get settings_infoHardware => 'Hardverő';
 
   @override
   String get settings_infoFirmware => 'Firmver';
@@ -7188,13 +7171,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get settings_contactSettingsSaved => 'Kapcsolatbeállítások mentve';
 
   @override
-  String get settings_batteryToggleHint =>
-      'Koppintson a százalék és a feszültség közötti váltáshoz';
-
-  @override
-  String get settings_publicKeyCopyHint => 'Nyilvános kulcs másolása';
-
-  @override
   String get settings_locationClearHelper =>
       'A helyzet törléséhez hagyja üresen mindkét mezőt.';
 
@@ -8301,4 +8277,237 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return 'Utoljára csatlakozva $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => 'Utoljára csatlakozva az imént';
+
+  @override
+  String get deviceInfo_storage => 'Tárhely';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => 'Eszköz';
+
+  @override
+  String get deviceInfo_model => 'Modell';
+
+  @override
+  String get deviceInfo_buildDate => 'Build dátuma';
+
+  @override
+  String get deviceInfo_runningSince => 'Indítás ideje';
+
+  @override
+  String get deviceInfo_radioClock => 'Rádió órája';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return 'Késik $duration';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return 'Siet $duration';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => 'Szinkronban';
+
+  @override
+  String get deviceInfo_connection => 'Kapcsolat';
+
+  @override
+  String get deviceInfo_link => 'Típus';
+
+  @override
+  String get deviceInfo_connectedSince => 'Csatlakozás ideje';
+
+  @override
+  String get deviceInfo_lastConnected => 'Utolsó csatlakozás';
+
+  @override
+  String get deviceInfo_signal => 'Jel';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'Bluetooth PIN';
+
+  @override
+  String get deviceInfo_pinFixed => 'Rögzített';
+
+  @override
+  String get deviceInfo_pinNotFixed => 'Nem rögzített';
+
+  @override
+  String get deviceInfo_pinNotFixedHint =>
+      'Véletlenszerű (a rádió kijelzőjén) vagy 123456';
+
+  @override
+  String get deviceInfo_showPin => 'PIN megjelenítése';
+
+  @override
+  String get deviceInfo_hidePin => 'PIN elrejtése';
+
+  @override
+  String get deviceInfo_frequency => 'Frekvencia';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'TX teljesítmény';
+
+  @override
+  String get deviceInfo_hashSize => 'Hash mérete';
+
+  @override
+  String get deviceInfo_repeat => 'Ismétlés';
+
+  @override
+  String get deviceInfo_on => 'Be';
+
+  @override
+  String get deviceInfo_off => 'Ki';
+
+  @override
+  String get deviceInfo_airtimeDescription => 'Összesen a rádió indítása óta';
+
+  @override
+  String get deviceInfo_transmit => 'Adás';
+
+  @override
+  String get deviceInfo_receive => 'Vétel';
+
+  @override
+  String get deviceInfo_mesh => 'Mesh';
+
+  @override
+  String get deviceInfo_telemetryDescription =>
+      'A saját rádióból, az oldal megnyitásakor frissül';
+
+  @override
+  String get deviceInfo_asText => 'Szövegként';
+
+  @override
+  String get deviceInfo_viewAsText => 'Megtekintés szövegként';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle =>
+      'Másoláshoz vagy megosztáshoz segítségkéréskor';
+
+  @override
+  String get deviceInfo_copied => 'Eszközadatok másolva';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '${days}n $hoursó';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hoursó ${minutes}p';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '${minutes}p ${seconds}s';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return 'Csatlakozva a következőn keresztül: $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return 'Szétkapcsolva, utoljára csatlakozva: $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => 'rögzített PIN (rejtve)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN nincs rögzítve';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, build: $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'Alkalmazás';
+
+  @override
+  String get shareContact_title => 'Névjegy megosztása';
+
+  @override
+  String get shareContact_scanHint => 'Beolvasással hozzáadható ez a névjegy';
+
+  @override
+  String get shareContact_copyKey => 'Kulcs másolása';
+
+  @override
+  String get shareContact_info =>
+      'A közvetlen csevegéshez mindkét félnek szerepelnie kell a másik kapcsolatai között.';
 }

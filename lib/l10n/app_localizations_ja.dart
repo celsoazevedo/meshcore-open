@@ -160,11 +160,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -934,9 +929,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings_infoName => '名前';
 
   @override
-  String get settings_infoId => 'ID';
-
-  @override
   String get settings_infoStatus => 'ステータス';
 
   @override
@@ -947,15 +939,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => '公開鍵がコピーされました';
-
-  @override
-  String get settings_infoContactsCount => '連絡先数';
-
-  @override
-  String get settings_infoChannelCount => 'チャンネル数';
-
-  @override
-  String get settings_infoHardware => 'ハードウェア';
 
   @override
   String get settings_infoFirmware => 'ファームウェア';
@@ -6872,12 +6855,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings_contactSettingsSaved => '連絡先設定を保存しました';
 
   @override
-  String get settings_batteryToggleHint => 'タップでパーセントと電圧を切り替え';
-
-  @override
-  String get settings_publicKeyCopyHint => '公開鍵をコピー';
-
-  @override
   String get settings_locationClearHelper => '位置情報を削除するには、両方の欄を空にしてください。';
 
   @override
@@ -7952,4 +7929,234 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return '最終接続: $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow => '最終接続: たった今';
+
+  @override
+  String get deviceInfo_storage => 'ストレージ';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => 'デバイス';
+
+  @override
+  String get deviceInfo_model => 'モデル';
+
+  @override
+  String get deviceInfo_buildDate => 'ビルド日';
+
+  @override
+  String get deviceInfo_runningSince => '起動日時';
+
+  @override
+  String get deviceInfo_radioClock => '無線機の時刻';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return '$duration遅れ';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return '$duration進み';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => '同期済み';
+
+  @override
+  String get deviceInfo_connection => '接続';
+
+  @override
+  String get deviceInfo_link => '接続方式';
+
+  @override
+  String get deviceInfo_connectedSince => '接続開始';
+
+  @override
+  String get deviceInfo_lastConnected => '最終接続';
+
+  @override
+  String get deviceInfo_signal => '信号';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'Bluetooth PIN';
+
+  @override
+  String get deviceInfo_pinFixed => '固定';
+
+  @override
+  String get deviceInfo_pinNotFixed => '固定なし';
+
+  @override
+  String get deviceInfo_pinNotFixedHint => 'ランダム（無線機の画面に表示）または 123456';
+
+  @override
+  String get deviceInfo_showPin => 'PINを表示';
+
+  @override
+  String get deviceInfo_hidePin => 'PINを非表示';
+
+  @override
+  String get deviceInfo_frequency => '周波数';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'TX 信号電力';
+
+  @override
+  String get deviceInfo_hashSize => 'ハッシュサイズ';
+
+  @override
+  String get deviceInfo_repeat => '中継';
+
+  @override
+  String get deviceInfo_on => 'オン';
+
+  @override
+  String get deviceInfo_off => 'オフ';
+
+  @override
+  String get deviceInfo_airtimeDescription => '無線機の起動以降の合計';
+
+  @override
+  String get deviceInfo_transmit => '送信';
+
+  @override
+  String get deviceInfo_receive => '受信';
+
+  @override
+  String get deviceInfo_mesh => 'メッシュ';
+
+  @override
+  String get deviceInfo_telemetryDescription => '自分の無線機から取得、ページを開くと更新';
+
+  @override
+  String get deviceInfo_asText => 'テキスト形式';
+
+  @override
+  String get deviceInfo_viewAsText => 'テキストで表示';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle => 'ヘルプを求めるときのコピーや共有用';
+
+  @override
+  String get deviceInfo_copied => 'デバイス情報をコピーしました';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '$days日$hours時間';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '$hours時間$minutes分';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '$minutes分$seconds秒';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '$seconds秒';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return '$link で接続済み';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return '切断済み、最終接続: $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => '固定 PIN（非表示）';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN 固定なし';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first、$second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version（$date ビルド）';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'アプリ';
+
+  @override
+  String get shareContact_title => '連絡先を共有';
+
+  @override
+  String get shareContact_scanHint => 'スキャンしてこの連絡先を追加';
+
+  @override
+  String get shareContact_copyKey => '鍵をコピー';
+
+  @override
+  String get shareContact_info =>
+      '相手と直接チャットするには、相手の連絡先にあなたが、あなたの連絡先に相手が登録されている必要があります。';
 }

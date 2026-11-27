@@ -165,11 +165,6 @@ class AppLocalizationsSk extends AppLocalizations {
   String get common_notAvailable => '—';
 
   @override
-  String common_voltageValue(String volts) {
-    return '$volts V';
-  }
-
-  @override
   String common_percentValue(int percent) {
     return '$percent%';
   }
@@ -982,9 +977,6 @@ class AppLocalizationsSk extends AppLocalizations {
   String get settings_infoName => 'Meno';
 
   @override
-  String get settings_infoId => 'Identifikátor';
-
-  @override
   String get settings_infoStatus => 'Stav';
 
   @override
@@ -995,15 +987,6 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get settings_publicKeyCopied => 'Verejný kľúč skopírovaný';
-
-  @override
-  String get settings_infoContactsCount => 'Počet kontaktov';
-
-  @override
-  String get settings_infoChannelCount => 'Počet kanálov';
-
-  @override
-  String get settings_infoHardware => 'Hardware';
 
   @override
   String get settings_infoFirmware => 'Firmware';
@@ -7187,13 +7170,6 @@ class AppLocalizationsSk extends AppLocalizations {
       'Nastavenia kontaktu boli uložené';
 
   @override
-  String get settings_batteryToggleHint =>
-      'Klepnutím prepnete medzi percentami a napätím';
-
-  @override
-  String get settings_publicKeyCopyHint => 'Kopírovať verejný kľúč';
-
-  @override
   String get settings_locationClearHelper =>
       'Ak chcete odstrániť svoju polohu, nechajte obe polia prázdne.';
 
@@ -8301,4 +8277,238 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get messageUrlImageLoadFailed => 'Unable to load image';
+
+  @override
+  String deviceInfo_lastConnectedAgo(String time) {
+    return 'Naposledy pripojené $time';
+  }
+
+  @override
+  String get deviceInfo_lastConnectedJustNow =>
+      'Naposledy pripojené práve teraz';
+
+  @override
+  String get deviceInfo_storage => 'Úložisko';
+
+  @override
+  String deviceInfo_storageOf(String total) {
+    return '/ $total KB';
+  }
+
+  @override
+  String deviceInfo_ofMax(String max) {
+    return '/ $max';
+  }
+
+  @override
+  String deviceInfo_volts(String volts) {
+    return '${volts}V';
+  }
+
+  @override
+  String get deviceInfo_device => 'Zariadenie';
+
+  @override
+  String get deviceInfo_model => 'Model';
+
+  @override
+  String get deviceInfo_buildDate => 'Dátum zostavenia';
+
+  @override
+  String get deviceInfo_runningSince => 'Beží od';
+
+  @override
+  String get deviceInfo_radioClock => 'Hodiny rádia';
+
+  @override
+  String deviceInfo_clockBehind(String duration) {
+    return 'Meškajú o $duration';
+  }
+
+  @override
+  String deviceInfo_clockAhead(String duration) {
+    return 'Idú napred o $duration';
+  }
+
+  @override
+  String get deviceInfo_clockInSync => 'Synchronizované';
+
+  @override
+  String get deviceInfo_connection => 'Pripojenie';
+
+  @override
+  String get deviceInfo_link => 'Typ';
+
+  @override
+  String get deviceInfo_connectedSince => 'Pripojené od';
+
+  @override
+  String get deviceInfo_lastConnected => 'Naposledy pripojené';
+
+  @override
+  String get deviceInfo_signal => 'Signál';
+
+  @override
+  String deviceInfo_dbm(int dbm) {
+    return '$dbm dBm';
+  }
+
+  @override
+  String get deviceInfo_blePin => 'PIN Bluetooth';
+
+  @override
+  String get deviceInfo_pinFixed => 'Pevný';
+
+  @override
+  String get deviceInfo_pinNotFixed => 'Nie je pevný';
+
+  @override
+  String get deviceInfo_pinNotFixedHint =>
+      'Náhodný (na displeji rádia) alebo 123456';
+
+  @override
+  String get deviceInfo_showPin => 'Zobraziť PIN';
+
+  @override
+  String get deviceInfo_hidePin => 'Skryť PIN';
+
+  @override
+  String get deviceInfo_frequency => 'Frekvencia';
+
+  @override
+  String deviceInfo_khz(String khz) {
+    return '$khz kHz';
+  }
+
+  @override
+  String get deviceInfo_txPower => 'Výkon TX';
+
+  @override
+  String get deviceInfo_hashSize => 'Veľkosť hashu';
+
+  @override
+  String get deviceInfo_repeat => 'Opakovanie';
+
+  @override
+  String get deviceInfo_on => 'Zapnuté';
+
+  @override
+  String get deviceInfo_off => 'Vypnuté';
+
+  @override
+  String get deviceInfo_airtimeDescription => 'Celkovo od spustenia rádia';
+
+  @override
+  String get deviceInfo_transmit => 'Vysielanie';
+
+  @override
+  String get deviceInfo_receive => 'Príjem';
+
+  @override
+  String get deviceInfo_mesh => 'Sieť';
+
+  @override
+  String get deviceInfo_telemetryDescription =>
+      'Z vášho rádia, aktualizuje sa pri otvorení stránky';
+
+  @override
+  String get deviceInfo_asText => 'Ako text';
+
+  @override
+  String get deviceInfo_viewAsText => 'Zobraziť ako text';
+
+  @override
+  String get deviceInfo_viewAsTextSubtitle =>
+      'Na skopírovanie alebo zdieľanie pri žiadosti o pomoc';
+
+  @override
+  String get deviceInfo_copied => 'Informácie o zariadení skopírované';
+
+  @override
+  String deviceInfo_durationDays(int days, int hours) {
+    return '${days}d ${hours}h';
+  }
+
+  @override
+  String deviceInfo_durationHours(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String deviceInfo_durationMinutes(int minutes, int seconds) {
+    return '${minutes}m ${seconds}s';
+  }
+
+  @override
+  String deviceInfo_durationSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String deviceInfo_dayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String deviceInfo_valueWithDetail(String value, String detail) {
+    return '$value ($detail)';
+  }
+
+  @override
+  String deviceInfo_reportConnectedVia(String link) {
+    return 'Pripojené cez $link';
+  }
+
+  @override
+  String deviceInfo_reportDisconnected(String time) {
+    return 'Odpojené, naposledy pripojené $time';
+  }
+
+  @override
+  String get deviceInfo_reportPinFixed => 'pevný PIN (skrytý)';
+
+  @override
+  String get deviceInfo_reportPinNotFixed => 'PIN nie je pevný';
+
+  @override
+  String deviceInfo_reportJoin(String first, String second) {
+    return '$first, $second';
+  }
+
+  @override
+  String deviceInfo_reportBuilt(String version, String date) {
+    return '$version, zostavené $date';
+  }
+
+  @override
+  String deviceInfo_reportRadio(
+    String frequency,
+    String bandwidth,
+    String spreadingFactor,
+    String codingRate,
+    String txPower,
+  ) {
+    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
+  }
+
+  @override
+  String deviceInfo_reportAirtime(String transmit, String receive) {
+    return 'TX $transmit, RX $receive';
+  }
+
+  @override
+  String get deviceInfo_app => 'Aplikácia';
+
+  @override
+  String get shareContact_title => 'Zdieľať kontakt';
+
+  @override
+  String get shareContact_scanHint => 'Naskenujte a pridajte tento kontakt';
+
+  @override
+  String get shareContact_copyKey => 'Kopírovať kľúč';
+
+  @override
+  String get shareContact_info =>
+      'Ak chcete s niekým písať priamo, musíte sa mať navzájom v kontaktoch.';
 }

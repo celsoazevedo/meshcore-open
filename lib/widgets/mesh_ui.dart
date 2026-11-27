@@ -258,6 +258,7 @@ class StatusChip extends StatelessWidget {
 }
 
 /// Compact metric tile: icon, mono value (+ optional unit), small label.
+/// With [onTap], a chevron ends the label row.
 class StatTile extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -303,6 +304,12 @@ class StatTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+              if (onTap != null)
+                Icon(
+                  Icons.chevron_right,
+                  size: 20,
+                  color: scheme.onSurfaceVariant,
+                ),
             ],
           ),
           const SizedBox(height: 6),
