@@ -7808,6 +7808,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deviceInfo_runningSince => '启动时间';
 
   @override
+  String get deviceInfo_bootTime => '最近一次启动';
+
+  @override
   String get deviceInfo_radioClock => '无线电时钟';
 
   @override
@@ -7837,6 +7840,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => '信号';
+
+  @override
+  String get deviceInfo_signalUpdated => '每 10 秒更新一次';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -7894,9 +7900,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deviceInfo_receive => '接收';
 
   @override
-  String get deviceInfo_mesh => '网状网络';
-
-  @override
   String get deviceInfo_telemetryDescription => '来自你的无线电，打开页面时更新';
 
   @override
@@ -7906,10 +7909,39 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deviceInfo_viewAsText => '以纯文本查看';
 
   @override
-  String get deviceInfo_viewAsTextSubtitle => '求助时可复制或分享';
+  String get deviceInfo_viewAsTextSubtitle => '求助时可复制或保存';
 
   @override
   String get deviceInfo_copied => '设备信息已复制';
+
+  @override
+  String get deviceInfo_saved => '设备信息已保存';
+
+  @override
+  String get deviceInfo_reportGenerated => '生成时间';
+
+  @override
+  String get deviceInfo_protocolVersion => '协议版本';
+
+  @override
+  String get deviceInfo_customVars => '自定义变量';
+
+  @override
+  String get deviceInfo_maxTxPower => '最大 TX 功率';
+
+  @override
+  String get deviceInfo_noiseFloor => '底噪';
+
+  @override
+  String get deviceInfo_lastRssi => '上次 RSSI';
+
+  @override
+  String get deviceInfo_lastSnr => '上次 SNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db dB';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -7932,6 +7964,41 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days 天',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours 小时',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours 小时',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes 分钟';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds 秒';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day $time';
   }
@@ -7939,48 +8006,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return '已通过 $link 连接';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return '已断开，上次连接于 $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => '固定 PIN（未显示）';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'PIN 未固定';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first，$second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version，构建于 $date';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override

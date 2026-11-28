@@ -4821,7 +4821,11 @@ class MeshCoreConnector extends ChangeNotifier {
   /// not Bluetooth or the platform cannot read it.
   Future<int?> readBleRssi() async {
     final device = _device;
-    if (!isConnected ||
+    // On Windows and Linux the plugin returns the scan value or 0, not a
+    // live reading.
+    if (PlatformInfo.isWindows ||
+        PlatformInfo.isLinux ||
+        !isConnected ||
         _activeTransport != MeshCoreTransportType.bluetooth ||
         device == null) {
       return null;

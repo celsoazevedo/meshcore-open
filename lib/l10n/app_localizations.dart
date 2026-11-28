@@ -13840,6 +13840,12 @@ abstract class AppLocalizations {
   /// **'Running Since'**
   String get deviceInfo_runningSince;
 
+  /// No description provided for @deviceInfo_bootTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Boot time'**
+  String get deviceInfo_bootTime;
+
   /// No description provided for @deviceInfo_radioClock.
   ///
   /// In en, this message translates to:
@@ -13893,6 +13899,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Signal'**
   String get deviceInfo_signal;
+
+  /// No description provided for @deviceInfo_signalUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated every 10 s'**
+  String get deviceInfo_signalUpdated;
 
   /// No description provided for @deviceInfo_dbm.
   ///
@@ -13996,12 +14008,6 @@ abstract class AppLocalizations {
   /// **'Receive'**
   String get deviceInfo_receive;
 
-  /// No description provided for @deviceInfo_mesh.
-  ///
-  /// In en, this message translates to:
-  /// **'Mesh'**
-  String get deviceInfo_mesh;
-
   /// No description provided for @deviceInfo_telemetryDescription.
   ///
   /// In en, this message translates to:
@@ -14023,7 +14029,7 @@ abstract class AppLocalizations {
   /// No description provided for @deviceInfo_viewAsTextSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'To copy or share when asking for help'**
+  /// **'To copy or save when asking for help'**
   String get deviceInfo_viewAsTextSubtitle;
 
   /// No description provided for @deviceInfo_copied.
@@ -14031,6 +14037,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Device info copied'**
   String get deviceInfo_copied;
+
+  /// No description provided for @deviceInfo_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Device info saved'**
+  String get deviceInfo_saved;
+
+  /// No description provided for @deviceInfo_reportGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated'**
+  String get deviceInfo_reportGenerated;
+
+  /// No description provided for @deviceInfo_protocolVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol Version'**
+  String get deviceInfo_protocolVersion;
+
+  /// No description provided for @deviceInfo_customVars.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Variables'**
+  String get deviceInfo_customVars;
+
+  /// No description provided for @deviceInfo_maxTxPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Max TX Power'**
+  String get deviceInfo_maxTxPower;
+
+  /// No description provided for @deviceInfo_noiseFloor.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Floor'**
+  String get deviceInfo_noiseFloor;
+
+  /// No description provided for @deviceInfo_lastRssi.
+  ///
+  /// In en, this message translates to:
+  /// **'Last RSSI'**
+  String get deviceInfo_lastRssi;
+
+  /// No description provided for @deviceInfo_lastSnr.
+  ///
+  /// In en, this message translates to:
+  /// **'Last SNR'**
+  String get deviceInfo_lastSnr;
+
+  /// No description provided for @deviceInfo_db.
+  ///
+  /// In en, this message translates to:
+  /// **'{db} dB'**
+  String deviceInfo_db(String db);
 
   /// No description provided for @deviceInfo_durationDays.
   ///
@@ -14056,6 +14116,30 @@ abstract class AppLocalizations {
   /// **'{seconds}s'**
   String deviceInfo_durationSeconds(int seconds);
 
+  /// No description provided for @deviceInfo_forDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day} other{{days} days}} {hours, plural, =1{1 hour} other{{hours} hours}}'**
+  String deviceInfo_forDays(int days, int hours);
+
+  /// No description provided for @deviceInfo_forHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =1{1 hour} other{{hours} hours}}'**
+  String deviceInfo_forHours(int hours);
+
+  /// No description provided for @deviceInfo_forMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String deviceInfo_forMinutes(int minutes);
+
+  /// No description provided for @deviceInfo_forSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} sec'**
+  String deviceInfo_forSeconds(int seconds);
+
   /// No description provided for @deviceInfo_dayTime.
   ///
   /// In en, this message translates to:
@@ -14067,60 +14151,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{value} ({detail})'**
   String deviceInfo_valueWithDetail(String value, String detail);
-
-  /// No description provided for @deviceInfo_reportConnectedVia.
-  ///
-  /// In en, this message translates to:
-  /// **'Connected via {link}'**
-  String deviceInfo_reportConnectedVia(String link);
-
-  /// No description provided for @deviceInfo_reportDisconnected.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnected, last connected {time}'**
-  String deviceInfo_reportDisconnected(String time);
-
-  /// No description provided for @deviceInfo_reportPinFixed.
-  ///
-  /// In en, this message translates to:
-  /// **'fixed PIN (not shown)'**
-  String get deviceInfo_reportPinFixed;
-
-  /// No description provided for @deviceInfo_reportPinNotFixed.
-  ///
-  /// In en, this message translates to:
-  /// **'PIN not fixed'**
-  String get deviceInfo_reportPinNotFixed;
-
-  /// No description provided for @deviceInfo_reportJoin.
-  ///
-  /// In en, this message translates to:
-  /// **'{first}, {second}'**
-  String deviceInfo_reportJoin(String first, String second);
-
-  /// No description provided for @deviceInfo_reportBuilt.
-  ///
-  /// In en, this message translates to:
-  /// **'{version}, built {date}'**
-  String deviceInfo_reportBuilt(String version, String date);
-
-  /// No description provided for @deviceInfo_reportRadio.
-  ///
-  /// In en, this message translates to:
-  /// **'{frequency}, BW {bandwidth} · {spreadingFactor} · CR {codingRate} · {txPower}'**
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  );
-
-  /// No description provided for @deviceInfo_reportAirtime.
-  ///
-  /// In en, this message translates to:
-  /// **'TX {transmit}, RX {receive}'**
-  String deviceInfo_reportAirtime(String transmit, String receive);
 
   /// No description provided for @deviceInfo_app.
   ///

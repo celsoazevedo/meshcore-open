@@ -35,18 +35,20 @@ Read-only information about the radio. Values the app doesn't know are hidden; w
 | Section | Shows |
 |---|---|
 | Header | Name, status and link chips, and the public key; tap the key to open Share Contact |
-| Status | Battery (% and voltage; alert icon at 15% or below), storage, contacts and channels (used / max), radio uptime (tap to reboot the radio), how long the link has been connected |
-| Device | Model, firmware, build date, when the radio started, radio clock (how far ahead or behind the phone, and its time; tap to sync it) |
-| Connection | Link and its address, connected since (or last connected); on Bluetooth, the signal and the Bluetooth PIN |
+| Status | Battery (% and voltage; alert icon at 15% or below; tap to open Telemetry), storage, contacts and channels (used / max; tap to switch to that tab), radio uptime (tap to reboot the radio), how long the link has been connected |
+| Device | Model, firmware, build date, when the radio started (its boot time), radio clock (how far ahead or behind the phone, and its time; tap to sync it) |
+| Connection | Link and its address (on iOS and macOS, Bluetooth shows an ID from the system instead), connected since (the time, and how long under it) or last connected; on Bluetooth, the signal (updated every 10 s; not shown on Windows and Linux) and the Bluetooth PIN |
+| Telemetry | Temperatures, humidity and pressure the radio reports, and a row to Telemetry |
 | Radio Settings | Frequency, bandwidth, spreading factor, coding rate, TX power, hash size, repeat, and a row to Radio Settings |
 | Airtime | Transmit and receive time since the radio started, and a row to Radio Stats |
-| Mesh | Multi-ACKs, location |
-| Telemetry | Temperatures, humidity and pressure the radio reports, and a row to Telemetry |
-| As Text | **View as Text** opens everything as plain text with Copy and Share |
+| Privacy | Multi-ACKs, location, and a row to Privacy |
+| As Text | **View as Text** opens everything as plain text with Copy and Save |
 
 The page asks the radio for its uptime, clock, radio stats and telemetry when it opens. The refresh button asks again for everything on the page. Uptime needs firmware that supports stats (v1.10 or newer).
 
 Tapping the radio clock does the same as **Sync Time**, then reads the clock back. Tapping uptime does the same as **Reboot Device**, after you confirm.
+
+**View as Text** makes the text once, when it opens, and starts with when it was made. It follows the page's sections and adds what else the app knows about the radio without asking it: protocol version, custom variables, max TX power, the radio default region, noise floor and last RSSI and SNR, telemetry permissions, contacts by type, discovered contacts, auto-add settings, and the app version and platform. **Copy** copies it; **Save** saves it as a .txt file (a save dialog on desktop, a download on web, the share sheet on phones).
 
 The Bluetooth PIN is hidden until you tap the eye icon, and never included in the text. The radio sends the PIN it has saved: a saved PIN is shown as **Fixed**; without one the radio uses a random PIN shown on its screen, or its default (usually 123456), shown as **Not fixed**.
 

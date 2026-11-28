@@ -258,7 +258,7 @@ class StatusChip extends StatelessWidget {
 }
 
 /// Compact metric tile: icon, mono value (+ optional unit), small label.
-/// With [onTap], a chevron ends the label row.
+/// With [onTap], a chevron ends the label row and [hint] names the action.
 class StatTile extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -266,6 +266,7 @@ class StatTile extends StatelessWidget {
   final String? unit;
   final Color? color;
   final VoidCallback? onTap;
+  final String? hint;
 
   const StatTile({
     super.key,
@@ -275,13 +276,14 @@ class StatTile extends StatelessWidget {
     this.unit,
     this.color,
     this.onTap,
+    this.hint,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final accent = color ?? scheme.primary;
-    return MeshCard(
+    final tile = MeshCard(
       onTap: onTap,
       margin: EdgeInsets.zero,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -336,6 +338,10 @@ class StatTile extends StatelessWidget {
           ),
         ],
       ),
+    );
+    if (onTap == null) return tile;
+    return MergeSemantics(
+      child: Semantics(button: true, hint: hint, child: tile),
     );
   }
 }

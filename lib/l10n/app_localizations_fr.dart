@@ -8353,6 +8353,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deviceInfo_runningSince => 'En marche depuis';
 
   @override
+  String get deviceInfo_bootTime => 'Heure de démarrage';
+
+  @override
   String get deviceInfo_radioClock => 'Horloge de la radio';
 
   @override
@@ -8382,6 +8385,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => 'Signal';
+
+  @override
+  String get deviceInfo_signalUpdated => 'Mis à jour toutes les 10 s';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -8441,9 +8447,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deviceInfo_receive => 'Réception';
 
   @override
-  String get deviceInfo_mesh => 'Maillage';
-
-  @override
   String get deviceInfo_telemetryDescription =>
       'De votre radio, mise à jour à l\'ouverture de la page';
 
@@ -8455,10 +8458,39 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deviceInfo_viewAsTextSubtitle =>
-      'Pour copier ou partager lors d\'une demande d\'aide';
+      'Pour copier ou enregistrer lors d\'une demande d\'aide';
 
   @override
   String get deviceInfo_copied => 'Informations du périphérique copiées';
+
+  @override
+  String get deviceInfo_saved => 'Informations du périphérique enregistrées';
+
+  @override
+  String get deviceInfo_reportGenerated => 'Généré';
+
+  @override
+  String get deviceInfo_protocolVersion => 'Version du protocole';
+
+  @override
+  String get deviceInfo_customVars => 'Variables personnalisées';
+
+  @override
+  String get deviceInfo_maxTxPower => 'Puissance TX max.';
+
+  @override
+  String get deviceInfo_noiseFloor => 'Niveau de bruit';
+
+  @override
+  String get deviceInfo_lastRssi => 'Dernier RSSI';
+
+  @override
+  String get deviceInfo_lastSnr => 'Dernier SNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db dB';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -8481,6 +8513,44 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '$days jour',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours heures',
+      one: '$hours heure',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours heures',
+      one: '$hours heure',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day, $time';
   }
@@ -8488,48 +8558,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return 'Connecté via $link';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return 'Déconnecté, dernière connexion : $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => 'code PIN fixe (masqué)';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'code PIN non fixe';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first, $second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version, compilé le $date';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override

@@ -12,9 +12,13 @@ import 'package:meshcore_open/connector/meshcore_protocol.dart';
 import 'package:meshcore_open/l10n/app_localizations.dart';
 import 'package:meshcore_open/review_mode/review_radio.dart';
 import 'package:meshcore_open/review_mode/review_script.dart';
+import 'package:meshcore_open/screens/channels_screen.dart';
+import 'package:meshcore_open/screens/contacts_screen.dart';
 import 'package:meshcore_open/screens/device_info_screen.dart';
+import 'package:meshcore_open/screens/privacy_settings_screen.dart';
 import 'package:meshcore_open/screens/settings_screen.dart';
 import 'package:meshcore_open/screens/share_contact_screen.dart';
+import 'package:meshcore_open/screens/telemetry_screen.dart';
 import 'package:meshcore_open/services/app_debug_log_service.dart';
 import 'package:meshcore_open/services/app_settings_service.dart';
 import 'package:meshcore_open/services/ble_debug_log_service.dart';
@@ -26,6 +30,7 @@ import 'package:meshcore_open/services/ui_view_state_service.dart';
 import 'package:meshcore_open/storage/last_radio_store.dart';
 import 'package:meshcore_open/storage/prefs_manager.dart';
 import 'package:meshcore_open/theme/mesh_theme.dart';
+import 'package:meshcore_open/widgets/mesh_nav_tile.dart';
 import 'package:meshcore_open/widgets/mesh_ui.dart';
 import 'package:meshcore_open/widgets/qr_code_display.dart';
 import 'package:meshcore_open/widgets/sync_progress_overlay.dart';
@@ -88,6 +93,23 @@ class _FakeRadio extends MeshCoreConnector {
   int? get batteryPercent => connected ? 82 : null;
   @override
   DateTime? get radioStartedAt => connected ? _started : null;
+  @override
+  int? get firmwareVerCode => connected ? 12 : null;
+  @override
+  int? get maxTxPower => connected ? 22 : null;
+  @override
+  Map<String, String>? get currentCustomVars =>
+      connected ? const {'gps': '1'} : null;
+  @override
+  bool get supportsDefaultFloodScope => connected;
+  @override
+  String? get defaultFloodScopeName => connected ? 'nl' : null;
+  @override
+  bool get supportsAutoAddConfig => connected;
+  @override
+  bool? get autoAddUsers => true;
+  @override
+  bool? get autoAddSensors => true;
   @override
   Future<void> refreshDeviceInfo() async => asked.add('deviceInfo');
   @override
@@ -253,6 +275,8 @@ void main() {
     expect(find.text('MeshCore Open Review'), findsOneWidget);
     expect(find.text(_l10n.repeater_uptime.toUpperCase()), findsOneWidget);
 
+    await _scrollTo(tester, find.text(_l10n.contact_telemetry));
+    expect(find.text(_l10n.contact_telemetry), findsOneWidget);
     await _scrollTo(tester, find.text(_l10n.deviceInfo_frequency));
     expect(
       find.text(
@@ -267,7 +291,7 @@ void main() {
     expect(find.text('12s'), findsOneWidget);
     expect(find.text('48s'), findsOneWidget);
     await _scrollTo(tester, find.text(_l10n.deviceInfo_viewAsText));
-    expect(find.text(_l10n.contact_telemetry), findsWidgets);
+    expect(find.widgetWithText(MeshNavTile, _l10n.settings_privacy), findsOne);
 
     await tester.pumpWidget(const SizedBox());
   });
@@ -289,9 +313,12 @@ void main() {
     expect(find.text('2h 28m'), findsOneWidget);
     expect(find.text(_l10n.connectionChoiceBluetoothLabel), findsWidgets);
     expect(find.text('2s behind'), findsOneWidget);
+    expect(find.text(_l10n.deviceInfo_bootTime), findsOneWidget);
 
     await _scrollTo(tester, find.text(_l10n.deviceInfo_blePin));
+    expect(find.text('2 hours'), findsOneWidget);
     expect(find.text('-64 dBm'), findsOneWidget);
+    expect(find.text(_l10n.deviceInfo_signalUpdated), findsOneWidget);
     expect(find.text('D4:3A:2C:91:7E:05'), findsOneWidget);
     expect(find.text('••••••'), findsOneWidget);
     expect(find.text('$_pin'), findsNothing);
@@ -309,15 +336,62 @@ void main() {
         .widget<SelectableText>(find.byType(SelectableText))
         .data!;
     expect(report, isNot(contains('$_pin')));
-    expect(report, contains(_l10n.deviceInfo_reportPinFixed));
-    expect(report, contains('-64 dBm'));
-    expect(report, contains('Heltec V3'));
-    expect(report, contains(pubKeyToHex(_key)));
+    expect(report, isNot(contains(_l10n.deviceInfo_blePin)));
+    for (final value in [
+      _l10n.deviceInfo_reportGenerated,
+      '-64 dBm',
+      'Heltec V3',
+      pubKeyToHex(_key),
+      // Values the page itself doesn't show.
+      RegExp('${_l10n.deviceInfo_protocolVersion} +12'),
+      RegExp('${_l10n.deviceInfo_maxTxPower} +22 dBm'),
+      'gps=1',
+      RegExp('${_l10n.settings_regionRadioDefault} +nl'),
+      _l10n.settings_telemetryBaseMode,
+      _l10n.discoveredContacts_Title,
+      '${_l10n.contactsSettings_autoAddUsersTitle}, '
+          '${_l10n.contactsSettings_autoAddSensorsTitle}',
+    ]) {
+      expect(report, contains(value));
+    }
+    // The text is made once, when the page opens.
+    await tester.pump(const Duration(seconds: 30));
+    expect(
+      tester.widget<SelectableText>(find.byType(SelectableText)).data,
+      report,
+    );
 
+    await _scrollTo(tester, find.text(_l10n.common_save));
+    final buttons = find.ancestor(
+      of: find.text(_l10n.common_copy),
+      matching: find.byType(Wrap),
+    );
+    expect(tester.widget<Wrap>(buttons).alignment, WrapAlignment.center);
+    expect(find.text(_l10n.common_share), findsNothing);
     await tester.tap(find.text(_l10n.common_copy));
     await tester.pump();
     expect(copied, report);
     expect(find.text(_l10n.deviceInfo_copied), findsOneWidget);
+
+    // Desktop (the test host) saves through the save dialog.
+    final path = '${tempDir.path}/device-info.txt';
+    String? suggested;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+          const MethodChannel('plugins.flutter.io/file_selector'),
+          (call) async {
+            suggested = (call.arguments as Map)['suggestedName'] as String?;
+            return path;
+          },
+        );
+    await tester.tap(find.text(_l10n.common_save));
+    // The dialog answers in test time, the file is written in real time.
+    final saved = find.text(_l10n.deviceInfo_saved);
+    await _until(tester, () => saved.evaluate().isNotEmpty);
+    expect(suggested, startsWith('meshcore-open-device-info_'));
+    expect(suggested, endsWith('.txt'));
+    expect(File(path).readAsStringSync(), report);
+    expect(saved, findsOneWidget);
     await tester.pumpWidget(const SizedBox());
   });
 
@@ -368,7 +442,7 @@ void main() {
     expect(find.text(_l10n.repeater_uptime.toUpperCase()), findsNothing);
     expect(find.text(_l10n.deviceInfo_blePin), findsNothing);
     expect(find.text(_l10n.deviceInfo_frequency), findsNothing);
-    expect(find.text(_l10n.deviceInfo_mesh.toUpperCase()), findsNothing);
+    expect(find.text(_l10n.settings_privacy.toUpperCase()), findsNothing);
     expect(find.text(_l10n.contact_telemetry), findsNothing);
     expect(find.text(_l10n.deviceInfo_viewAsText), findsOneWidget);
     expect(_reloadButton(tester), isNull);
@@ -453,6 +527,87 @@ void main() {
     expect(_reloadButton(tester), isNotNull);
     await tester.pumpWidget(const SizedBox());
   });
+
+  testWidgets('sections run Connection, Telemetry, Radio Settings, Privacy', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(400, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _app(_FakeRadio(pin: _pin), const DeviceInfoScreen()),
+    );
+    await _frames(tester);
+    double top(String header) =>
+        tester.getTopLeft(find.text(header.toUpperCase())).dy;
+    final order = [
+      _l10n.deviceInfo_connection,
+      _l10n.contact_telemetry,
+      _l10n.settings_radioSettings,
+      _l10n.settings_privacy,
+    ].map(top).toList();
+    expect(order, [...order]..sort());
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('Battery opens Telemetry and Privacy opens its page', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(400, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _app(_FakeRadio(pin: _pin), const DeviceInfoScreen()),
+    );
+    await _frames(tester);
+    final battery = find.ancestor(
+      of: find.text(_l10n.settings_infoBattery.toUpperCase()),
+      matching: find.byType(StatTile),
+    );
+    expect(
+      tester.getSemantics(battery),
+      isSemantics(isButton: true, hint: _l10n.contact_telemetry),
+    );
+    await tester.tap(battery);
+    await _frames(tester);
+    expect(find.byType(TelemetryScreen), findsOneWidget);
+
+    Navigator.of(tester.element(find.byType(TelemetryScreen))).pop();
+    await _frames(tester);
+    final privacy = find.widgetWithText(MeshNavTile, _l10n.settings_privacy);
+    await _scrollTo(tester, privacy);
+    await tester.tap(privacy);
+    await _frames(tester);
+    expect(find.byType(PrivacySettingsScreen), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  for (final (label, screen) in [
+    (_l10n.contacts_title, ContactsScreen),
+    (_l10n.channels_title, ChannelsScreen),
+  ]) {
+    testWidgets('$label tile switches to its tab', (tester) async {
+      tester.view.physicalSize = const Size(400, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        _app(
+          _FakeRadio(connected: false, fakeLastRadio: _lastRadio()),
+          const DeviceInfoScreen(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(label.toUpperCase()));
+      await _frames(tester);
+      expect(find.byType(screen), findsOneWidget);
+      // The tab replaces the stack, so Back can't return to Device Info.
+      expect(find.byType(DeviceInfoScreen, skipOffstage: false), findsNothing);
+      await tester.pumpWidget(const SizedBox());
+    });
+  }
 
   testWidgets('the key row opens the share page with the info card', (
     tester,

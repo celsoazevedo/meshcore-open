@@ -8373,6 +8373,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get deviceInfo_runningSince => 'Працює з';
 
   @override
+  String get deviceInfo_bootTime => 'Час запуску';
+
+  @override
   String get deviceInfo_radioClock => 'Годинник радіо';
 
   @override
@@ -8402,6 +8405,9 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => 'Сигнал';
+
+  @override
+  String get deviceInfo_signalUpdated => 'Оновлюється кожні 10 с';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -8460,9 +8466,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get deviceInfo_receive => 'Прийом';
 
   @override
-  String get deviceInfo_mesh => 'Мережа';
-
-  @override
   String get deviceInfo_telemetryDescription =>
       'З вашого радіо, оновлюється під час відкриття сторінки';
 
@@ -8474,10 +8477,39 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get deviceInfo_viewAsTextSubtitle =>
-      'Щоб скопіювати або поділитися, коли просите допомоги';
+      'Щоб скопіювати або зберегти, коли просите допомоги';
 
   @override
   String get deviceInfo_copied => 'Інформацію про пристрій скопійовано';
+
+  @override
+  String get deviceInfo_saved => 'Інформацію про пристрій збережено';
+
+  @override
+  String get deviceInfo_reportGenerated => 'Створено';
+
+  @override
+  String get deviceInfo_protocolVersion => 'Версія протоколу';
+
+  @override
+  String get deviceInfo_customVars => 'Власні змінні';
+
+  @override
+  String get deviceInfo_maxTxPower => 'Макс. потужність TX';
+
+  @override
+  String get deviceInfo_noiseFloor => 'Рівень шуму';
+
+  @override
+  String get deviceInfo_lastRssi => 'Останній RSSI';
+
+  @override
+  String get deviceInfo_lastSnr => 'Останній SNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db дБ';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -8500,6 +8532,50 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days днів',
+      few: '$days дні',
+      one: '$days день',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours години',
+      many: '$hours годин',
+      few: '$hours години',
+      one: '$hours година',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours години',
+      many: '$hours годин',
+      few: '$hours години',
+      one: '$hours година',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes хв';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds с';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day, $time';
   }
@@ -8507,48 +8583,6 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return 'Підключено через $link';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return 'Відключено, востаннє підключено $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => 'фіксований PIN (не показано)';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'PIN не фіксований';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first, $second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version, зібрано $date';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +21,10 @@ import '../services/app_settings_service.dart';
 import '../storage/last_radio_store.dart';
 import '../theme/mesh_theme.dart';
 import '../utils/radio_actions.dart';
+import '../utils/platform_info.dart';
 import '../utils/radio_guard.dart';
+import '../utils/route_transitions.dart';
+import '../utils/share_origin.dart';
 import '../widgets/adaptive_app_bar_title.dart';
 import '../widgets/chat_day_separator.dart';
 import '../widgets/mesh_nav_tile.dart';
@@ -29,6 +34,9 @@ import '../widgets/radio_disconnected_banner.dart';
 import '../widgets/radio_stats_entry.dart';
 import '../widgets/sync_progress_overlay.dart';
 import 'about_screen.dart';
+import 'channels_screen.dart';
+import 'contacts_screen.dart';
+import 'privacy_settings_screen.dart';
 import 'radio_settings_screen.dart';
 import 'share_contact_screen.dart';
 import 'telemetry_screen.dart';
@@ -70,6 +78,7 @@ String? _deviceKey(MeshCoreConnector c) {
 }
 
 /// Bluetooth address, USB port or TCP endpoint of the link in [_link].
+/// On iOS and macOS the Bluetooth address is an ID from the system.
 String? _linkAddress(MeshCoreConnector c) {
   final radio = c.lastRadio;
   final address = c.isConnected
@@ -112,6 +121,15 @@ String _compactDuration(AppLocalizations l10n, Duration duration) {
     return l10n.deviceInfo_durationMinutes(d.inMinutes, d.inSeconds % 60);
   }
   return l10n.deviceInfo_durationSeconds(d.inSeconds);
+}
+
+/// "42 sec", "5 min", "2 hours" or "3 days 4 hours".
+String _shortDuration(AppLocalizations l10n, Duration duration) {
+  final d = duration.isNegative ? Duration.zero : duration;
+  if (d.inDays >= 1) return l10n.deviceInfo_forDays(d.inDays, d.inHours % 24);
+  if (d.inHours >= 1) return l10n.deviceInfo_forHours(d.inHours);
+  if (d.inMinutes >= 1) return l10n.deviceInfo_forMinutes(d.inMinutes);
+  return l10n.deviceInfo_forSeconds(d.inSeconds);
 }
 
 /// "Yesterday, 14:32".
@@ -195,6 +213,19 @@ String? _locationText(MeshCoreConnector c) {
   if (lat == null || lon == null || (lat == 0 && lon == 0)) return null;
   return '${lat.toStringAsFixed(5)}, ${lon.toStringAsFixed(5)}';
 }
+
+/// The platform the app runs on, for the text report.
+String get _platformName => PlatformInfo.isWeb
+    ? 'Web'
+    : PlatformInfo.isAndroid
+    ? 'Android'
+    : PlatformInfo.isIOS
+    ? 'iOS'
+    : PlatformInfo.isMacOS
+    ? 'macOS'
+    : PlatformInfo.isWindows
+    ? 'Windows'
+    : 'Linux';
 
 /// Detail columns: two side by side unless the text is large for the width
 /// (about 1.5x on a phone, 1.3x on a 320dp one).
@@ -468,6 +499,18 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
             ),
             if (connected)
               ..._section(
+                l10n.contact_telemetry,
+                _telemetryCells(context, imperial),
+                two,
+                description: l10n.deviceInfo_telemetryDescription,
+                tail: MeshNavTile(
+                  icon: Icons.thermostat_outlined,
+                  title: l10n.contact_telemetry,
+                  onTap: () => pushSelfTelemetryScreen(context),
+                ),
+              ),
+            if (connected)
+              ..._section(
                 l10n.settings_radioSettings,
                 _radioCells(l10n, c),
                 two,
@@ -504,21 +547,23 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
                 ),
               ),
             if (connected)
-              ..._section(l10n.deviceInfo_mesh, [
-                _Cell(l10n.settings_multiAck, _onOff(l10n, c.multiAcks != 0)),
-                if (_locationText(c) case final location?)
-                  _Cell(l10n.settings_location, location, wide: true),
-              ], two),
-            if (connected)
               ..._section(
-                l10n.contact_telemetry,
-                _telemetryCells(context, imperial),
+                l10n.settings_privacy,
+                [
+                  _Cell(l10n.settings_multiAck, _onOff(l10n, c.multiAcks != 0)),
+                  if (_locationText(c) case final location?)
+                    _Cell(l10n.settings_location, location, wide: true),
+                ],
                 two,
-                description: l10n.deviceInfo_telemetryDescription,
                 tail: MeshNavTile(
-                  icon: Icons.thermostat_outlined,
-                  title: l10n.contact_telemetry,
-                  onTap: () => pushSelfTelemetryScreen(context),
+                  icon: Icons.visibility_off_outlined,
+                  title: l10n.settings_privacy,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const PrivacySettingsScreen(),
+                    ),
+                  ),
                 ),
               ),
             SectionHeader(l10n.deviceInfo_asText),
@@ -528,13 +573,18 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
                 icon: Icons.notes,
                 title: l10n.deviceInfo_viewAsText,
                 subtitle: l10n.deviceInfo_viewAsTextSubtitle,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) =>
-                        _DeviceInfoTextScreen(report: _report(context)),
-                  ),
-                ),
+                onTap: () {
+                  final now = DateTime.now();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => _DeviceInfoTextScreen(
+                        report: _report(context, now),
+                        generatedAt: now,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -577,6 +627,11 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
     ];
   }
 
+  /// Switches to a main tab, as the bottom bar does.
+  void _openTab(Widget screen) => Navigator.of(
+    context,
+  ).pushAndRemoveUntil(buildQuickSwitchRoute<void>(screen), (_) => false);
+
   List<Widget> _statusTiles(BuildContext context, MeshCoreConnector c) {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
@@ -599,6 +654,8 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
             : Icons.battery_full,
         color: low ? scheme.tertiary : null,
         label: l10n.settings_infoBattery,
+        onTap: connected ? () => pushSelfTelemetryScreen(context) : null,
+        hint: l10n.contact_telemetry,
         value: percent == null
             ? l10n.common_notAvailable
             : l10n.common_percentValue(percent),
@@ -620,6 +677,7 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
         unit: connected
             ? l10n.deviceInfo_ofMax(grouped.format(c.maxContacts))
             : null,
+        onTap: () => _openTab(const ContactsScreen(hideBackButton: true)),
       ),
       StatTile(
         icon: Icons.forum,
@@ -628,19 +686,15 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
         unit: connected
             ? l10n.deviceInfo_ofMax(grouped.format(c.maxChannels))
             : null,
+        onTap: () => _openTab(const ChannelsScreen(hideBackButton: true)),
       ),
       if (startedAt != null)
-        MergeSemantics(
-          child: Semantics(
-            button: true,
-            hint: l10n.settings_rebootDevice,
-            child: StatTile(
-              icon: Icons.restart_alt,
-              label: l10n.repeater_uptime,
-              value: _compactDuration(l10n, now.difference(startedAt)),
-              onTap: _reboot,
-            ),
-          ),
+        StatTile(
+          icon: Icons.restart_alt,
+          label: l10n.repeater_uptime,
+          value: _compactDuration(l10n, now.difference(startedAt)),
+          onTap: _reboot,
+          hint: l10n.settings_rebootDevice,
         ),
       if (connectedAt != null)
         StatTile(
@@ -663,7 +717,11 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
       if (c.firmwareBuildDate case final buildDate?)
         _Cell(l10n.deviceInfo_buildDate, buildDate),
       if (startedAt != null)
-        _Cell(l10n.deviceInfo_runningSince, _dayTime(context, startedAt)),
+        _Cell(
+          l10n.deviceInfo_runningSince,
+          _dayTime(context, startedAt),
+          sub: l10n.deviceInfo_bootTime,
+        ),
       if (offset != null)
         _Cell(
           l10n.deviceInfo_radioClock,
@@ -695,11 +753,16 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
         _Cell(
           l10n.deviceInfo_connectedSince,
           _timeOrDayTime(context, connectedAt),
+          sub: _shortDuration(l10n, DateTime.now().difference(connectedAt)),
         ),
       if (savedAt != null)
         _Cell(l10n.deviceInfo_lastConnected, _dayTime(context, savedAt)),
       if (rssi != null)
-        _Cell(l10n.deviceInfo_signal, l10n.deviceInfo_dbm(rssi)),
+        _Cell(
+          l10n.deviceInfo_signal,
+          l10n.deviceInfo_dbm(rssi),
+          sub: l10n.deviceInfo_signalUpdated,
+        ),
       if (pin != null && pin > 0)
         _Cell(
           l10n.deviceInfo_blePin,
@@ -769,123 +832,61 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
     ];
   }
 
-  /// The page as plain text, in the same order. Never includes the PIN.
-  String _report(BuildContext context) {
+  /// The page as plain text in the same sections, plus what else the app
+  /// knows about the radio without asking it. Never includes the PIN.
+  String _report(BuildContext context, DateTime now) {
     final l10n = context.l10n;
     final c = _connector;
     final imperial =
         context.read<AppSettingsService>().settings.unitSystem ==
         UnitSystem.imperial;
-    final na = l10n.common_notAvailable;
     final grouped = NumberFormat.decimalPattern(
       Localizations.localeOf(context).toString(),
     );
     final connected = c.isConnected;
-    final now = DateTime.now();
     final detail = l10n.deviceInfo_valueWithDetail;
-    final lines = <(String?, String)>[];
-    void line(String label, String value) => lines.add((label, value));
-    void text(String value) => lines.add((null, value));
+    final blocks = <List<(String?, String)>>[[]];
+    void line(String label, String value) => blocks.last.add((label, value));
+    void text(String value) => blocks.last.add((null, value));
+    void heading(String title) => blocks.add([(null, title.toUpperCase())]);
+    String date(DateTime time) => l10n.deviceInfo_dayTime(
+      DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(time),
+      formatChatTime(context, time),
+    );
 
     text(_deviceName(c));
-    if (connected) {
-      final link = _link(l10n, c);
-      final address = _linkAddress(c);
-      text(
-        link == null
-            ? l10n.common_connected
-            : l10n.deviceInfo_reportConnectedVia(
-                address == null ? link.$2 : detail(link.$2, address),
-              ),
-      );
-      if (c.connectedAt case final since?) {
-        line(
-          l10n.deviceInfo_connectedSince,
-          detail(
-            _dayTime(context, since),
-            _compactDuration(l10n, now.difference(since)),
-          ),
-        );
-      }
-      if (_isBluetoothLink(c)) {
-        final pin = c.blePin;
-        final parts = [
-          if (_rssi case final rssi?) l10n.deviceInfo_dbm(rssi),
-          if (pin != null)
-            pin > 0
-                ? l10n.deviceInfo_reportPinFixed
-                : l10n.deviceInfo_reportPinNotFixed,
-        ];
-        if (parts.isNotEmpty) {
-          line(
-            l10n.connectionChoiceBluetoothLabel,
-            parts.length == 2
-                ? l10n.deviceInfo_reportJoin(parts[0], parts[1])
-                : parts.first,
-          );
-        }
-      }
-    } else {
-      final savedAt = c.lastRadio?.savedAt;
-      text(
-        savedAt == null
-            ? l10n.common_disconnected
-            : l10n.deviceInfo_reportDisconnected(_dayTime(context, savedAt)),
-      );
-    }
-
-    text('');
-    line(l10n.deviceInfo_model, c.manufacturerName ?? na);
-    final firmware = c.firmwareVersionString;
-    final buildDate = c.firmwareBuildDate;
     line(
-      l10n.settings_infoFirmware,
-      firmware == null
-          ? na
-          : buildDate == null
-          ? firmware
-          : l10n.deviceInfo_reportBuilt(firmware, buildDate),
+      l10n.deviceInfo_reportGenerated,
+      l10n.deviceInfo_dayTime(
+        DateFormat.yMMMd(
+          Localizations.localeOf(context).toString(),
+        ).format(now),
+        _timeWithSeconds(context, now),
+      ),
     );
-    if (connected) {
-      if (c.radioStartedAt case final startedAt?) {
-        line(
-          l10n.deviceInfo_runningSince,
-          detail(
-            _dayTime(context, startedAt),
-            _compactDuration(l10n, now.difference(startedAt)),
-          ),
-        );
-      }
-      if (c.radioClockOffset case final offset?) {
-        line(
-          l10n.deviceInfo_radioClock,
-          detail(
-            _timeWithSeconds(context, now.add(offset)),
-            _clockText(l10n, offset),
-          ),
-        );
-      }
-    }
+    text(connected ? l10n.common_connected : l10n.common_disconnected);
+
+    heading(l10n.settings_infoStatus);
     final percent = connected ? c.batteryPercent : null;
     final millivolts = connected ? c.batteryMillivolts : null;
-    line(
-      l10n.settings_infoBattery,
-      percent == null
-          ? na
-          : millivolts == null
-          ? l10n.common_percentValue(percent)
-          : detail(
-              l10n.common_percentValue(percent),
-              l10n.deviceInfo_volts((millivolts / 1000).toStringAsFixed(2)),
-            ),
-    );
-    line(
-      l10n.deviceInfo_storage,
-      _storageKnown(c)
-          ? '${grouped.format(c.storageUsedKb!)} '
-                '${l10n.deviceInfo_storageOf(grouped.format(c.storageTotalKb!))}'
-          : na,
-    );
+    if (percent != null) {
+      line(
+        l10n.settings_infoBattery,
+        millivolts == null
+            ? l10n.common_percentValue(percent)
+            : detail(
+                l10n.common_percentValue(percent),
+                l10n.deviceInfo_volts((millivolts / 1000).toStringAsFixed(2)),
+              ),
+      );
+    }
+    if (_storageKnown(c)) {
+      line(
+        l10n.deviceInfo_storage,
+        '${grouped.format(c.storageUsedKb!)} '
+        '${l10n.deviceInfo_storageOf(grouped.format(c.storageTotalKb!))}',
+      );
+    }
     final contacts = grouped.format(c.contacts.length);
     final channels = grouped.format(c.channels.length);
     line(
@@ -900,66 +901,217 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
           ? '$channels ${l10n.deviceInfo_ofMax(grouped.format(c.maxChannels))}'
           : channels,
     );
+    final startedAt = connected ? c.radioStartedAt : null;
+    final connectedAt = connected ? c.connectedAt : null;
+    if (startedAt != null) {
+      line(
+        l10n.repeater_uptime,
+        _compactDuration(l10n, now.difference(startedAt)),
+      );
+    }
+    if (connectedAt != null) {
+      line(
+        l10n.common_connected,
+        _compactDuration(l10n, now.difference(connectedAt)),
+      );
+    }
 
-    text('');
-    final radio = _radioTexts(l10n, c);
-    line(
-      l10n.settings_radioSettings,
-      connected && radio.frequency != null
-          ? l10n.deviceInfo_reportRadio(
-              radio.frequency!,
-              radio.bandwidth ?? na,
-              radio.sf ?? na,
-              radio.cr ?? na,
-              radio.tx ?? na,
-            )
-          : na,
-    );
-    line(
-      l10n.deviceInfo_hashSize,
-      connected ? _hashSizeText(l10n, c.pathHashByteWidth) : na,
-    );
-    final repeat = connected ? c.clientRepeat : null;
-    line(l10n.deviceInfo_repeat, repeat == null ? na : _onOff(l10n, repeat));
-    final stats = connected && c.supportsCompanionRadioStats
-        ? c.latestRadioStats
-        : null;
-    line(
-      l10n.radioStats_sectionAirtime,
-      stats == null
-          ? na
-          : l10n.deviceInfo_reportAirtime(
-              _compactDuration(l10n, Duration(seconds: stats.txAirSecs)),
-              _compactDuration(l10n, Duration(seconds: stats.rxAirSecs)),
-            ),
-    );
-    line(
-      l10n.settings_multiAck,
-      connected ? _onOff(l10n, c.multiAcks != 0) : na,
-    );
-    line(l10n.settings_location, (connected ? _locationText(c) : null) ?? na);
+    heading(l10n.deviceInfo_device);
+    if (c.manufacturerName case final model?) {
+      line(l10n.deviceInfo_model, model);
+    }
+    if (c.firmwareVersionString case final firmware?) {
+      line(l10n.settings_infoFirmware, firmware);
+    }
+    if (c.firmwareBuildDate case final buildDate?) {
+      line(l10n.deviceInfo_buildDate, buildDate);
+    }
+    if (connected && c.firmwareVerCode != null) {
+      line(l10n.deviceInfo_protocolVersion, '${c.firmwareVerCode}');
+    }
+    if (startedAt != null) line(l10n.deviceInfo_runningSince, date(startedAt));
+    if ((connected ? c.radioClockOffset : null) case final offset?) {
+      line(
+        l10n.deviceInfo_radioClock,
+        detail(
+          _timeWithSeconds(context, now.add(offset)),
+          _clockText(l10n, offset),
+        ),
+      );
+    }
+    final vars = connected ? c.currentCustomVars : null;
+    if (vars != null && vars.isNotEmpty) {
+      line(
+        l10n.deviceInfo_customVars,
+        [for (final e in vars.entries) '${e.key}=${e.value}'].join(', '),
+      );
+    }
+
+    heading(l10n.deviceInfo_connection);
+    final link = _link(l10n, c);
+    if (link != null) {
+      final address = _linkAddress(c);
+      line(
+        l10n.deviceInfo_link,
+        address == null ? link.$2 : detail(link.$2, address),
+      );
+    }
+    if (connectedAt != null) {
+      line(
+        l10n.deviceInfo_connectedSince,
+        detail(
+          date(connectedAt),
+          _shortDuration(l10n, now.difference(connectedAt)),
+        ),
+      );
+    } else if ((connected ? null : c.lastRadio?.savedAt) case final saved?) {
+      line(l10n.deviceInfo_lastConnected, date(saved));
+    }
+    if (_isBluetoothLink(c) && _rssi != null) {
+      line(l10n.deviceInfo_signal, l10n.deviceInfo_dbm(_rssi!));
+    }
+
     final telemetry = connected
         ? _telemetryCells(context, imperial)
         : const <_Cell>[];
     if (telemetry.isNotEmpty) {
-      text('');
+      heading(l10n.contact_telemetry);
       for (final cell in telemetry) {
         line(cell.label, cell.value);
       }
     }
 
-    final key = _deviceKey(c);
-    if (key != null || _appVersion != null) text('');
-    if (key != null) line(l10n.settings_infoPublicKey, key);
-    if (_appVersion case final version?) {
-      line(l10n.deviceInfo_app, '${l10n.appTitle} $version');
+    if (connected) {
+      heading(l10n.settings_radioSettings);
+      for (final cell in _radioCells(l10n, c)) {
+        line(cell.label, cell.value);
+      }
+      if (c.maxTxPower case final max?) {
+        line(l10n.deviceInfo_maxTxPower, l10n.deviceInfo_dbm(max));
+      }
+      if (c.supportsDefaultFloodScope) {
+        line(
+          l10n.settings_regionRadioDefault,
+          c.defaultFloodScopeName ?? l10n.settings_regionDefaultNone,
+        );
+      }
     }
 
-    final width =
-        lines.fold<int>(0, (w, l) => math.max(w, l.$1?.length ?? 0)) + 2;
-    return lines
-        .map((l) => l.$1 == null ? l.$2 : '${l.$1!.padRight(width)}${l.$2}')
-        .join('\n');
+    final stats = connected && c.supportsCompanionRadioStats
+        ? c.latestRadioStats
+        : null;
+    if (stats != null) {
+      heading(l10n.radioStats_sectionAirtime);
+      line(
+        l10n.deviceInfo_transmit,
+        _compactDuration(l10n, Duration(seconds: stats.txAirSecs)),
+      );
+      line(
+        l10n.deviceInfo_receive,
+        _compactDuration(l10n, Duration(seconds: stats.rxAirSecs)),
+      );
+      line(
+        l10n.deviceInfo_noiseFloor,
+        l10n.deviceInfo_dbm(stats.noiseFloorDbm),
+      );
+      line(l10n.deviceInfo_lastRssi, l10n.deviceInfo_dbm(stats.lastRssiDbm));
+      line(
+        l10n.deviceInfo_lastSnr,
+        l10n.deviceInfo_db(stats.lastSnrDb.toStringAsFixed(1)),
+      );
+    }
+
+    if (connected) {
+      heading(l10n.settings_privacy);
+      line(l10n.settings_multiAck, _onOff(l10n, c.multiAcks != 0));
+      if (_locationText(c) case final location?) {
+        line(l10n.settings_location, location);
+      }
+      line(
+        l10n.settings_advertLocation,
+        _onOff(l10n, c.advertLocationPolicy != 0),
+      );
+      String mode(int value) => switch (value) {
+        teleModeAllowAll => l10n.settings_allowAll,
+        teleModeAllowFlags => l10n.settings_allowByContact,
+        _ => l10n.settings_denyAll,
+      };
+      line(l10n.settings_telemetryBaseMode, mode(c.telemetryModeBase));
+      line(l10n.settings_telemetryLocationMode, mode(c.telemetryModeLoc));
+      line(l10n.settings_telemetryEnvironmentMode, mode(c.telemetryModeEnv));
+    }
+
+    heading(l10n.contacts_title);
+    int count(int type) => c.contacts.where((x) => x.type == type).length;
+    final types = [
+      (advTypeChat, l10n.contactsSettings_autoAddUsersTitle, c.autoAddUsers),
+      (
+        advTypeRepeater,
+        l10n.contactsSettings_autoAddRepeatersTitle,
+        c.autoAddRepeaters,
+      ),
+      (
+        advTypeRoom,
+        l10n.contactsSettings_autoAddRoomServersTitle,
+        c.autoAddRoomServers,
+      ),
+      (
+        advTypeSensor,
+        l10n.contactsSettings_autoAddSensorsTitle,
+        c.autoAddSensors,
+      ),
+    ];
+    for (final (type, label, _) in types) {
+      line(label, grouped.format(count(type)));
+    }
+    line(
+      l10n.discoveredContacts_Title,
+      grouped.format(c.discoveredContacts.length),
+    );
+    if (connected && c.supportsAutoAddConfig) {
+      final added = [
+        for (final (_, label, on) in types)
+          if (on ?? false) label,
+      ];
+      line(
+        l10n.contactsSettings_autoAddTitle,
+        added.isEmpty ? l10n.deviceInfo_off : added.join(', '),
+      );
+      if (c.autoAddOverwriteOldest case final overwrite?) {
+        line(
+          l10n.contactsSettings_overwriteOldestTitle,
+          _onOff(l10n, overwrite),
+        );
+      }
+      if (c.autoAddMaxHops case final hops?) {
+        line(
+          l10n.contactsSettings_hopLimit,
+          l10n.contactsSettings_hopLimitOption(hops),
+        );
+      }
+    }
+
+    blocks.add([]);
+    if (_deviceKey(c) case final key?) line(l10n.settings_infoPublicKey, key);
+    if (_appVersion case final version?) {
+      line(
+        l10n.deviceInfo_app,
+        detail('${l10n.appTitle} $version', _platformName),
+      );
+    }
+
+    return blocks
+        .where((block) => block.any((l) => l.$1 != null))
+        .map((block) {
+          final width =
+              block.fold<int>(0, (w, l) => math.max(w, l.$1?.length ?? 0)) + 2;
+          return block
+              .map(
+                (l) => l.$1 == null ? l.$2 : '${l.$1!.padRight(width)}${l.$2}',
+              )
+              .join('\n');
+        })
+        .join('\n\n');
   }
 }
 
@@ -1201,11 +1353,18 @@ class _CellView extends StatelessWidget {
   }
 }
 
-/// [DeviceInfoScreen] as plain text, to copy or share.
+/// [DeviceInfoScreen] as plain text, made once when opened, to copy or
+/// save as a .txt file.
 class _DeviceInfoTextScreen extends StatelessWidget {
   final String report;
+  final DateTime generatedAt;
 
-  const _DeviceInfoTextScreen({required this.report});
+  const _DeviceInfoTextScreen({
+    required this.report,
+    required this.generatedAt,
+  });
+
+  static const _textFileType = XTypeGroup(label: 'TXT', extensions: ['txt']);
 
   @override
   Widget build(BuildContext context) {
@@ -1229,8 +1388,9 @@ class _DeviceInfoTextScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
               child: Wrap(
+                alignment: WrapAlignment.center,
                 spacing: 8,
                 runSpacing: 8,
                 children: [
@@ -1241,9 +1401,9 @@ class _DeviceInfoTextScreen extends StatelessWidget {
                   ),
                   Builder(
                     builder: (buttonContext) => FilledButton.icon(
-                      onPressed: () => _share(buttonContext),
-                      icon: const Icon(Icons.share, size: 18),
-                      label: Text(l10n.common_share),
+                      onPressed: () => _save(buttonContext),
+                      icon: const Icon(Icons.save_alt, size: 18),
+                      label: Text(l10n.common_save),
                     ),
                   ),
                 ],
@@ -1264,16 +1424,50 @@ class _DeviceInfoTextScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _share(BuildContext buttonContext) async {
-    final box = buttonContext.findRenderObject() as RenderBox?;
-    await SharePlus.instance.share(
-      ShareParams(
-        text: report,
-        subject: buttonContext.l10n.settings_deviceInfo,
-        sharePositionOrigin: box == null
-            ? null
-            : box.localToGlobal(Offset.zero) & box.size,
-      ),
+  /// A download on web, a save dialog on desktop, the share sheet on phones
+  /// (which have no save dialog), like the other exports.
+  Future<void> _save(BuildContext buttonContext) async {
+    final l10n = buttonContext.l10n;
+    final name =
+        'meshcore-open-device-info_'
+        '${DateFormat('yyyy-MM-dd_HHmmss', 'en').format(generatedAt)}.txt';
+    final file = XFile.fromData(
+      Uint8List.fromList(utf8.encode(report)),
+      name: name,
+      mimeType: 'text/plain',
     );
+    try {
+      if (PlatformInfo.isWeb) {
+        await file.saveTo(name);
+      } else if (PlatformInfo.isDesktop) {
+        final location = await getSaveLocation(
+          suggestedName: name,
+          acceptedTypeGroups: const [_textFileType],
+        );
+        if (location == null) return;
+        await file.saveTo(location.path);
+      } else {
+        final result = await SharePlus.instance.share(
+          ShareParams(
+            subject: l10n.settings_deviceInfo,
+            files: [file],
+            fileNameOverrides: [name],
+            sharePositionOrigin: shareOriginOf(buttonContext),
+          ),
+        );
+        if (result.status == ShareResultStatus.dismissed) return;
+      }
+      if (!buttonContext.mounted) return;
+      showDismissibleSnackBar(
+        buttonContext,
+        content: Text(l10n.deviceInfo_saved),
+      );
+    } catch (e) {
+      if (!buttonContext.mounted) return;
+      showDismissibleSnackBar(
+        buttonContext,
+        content: Text('${l10n.settings_gpxExportError} $e'),
+      );
+    }
   }
 }

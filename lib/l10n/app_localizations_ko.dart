@@ -7978,6 +7978,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deviceInfo_runningSince => '가동 시작';
 
   @override
+  String get deviceInfo_bootTime => '부팅 시각';
+
+  @override
   String get deviceInfo_radioClock => '무전기 시계';
 
   @override
@@ -8007,6 +8010,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => '신호';
+
+  @override
+  String get deviceInfo_signalUpdated => '10초마다 업데이트';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -8064,9 +8070,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deviceInfo_receive => '수신';
 
   @override
-  String get deviceInfo_mesh => '메시';
-
-  @override
   String get deviceInfo_telemetryDescription => '내 무전기에서 읽음, 페이지를 열 때 업데이트';
 
   @override
@@ -8076,10 +8079,39 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deviceInfo_viewAsText => '텍스트로 보기';
 
   @override
-  String get deviceInfo_viewAsTextSubtitle => '도움을 요청할 때 복사하거나 공유하기 위해';
+  String get deviceInfo_viewAsTextSubtitle => '도움을 요청할 때 복사하거나 저장하기 위해';
 
   @override
   String get deviceInfo_copied => '장치 정보가 복사되었습니다';
+
+  @override
+  String get deviceInfo_saved => '장치 정보가 저장되었습니다';
+
+  @override
+  String get deviceInfo_reportGenerated => '생성 시각';
+
+  @override
+  String get deviceInfo_protocolVersion => '프로토콜 버전';
+
+  @override
+  String get deviceInfo_customVars => '사용자 지정 변수';
+
+  @override
+  String get deviceInfo_maxTxPower => '최대 송신 전력';
+
+  @override
+  String get deviceInfo_noiseFloor => '잡음 수준';
+
+  @override
+  String get deviceInfo_lastRssi => '마지막 RSSI';
+
+  @override
+  String get deviceInfo_lastSnr => '마지막 SNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db dB';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -8102,6 +8134,41 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours시간',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours시간',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes분';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds초';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day $time';
   }
@@ -8109,48 +8176,6 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return '연결됨: $link';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return '연결 해제됨, 마지막 연결: $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => '고정 PIN(표시 안 함)';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'PIN 고정 안 됨';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first, $second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version, $date 빌드';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override

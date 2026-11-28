@@ -8317,6 +8317,9 @@ class AppLocalizationsHu extends AppLocalizations {
   String get deviceInfo_runningSince => 'Indítás ideje';
 
   @override
+  String get deviceInfo_bootTime => 'Utolsó indítás';
+
+  @override
   String get deviceInfo_radioClock => 'Rádió órája';
 
   @override
@@ -8346,6 +8349,9 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => 'Jel';
+
+  @override
+  String get deviceInfo_signalUpdated => '10 mp-enként frissül';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -8404,9 +8410,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get deviceInfo_receive => 'Vétel';
 
   @override
-  String get deviceInfo_mesh => 'Mesh';
-
-  @override
   String get deviceInfo_telemetryDescription =>
       'A saját rádióból, az oldal megnyitásakor frissül';
 
@@ -8418,10 +8421,39 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get deviceInfo_viewAsTextSubtitle =>
-      'Másoláshoz vagy megosztáshoz segítségkéréskor';
+      'Másoláshoz vagy mentéshez segítségkéréskor';
 
   @override
   String get deviceInfo_copied => 'Eszközadatok másolva';
+
+  @override
+  String get deviceInfo_saved => 'Eszközadatok mentve';
+
+  @override
+  String get deviceInfo_reportGenerated => 'Létrehozva';
+
+  @override
+  String get deviceInfo_protocolVersion => 'Protokollverzió';
+
+  @override
+  String get deviceInfo_customVars => 'Egyéni változók';
+
+  @override
+  String get deviceInfo_maxTxPower => 'Max. TX teljesítmény';
+
+  @override
+  String get deviceInfo_noiseFloor => 'Zajszint';
+
+  @override
+  String get deviceInfo_lastRssi => 'Utolsó RSSI';
+
+  @override
+  String get deviceInfo_lastSnr => 'Utolsó SNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db dB';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -8444,6 +8476,44 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days nap',
+      one: '$days nap',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours óra',
+      one: '$hours óra',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours óra',
+      one: '$hours óra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes perc';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds mp';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day, $time';
   }
@@ -8451,48 +8521,6 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return 'Csatlakozva a következőn keresztül: $link';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return 'Szétkapcsolva, utoljára csatlakozva: $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => 'rögzített PIN (rejtve)';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'PIN nincs rögzítve';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first, $second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version, build: $date';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override

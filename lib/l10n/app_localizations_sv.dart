@@ -8266,6 +8266,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get deviceInfo_runningSince => 'Igång sedan';
 
   @override
+  String get deviceInfo_bootTime => 'Starttid';
+
+  @override
   String get deviceInfo_radioClock => 'Radions klocka';
 
   @override
@@ -8295,6 +8298,9 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => 'Signal';
+
+  @override
+  String get deviceInfo_signalUpdated => 'Uppdateras var 10:e sek';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -8353,9 +8359,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get deviceInfo_receive => 'Mottagning';
 
   @override
-  String get deviceInfo_mesh => 'Mesh';
-
-  @override
   String get deviceInfo_telemetryDescription =>
       'Från din radio, uppdateras när sidan öppnas';
 
@@ -8367,10 +8370,39 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get deviceInfo_viewAsTextSubtitle =>
-      'För att kopiera eller dela när du ber om hjälp';
+      'För att kopiera eller spara när du ber om hjälp';
 
   @override
   String get deviceInfo_copied => 'Enhetsinformation kopierad';
+
+  @override
+  String get deviceInfo_saved => 'Enhetsinformation sparad';
+
+  @override
+  String get deviceInfo_reportGenerated => 'Skapad';
+
+  @override
+  String get deviceInfo_protocolVersion => 'Protokollversion';
+
+  @override
+  String get deviceInfo_customVars => 'Anpassade variabler';
+
+  @override
+  String get deviceInfo_maxTxPower => 'Max TX-effekt';
+
+  @override
+  String get deviceInfo_noiseFloor => 'Brusgolv';
+
+  @override
+  String get deviceInfo_lastRssi => 'Senaste RSSI';
+
+  @override
+  String get deviceInfo_lastSnr => 'Senaste SNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db dB';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -8393,6 +8425,44 @@ class AppLocalizationsSv extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dagar',
+      one: '1 dag',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours timmar',
+      one: '1 timme',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours timmar',
+      one: '1 timme',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds sek';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day, $time';
   }
@@ -8400,48 +8470,6 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return 'Ansluten via $link';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return 'Frånkopplad, senast ansluten $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => 'fast PIN (visas inte)';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'ingen fast PIN';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first, $second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version, byggd $date';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override

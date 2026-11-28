@@ -7969,6 +7969,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deviceInfo_runningSince => '起動日時';
 
   @override
+  String get deviceInfo_bootTime => '最終起動';
+
+  @override
   String get deviceInfo_radioClock => '無線機の時刻';
 
   @override
@@ -7998,6 +8001,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deviceInfo_signal => '信号';
+
+  @override
+  String get deviceInfo_signalUpdated => '10秒ごとに更新';
 
   @override
   String deviceInfo_dbm(int dbm) {
@@ -8055,9 +8061,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deviceInfo_receive => '受信';
 
   @override
-  String get deviceInfo_mesh => 'メッシュ';
-
-  @override
   String get deviceInfo_telemetryDescription => '自分の無線機から取得、ページを開くと更新';
 
   @override
@@ -8067,10 +8070,39 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deviceInfo_viewAsText => 'テキストで表示';
 
   @override
-  String get deviceInfo_viewAsTextSubtitle => 'ヘルプを求めるときのコピーや共有用';
+  String get deviceInfo_viewAsTextSubtitle => 'ヘルプを求めるときのコピーや保存用';
 
   @override
   String get deviceInfo_copied => 'デバイス情報をコピーしました';
+
+  @override
+  String get deviceInfo_saved => 'デバイス情報を保存しました';
+
+  @override
+  String get deviceInfo_reportGenerated => '作成日時';
+
+  @override
+  String get deviceInfo_protocolVersion => 'プロトコルバージョン';
+
+  @override
+  String get deviceInfo_customVars => 'カスタム変数';
+
+  @override
+  String get deviceInfo_maxTxPower => '最大 TX 信号電力';
+
+  @override
+  String get deviceInfo_noiseFloor => 'ノイズレベル';
+
+  @override
+  String get deviceInfo_lastRssi => '最後のRSSI';
+
+  @override
+  String get deviceInfo_lastSnr => '最後のSNR';
+
+  @override
+  String deviceInfo_db(String db) {
+    return '$db dB';
+  }
 
   @override
   String deviceInfo_durationDays(int days, int hours) {
@@ -8093,6 +8125,41 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String deviceInfo_forDays(int days, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days日',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours時間',
+    );
+    return '$_temp0$_temp1';
+  }
+
+  @override
+  String deviceInfo_forHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours時間',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deviceInfo_forMinutes(int minutes) {
+    return '$minutes分';
+  }
+
+  @override
+  String deviceInfo_forSeconds(int seconds) {
+    return '$seconds秒';
+  }
+
+  @override
   String deviceInfo_dayTime(String day, String time) {
     return '$day $time';
   }
@@ -8100,48 +8167,6 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String deviceInfo_valueWithDetail(String value, String detail) {
     return '$value ($detail)';
-  }
-
-  @override
-  String deviceInfo_reportConnectedVia(String link) {
-    return '$link で接続済み';
-  }
-
-  @override
-  String deviceInfo_reportDisconnected(String time) {
-    return '切断済み、最終接続: $time';
-  }
-
-  @override
-  String get deviceInfo_reportPinFixed => '固定 PIN（非表示）';
-
-  @override
-  String get deviceInfo_reportPinNotFixed => 'PIN 固定なし';
-
-  @override
-  String deviceInfo_reportJoin(String first, String second) {
-    return '$first、$second';
-  }
-
-  @override
-  String deviceInfo_reportBuilt(String version, String date) {
-    return '$version（$date ビルド）';
-  }
-
-  @override
-  String deviceInfo_reportRadio(
-    String frequency,
-    String bandwidth,
-    String spreadingFactor,
-    String codingRate,
-    String txPower,
-  ) {
-    return '$frequency, BW $bandwidth · $spreadingFactor · CR $codingRate · $txPower';
-  }
-
-  @override
-  String deviceInfo_reportAirtime(String transmit, String receive) {
-    return 'TX $transmit, RX $receive';
   }
 
   @override
